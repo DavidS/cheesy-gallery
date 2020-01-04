@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - 'spec/fixtures/**/*'
+
 # This is part of jekylls loading convention
 Naming/FileName:
   Exclude:
