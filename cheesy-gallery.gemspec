@@ -2,11 +2,11 @@
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'cheesy/gallery/version'
+require 'cheesy-gallery/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'cheesy-gallery'
-  spec.version       = Cheesy::Gallery::VERSION
+  spec.version       = CheesyGallery::VERSION
   spec.authors       = ['David Schmitt']
   spec.email         = ['david@black.co.at']
 
