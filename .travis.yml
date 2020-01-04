@@ -14,4 +14,4 @@ jobs:
     install:
     - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle} --gemfile=spec/fixtures/test_site/Gemfile
     script:
-    - (cd spec/fixtures/test_site && bundle exec jekyll build --strict --trace && ls -la _site)
+    - (cd spec/fixtures/test_site && bundle --gemfile=./Gemfile exec jekyll build --strict --trace && ls -la _site)
