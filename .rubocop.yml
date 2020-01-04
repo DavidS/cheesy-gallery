@@ -1,0 +1,13 @@
+# This is part of jekylls loading convention
+Naming/FileName:
+  Exclude:
+    - 'lib/cheesy-gallery.rb'
+
+# A more modern default
+Layout/LineLength:
+  Max: 200
+
+# don't deviate from the default template too much
+Style/GuardClause:
+  Exclude:
+    - 'cheesy-gallery.gemspec'
