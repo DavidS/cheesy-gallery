@@ -63,7 +63,7 @@ GEM
       forwardable-extended (~> 2.6)
     public_suffix (4.0.2)
     rainbow (3.0.0)
-    rake (10.5.0)
+    rake (13.0.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -109,7 +109,7 @@ DEPENDENCIES
   bundler (~> 1.17)
   cheesy-gallery!
   codecov
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
   rubocop
 
