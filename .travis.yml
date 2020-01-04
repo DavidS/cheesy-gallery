@@ -6,7 +6,7 @@ rvm:
   - 2.5.3
 before_install:
 - gem install bundler -v 1.17.3
-- (cd spec/fixtures/test_site && bundle install --path ../../../${BUNDLE_PATH:-vendor/bundle})
+- bundle install --gemfile=spec/fixtures/test_site/Gemfile --path ${BUNDLE_PATH:-vendor/bundle})
 jobs:
   include:
   - env: CHECK=rspec
