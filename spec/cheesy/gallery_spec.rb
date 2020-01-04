@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Cheesy::Gallery do
+RSpec.describe CheesyGallery do
   it 'has a version number' do
-    expect(Cheesy::Gallery::VERSION).not_to be nil
+    expect(CheesyGallery::VERSION).not_to be nil
   end
 
   it 'does something useful' do

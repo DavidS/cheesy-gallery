@@ -8,7 +8,7 @@ SimpleCov.start
 require 'codecov'
 SimpleCov.formatter = SimpleCov::Formatter::Codecov
 
-require 'cheesy/gallery'
+require 'cheesy-gallery'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
