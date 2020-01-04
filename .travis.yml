@@ -5,6 +5,9 @@ cache: bundler
 rvm:
   - 2.5.3
 before_install: gem install bundler -v 1.17.3
-script:
-  - bundle exec rake
-  - cd spec/fixtures/test_site && bundle install --path ../../${BUNDLE_PATH:-vendor/bundle} && bundle exec jekyll build --strict && ls -la _site
+jobs:
+  include:
+  - script:
+    - bundle exec rake
+  - script:
+    - cd spec/fixtures/test_site && bundle install --path ../../${BUNDLE_PATH:-vendor/bundle} && bundle exec jekyll build --strict --trace && ls -la _site
