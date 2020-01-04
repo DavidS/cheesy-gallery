@@ -1,4 +1,6 @@
-require "cheesy/gallery/version"
+# frozen_string_literal: true
+
+require 'cheesy/gallery/version'
 
 module Cheesy
   module Gallery

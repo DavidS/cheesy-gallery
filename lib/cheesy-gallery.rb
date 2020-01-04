@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "jekyll"
-require "fileutils"
-require "cheesy-gallery/generator"
+require 'jekyll'
+require 'fileutils'
+require 'cheesy-gallery/generator'
 
 module CheesyGallery
   # autoload :Const, "cheesy-gallery/const"
