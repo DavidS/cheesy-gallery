@@ -10,7 +10,8 @@ jobs:
   - env: CHECK=rspec
     script:
     - bundle exec rake
-  - env: CHECK=build BUNDLE_GEMFILE=spec/fixtures/test_site/Gemfile
+  - env: CHECK=build
+    gemfile: spec/fixtures/test_site/Gemfile
     install:
     - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
     script:
