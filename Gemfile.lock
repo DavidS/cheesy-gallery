@@ -2,15 +2,22 @@ PATH
   remote: .
   specs:
     cheesy-gallery (0.1.0)
+      jekyll (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.0)
+    codecov (0.1.16)
+      json
+      simplecov
+      url
     colorator (1.1.0)
     concurrent-ruby (1.1.5)
     diff-lcs (1.3)
+    docile (1.3.2)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -20,6 +27,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.4)
     jekyll (4.0.0)
       addressable (~> 2.4)
       colorator (~> 1.0)
@@ -39,6 +47,7 @@ GEM
       sassc (> 2.0.1, < 3.0)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
+    json (2.3.0)
     kramdown (2.1.0)
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
@@ -47,9 +56,13 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.3.6)
+    parallel (1.19.1)
+    parser (2.7.0.1)
+      ast (~> 2.4.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.2)
+    rainbow (3.0.0)
     rake (10.5.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
@@ -68,12 +81,26 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    rubocop (0.78.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.6)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
     safe_yaml (1.0.5)
     sassc (2.2.1)
       ffi (~> 1.9)
+    simplecov (0.17.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     unicode-display_width (1.6.0)
+    url (0.3.2)
 
 PLATFORMS
   ruby
@@ -81,9 +108,10 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.17)
   cheesy-gallery!
-  jekyll (~> 4.0)
+  codecov
   rake (~> 10.0)
   rspec (~> 3.0)
+  rubocop
 
 BUNDLED WITH
    1.17.3
