@@ -9,7 +9,9 @@ before_install:
 - cd spec/fixtures/test_site && bundle install --path ../../${BUNDLE_PATH:-vendor/bundle}
 jobs:
   include:
-  - script:
+  - env: CHECK=rspec
+    script:
     - bundle exec rake
-  - script:
+  - env: CHECK=build
+    script:
     - cd spec/fixtures/test_site && bundle exec jekyll build --strict --trace && ls -la _site
