@@ -35,7 +35,7 @@ class CheesyGallery::Generator < Jekyll::Generator
   end
 
   def make_page(file_path, collection: 'posts', category: nil)
-    PageWithoutAFile.new(@site, __dir__, '', file_path).tap do |file|
+    CheesyGallery::PageWithoutAFile.new(@site, __dir__, '', file_path).tap do |file|
       # file.content = "feed_template\n"
       file.data.merge!(
         'layout' => 'debug',
