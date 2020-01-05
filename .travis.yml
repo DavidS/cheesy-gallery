@@ -17,4 +17,4 @@ jobs:
     script:
     - (cd spec/fixtures/test_site && bundle exec jekyll build --strict --trace --verbose)
     after_script:
-    - (cd spec/fixtures/test_site && find -type f _site && echo -e '\n===\n' && cat _site/debug.html && echo -e '\n===\n' && cat _site/galleries/first/index.html)
+    - (cd spec/fixtures/test_site && find _site -type f && echo -e '\n===\n' && cat _site/debug.html && echo -e '\n===\n' && cat _site/galleries/first/index.html)
