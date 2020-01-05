@@ -21,8 +21,8 @@ class CheesyGallery::GalleryPage < Jekyll::Page
     super(site, base, dir, name)
   end
 
-  def read_yaml(*)
-    super
+  def read_yaml(base, name, opts = {})
+    super(base, name, opts) if File.exist?(@path)
     @data ||= {} # ensure that there is a data hash, even if there is no source # rubocop:disable Naming/MemoizedInstanceVariableName
     # require 'pry'; binding.pry
   end
