@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'jekyll'
+require 'json'
 require 'cheesy-gallery/utils'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
@@ -11,7 +12,7 @@ class CheesyGallery::Generator < Jekyll::Generator
     galleries = collect_galleries(site.source, '_galleries')
 
     debug_page = make_page('debug.html')
-    debug_page.content = galleries.pretty_inspect
+    debug_page.content = JSON.pretty_generate(galleries)
     site.pages << debug_page
     # read `_galleries`
     # modify `site`
