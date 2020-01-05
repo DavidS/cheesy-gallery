@@ -11,7 +11,7 @@ class CheesyGallery::Generator < Jekyll::Generator
     galleries = collect_galleries(site.source, '_galleries')
 
     debug_page = make_page('debug.html')
-    debug_page.content = "debug\n"
+    debug_page.content = galleries.pretty_inspect
     site.pages << debug_page
     # read `_galleries`
     # modify `site`
