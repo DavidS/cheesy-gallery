@@ -2,25 +2,24 @@
 
 require 'jekyll'
 require 'json'
-require 'cheesy-gallery/utils'
+require 'cheesy-gallery/gallery_page'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
 class CheesyGallery::Generator < Jekyll::Generator
   def generate(site)
     @site = site
+    # require 'pry'; binding.pry
 
     galleries = collect_galleries(File.join(site.source, '_galleries'), File.join(site.dest, 'galleries'))
 
-    debug_page = make_gallery_page("nil", 'debug.html')
+    # debug_page = make_gallery_page('/source_path', '/target_path', '/file.html')
+    debug_page = make_gallery_page('nil', '', 'debug.html')
     debug_page.content = JSON.pretty_generate(galleries)
     site.pages << debug_page
 
     galleries.each do |g|
-      site.pages << make_gallery_page(File.join(g[:path], 'index.html'), File.join(g[:dest], 'index.html'))
+      site.pages << make_gallery_page(g[:path], g[:dest], 'index.html')
     end
-
-    # read `_galleries`
-    # modify `site`
   end
 
   # source_dir: join(site.source, config[:gallery][:source] = '_galleries')
@@ -57,13 +56,14 @@ class CheesyGallery::Generator < Jekyll::Generator
     end || []).flatten.find_all { |f| !f.nil? }
   end
 
-  def make_gallery_page(source_path, target_path)
-    CheesyGallery::PageWithoutAFile.new(@site, __dir__, '', target_path).tap do |file|
+  def make_gallery_page(source_path, target_path, path)
+    CheesyGallery::GalleryPage.new(@site, @site.source, target_path, path).tap do |file|
       # file.content = "feed_template\n"
       file.data.merge!(
-        'layout' => 'debug',
+        'layout' => 'gallery',
         'sitemap' => false,
         'source' => source_path,
+        'images' => %w[a b],
       )
       file.output
     end
