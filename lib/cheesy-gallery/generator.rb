@@ -9,40 +9,61 @@ class CheesyGallery::Generator < Jekyll::Generator
   def generate(site)
     @site = site
 
-    galleries = collect_galleries(site.source, '_galleries')
+    galleries = collect_galleries(File.join(site.source, '_galleries'), File.join(site.dest, 'galleries'))
 
-    debug_page = make_page('debug.html')
+    debug_page = make_gallery_page("nil", 'debug.html')
     debug_page.content = JSON.pretty_generate(galleries)
     site.pages << debug_page
+
+    galleries.each do |g|
+      site.pages << make_gallery_page(File.join(g[:path], 'index.html'), File.join(g[:dest], 'index.html'))
+    end
+
     # read `_galleries`
     # modify `site`
   end
 
-  def collect_galleries(base_dir, next_dir)
-    (Dir.foreach(File.join(base_dir, next_dir)).collect do |entry|
+  # source_dir: join(site.source, config[:gallery][:source] = '_galleries')
+  # dest_dir: join(site.dest, config[:gallery][:dest] = 'galleries' )
+  # next_dir: relative path within the gallery tree, used in recursion, leave `nil` for first level
+  def collect_galleries(source_dir, dest_dir, next_dir = nil)
+    if next_dir.nil?
+      current_dir = source_dir
+      next_dir = '/'
+    else
+      current_dir = File.join(source_dir, next_dir)
+    end
+
+    (Dir.foreach(current_dir).collect do |entry|
+      # skip self and parent directory
       next if ['.', '..'].include?(entry)
 
       path = File.join(next_dir, entry)
-      full_path = File.join(base_dir, path)
-      next unless File.directory?(full_path)
 
-      collect_galleries(base_dir, path) + [
+      # files (as opposed to directories) will be handled later
+      source_path = File.join(source_dir, path)
+      next unless File.directory?(source_path)
+
+      dest_path = File.join(dest_dir, path)
+
+      collect_galleries(source_dir, dest_dir, path) + [
         {
           name: entry,
-          source: full_path,
+          path: path,
+          source: source_path,
+          dest: dest_path,
         },
       ]
     end || []).flatten.find_all { |f| !f.nil? }
   end
 
-  def make_page(file_path, collection: 'posts', category: nil)
-    CheesyGallery::PageWithoutAFile.new(@site, __dir__, '', file_path).tap do |file|
+  def make_gallery_page(source_path, target_path)
+    CheesyGallery::PageWithoutAFile.new(@site, __dir__, '', target_path).tap do |file|
       # file.content = "feed_template\n"
       file.data.merge!(
         'layout' => 'debug',
         'sitemap' => false,
-        'collection' => collection,
-        'category' => category,
+        'source' => source_path,
       )
       file.output
     end
