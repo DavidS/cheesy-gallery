@@ -1,17 +1,13 @@
 ---
-x_layout: default
+layout: page
 ---
 
-<h1>GALLERY</h1>
+{{ content }}
 
 <pre>
   {{ page.images | jsonify }}
 ---
   {%- for image in page.images -%}
-  {{image}},
-
+  <img src="{{image.name}}" height="100", width="100"/>
   {%- endfor -%}
 </pre>
-
-
-{{ content }}
