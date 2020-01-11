@@ -18,7 +18,7 @@ class CheesyGallery::Generator < Jekyll::Generator
     site.pages << debug_page
 
     galleries.each do |g|
-      site.pages << make_gallery_page(g[:path], g[:dest], 'index.html')
+      site.pages << make_gallery_page(site.source, File.join('_galleries', g[:path]), 'index.html')
     end
   end
 
@@ -58,9 +58,8 @@ class CheesyGallery::Generator < Jekyll::Generator
 
   def make_gallery_page(source_path, target_path, path)
     CheesyGallery::GalleryPage.new(@site, @site.source, target_path, path).tap do |file|
-      # file.content = "feed_template\n"
+      file.data['layout'] ||= 'gallery'
       file.data.merge!(
-        'layout' => 'gallery',
         'sitemap' => false,
         'source' => source_path,
         'images' => %w[a b],

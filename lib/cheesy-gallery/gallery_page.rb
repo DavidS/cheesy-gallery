@@ -22,8 +22,23 @@ class CheesyGallery::GalleryPage < Jekyll::Page
   end
 
   def read_yaml(base, name, opts = {})
+    # puts "@path: #{@path}"
+    # puts "base: #{base}"
+    # puts "dir: #{dir}"
+    # puts "name: #{name}"
+    # puts "site.in_source_dir(base, name): #{site.in_source_dir(base, name)}"
+    # puts ""
     super(base, name, opts) if File.exist?(@path)
+    content = "DEFAULT GALLERY" if content.nil?
     @data ||= {} # ensure that there is a data hash, even if there is no source # rubocop:disable Naming/MemoizedInstanceVariableName
     # require 'pry'; binding.pry
+  end
+
+  def write(dest)
+    puts "dest: #{dest}"
+    puts "url: #{url}"
+    puts "in_dest_dir: #{site.in_dest_dir(dest, Jekyll::URL.unescape_path(url))}"
+    require'pry';binding.pry
+    super(dest)
   end
 end
