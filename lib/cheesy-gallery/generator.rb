@@ -20,6 +20,7 @@ class CheesyGallery::Generator < Jekyll::Generator
     (galleries - galleries_with_index).each do |e|
       doc = CheesyGallery::GalleryIndex.new(File.join('_galleries', e, 'index.html'), site: site, collection: collection)
       doc.read
+      doc.data['layout'] = 'gallery'
       collection.docs << doc if site.unpublished || doc.published?
     end
 
