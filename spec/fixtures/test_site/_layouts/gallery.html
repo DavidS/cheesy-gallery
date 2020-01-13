@@ -10,6 +10,6 @@ layout: page
   {{ page.parent | jsonify }}
 ---
   {%- for image in page.images -%}
-  <img src="{{image.name}}" height="100", width="100"/>
+  <img src="{{ image.name }}" height="100", width="100"/>
   {%- endfor -%}
 </pre>
