@@ -2,10 +2,12 @@
 layout: page
 ---
 
+<a href="{{ page.parent.url }}">{{ page.parent.title }}</a>
+
 {{ content }}
 
 <pre>
-  {{ page.images | jsonify }}
+  {{ page.parent | jsonify }}
 ---
   {%- for image in page.images -%}
   <img src="{{image.name}}" height="100", width="100"/>

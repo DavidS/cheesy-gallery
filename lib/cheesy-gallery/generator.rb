@@ -23,12 +23,31 @@ class CheesyGallery::Generator < Jekyll::Generator
       collection.docs << doc if site.unpublished || doc.published?
     end
 
+    # collect files by gallery
     files_by_dirname = {}
     collection.files.each { |e| (files_by_dirname[File.dirname(e.relative_path)] ||= []) << e }
 
+    # and galleries after adding the Documents
+    galleries_by_dirname = {}
+    collection.docs.each { |e| galleries_by_dirname[File.dirname(e.relative_path)] = e }
+
     collection.docs.each do |doc|
+      gallery_path = File.dirname(doc.relative_path)
+
       # attach images
-      doc.data['images'] = files_by_dirname[File.dirname(doc.relative_path)]
+      doc.data['images'] = files_by_dirname[gallery_path]
+
+      # attach parent
+      if gallery_path == '_galleries'
+        # main gallery doesn't have parent
+        doc.data['parent'] = nil
+      elsif File.dirname(gallery_path) == '_galleries'
+        # main gallery has a weird relative_path
+        doc.data['parent'] = galleries_by_dirname['_galleries/.']
+      else
+        # everyone else is regular
+        doc.data['parent'] = galleries_by_dirname[File.dirname(gallery_path)]
+      end
     end
   end
 end
