@@ -39,7 +39,7 @@ class CheesyGallery::Generator < Jekyll::Generator
       doc.data['images'] = files_by_dirname[gallery_path]
 
       # attach parent
-      if gallery_path == '_galleries'
+      if gallery_path == '_galleries/.'
         # main gallery doesn't have parent
         doc.data['parent'] = nil
       elsif File.dirname(gallery_path) == '_galleries'
