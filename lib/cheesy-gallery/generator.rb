@@ -33,6 +33,11 @@ class CheesyGallery::Generator < Jekyll::Generator
     galleries_by_dirname = {}
     collection.docs.find_all { |e| e.basename_without_ext == 'index' }.each { |e| galleries_by_dirname[File.dirname(e.relative_path)] = e }
 
+    # this will be filled while linking up parents below
+    # make sure each document has an entry, so later we can easily iterate everything
+    galleries_by_parent = Hash[collection.docs.map { |d| [d, []] }]
+    galleries_by_parent[nil] = []
+
     collection.docs.each do |doc|
       gallery_path = File.dirname(doc.relative_path)
 
@@ -51,6 +56,14 @@ class CheesyGallery::Generator < Jekyll::Generator
                  galleries_by_dirname[File.dirname(gallery_path)]
                end
       doc.data['parent'] = parent
+      galleries_by_parent[parent] << doc
+    end
+
+    # link up sub-pages for tree navigation
+    galleries_by_parent.each do |parent, pages|
+      next if parent.nil?
+
+      parent.data['pages'] = pages
     end
   end
 end

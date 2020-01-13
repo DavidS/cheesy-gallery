@@ -3,6 +3,13 @@ layout: page
 ---
 
 <a href="{{ page.parent.url }}">{{ page.parent.title }}</a>
+{% if page.pages %}
+<ul>
+  {%- for sub in page.pages -%}
+    <li><a href="{{ sub.url }}">{{ sub.title }}</a></li>
+  {%- endfor -%}
+</ul>
+{% endif %}
 
 {{ content }}
 
