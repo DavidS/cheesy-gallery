@@ -21,11 +21,8 @@ class CheesyGallery::ImageThumb < Jekyll::StaticFile
   # this is only called if the mtime doesn't match
   def copy_file(dest_path)
     source = Magick::ImageList.new(@source_file.path)
-    nuimg = source.change_geometry!('150x150^') do |cols, rows, img|
-      img.resize!(cols, rows)
-      img.crop(Magick::CenterGravity, 150, 150)
-    end
-    nuimg.write(dest_path)
+    source.resize_to_fill!(150, 150)
+    source.write(dest_path)
 
     unless File.symlink?(dest_path) # rubocop:disable Style/GuardClause
       File.utime(self.class.mtimes[@source_file.path], self.class.mtimes[@source_file.path], dest_path)
