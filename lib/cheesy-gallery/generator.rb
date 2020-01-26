@@ -3,6 +3,7 @@
 require 'jekyll'
 require 'json'
 require 'cheesy-gallery/gallery_index'
+require 'cheesy-gallery/image_thumb'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
 class CheesyGallery::Generator < Jekyll::Generator
@@ -65,5 +66,12 @@ class CheesyGallery::Generator < Jekyll::Generator
 
       parent.data['pages'] = pages
     end
+
+    # render image thumbnails and add them to the collection's files
+    thumbs = collection.files.map do |f|
+      CheesyGallery::ImageThumb.new(site, collection, f)
+    end
+
+    collection.files.push(*thumbs)
   end
 end

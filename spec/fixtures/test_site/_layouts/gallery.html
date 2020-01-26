@@ -2,21 +2,19 @@
 layout: page
 ---
 
-<a href="{{ page.parent.url }}">{{ page.parent.title }}</a>
+<a href="{{ page.parent.url | relative_url }}">{{ page.parent.title }}</a>
 {% if page.pages %}
 <ul>
   {%- for sub in page.pages -%}
-    <li><a href="{{ sub.url }}">{{ sub.title }}</a></li>
+    <li><a href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
   {%- endfor -%}
 </ul>
 {% endif %}
 
 {{ content }}
 
-<pre>
-  {{ page.parent | jsonify }}
----
-  {%- for image in page.images -%}
-  <img src="{{ image.name }}" height="100", width="100"/>
-  {%- endfor -%}
-</pre>
+<br/>
+
+{%- for image in page.images -%}
+<img src="{{ image.name}}_thumb.jpg" height="150", width="150"/>
+{%- endfor -%}
