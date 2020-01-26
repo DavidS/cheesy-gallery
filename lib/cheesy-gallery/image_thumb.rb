@@ -1,31 +1,22 @@
 # frozen_string_literal: true
 
 require 'rmagick'
+require 'cheesy-gallery/base_image_file'
 
 # This StaticFile subclass represents thumbnail images for each image. On `write()` it renders a 150x150 center crop of the source
-class CheesyGallery::ImageThumb < Jekyll::StaticFile
-  THUMB_POSTFIX = '_thumb.jpg'
+class CheesyGallery::ImageThumb < CheesyGallery::BaseImageFile
+  attr_reader :height, :width
 
-  def initialize(site, collection, file)
-    @source_file = file
-    super(site, site.source, File.dirname(file.relative_path), file.name + THUMB_POSTFIX, collection)
-  end
+  def initialize(site, collection, file, postfix = '_thumb.jpg', height = 150, width = 150)
+    super(site, collection, file, file.name + postfix)
 
-  # use the source file's path for this, as this value is used all over the
-  # place for mtime checking
-  def path
-    @source_file.path
+    @height = height
+    @width = width
   end
 
   # instead of copying, renders the thumbnail
-  # this is only called if the mtime doesn't match
-  def copy_file(dest_path)
-    source = Magick::ImageList.new(@source_file.path)
-    source.resize_to_fill!(150, 150)
-    source.write(dest_path)
-
-    unless File.symlink?(dest_path) # rubocop:disable Style/GuardClause
-      File.utime(self.class.mtimes[@source_file.path], self.class.mtimes[@source_file.path], dest_path)
-    end
+  def process_and_write(img, path)
+    img.resize_to_fill!(height, width)
+    img.write(path)
   end
 end

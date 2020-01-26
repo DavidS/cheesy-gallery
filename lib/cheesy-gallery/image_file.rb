@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require 'rmagick'
+require 'cheesy-gallery/base_image_file'
 
 # This StaticFile subclass adds additional functionality for images in the
 # gallery
-class CheesyGallery::ImageFile < Jekyll::StaticFile
+class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
   def initialize(site, collection, file)
-    @source_file = file
-    super(site, site.source, File.dirname(file.relative_path), file.name, collection)
+    super
 
-    # read file metadata as it will be processed
-    source = Magick::ImageList.new(path)
+    # read file metadata in the same way it will be processed
+    source = Magick::Image.ping(path).first
     source.change_geometry!('1920x1080') do |cols, rows, _img|
       data['height'] = rows
       data['width'] = cols
@@ -18,15 +18,10 @@ class CheesyGallery::ImageFile < Jekyll::StaticFile
   end
 
   # instead of copying, renders an optimised version
-  def copy_file(dest_path)
-    source = Magick::ImageList.new(path)
-    nuimg = source.change_geometry!('1920x1080') do |cols, rows, img|
-      img.resize!(cols, rows)
+  def process_and_write(img, path)
+    nuimg = img.change_geometry!('1920x1080') do |cols, rows, i|
+      i.resize!(cols, rows)
     end
-    nuimg.write(dest_path) { self.quality = 50 }
-
-    unless File.symlink?(dest_path) # rubocop:disable Style/GuardClause
-      File.utime(self.class.mtimes[@source_file.path], self.class.mtimes[@source_file.path], dest_path)
-    end
+    nuimg.write(path) { self.quality = 50 }
   end
 end
