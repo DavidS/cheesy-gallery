@@ -3,6 +3,7 @@
 require 'jekyll'
 require 'json'
 require 'cheesy-gallery/gallery_index'
+require 'cheesy-gallery/image_file'
 require 'cheesy-gallery/image_thumb'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
@@ -24,6 +25,14 @@ class CheesyGallery::Generator < Jekyll::Generator
       doc.data['layout'] = 'gallery'
       collection.docs << doc if site.unpublished || doc.published?
     end
+
+    # create replacements for the files with additional functionality
+    image_files = collection.files.map do |f|
+      CheesyGallery::ImageFile.new(site, collection, f)
+    end
+
+    # inject the `ImageFile`s into the collection
+    image_files.each_with_index { |f, i| collection.files[i] = f }
 
     # collect files by gallery
     files_by_dirname = {}
@@ -65,14 +74,6 @@ class CheesyGallery::Generator < Jekyll::Generator
       next if parent.nil?
 
       parent.data['pages'] = pages
-    end
-
-    # collect additional metadata from images
-    collection.files.each do |f|
-      source = Magick::ImageList.new(f.path)
-
-      f.data['height'] = source.rows
-      f.data['width'] = source.columns
     end
 
     # render image thumbnails and add them to the collection's files
