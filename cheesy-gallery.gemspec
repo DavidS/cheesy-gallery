@@ -40,4 +40,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
 
   spec.add_dependency 'jekyll', '~> 4.0'
+  spec.add_dependency 'rmagick', '~> 4.0'
 end
