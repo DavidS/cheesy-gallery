@@ -3,6 +3,7 @@ PATH
   specs:
     cheesy-gallery (0.1.0)
       jekyll (~> 4.0)
+      rmagick (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -61,6 +62,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rmagick (4.0.0)
     rouge (3.14.0)
     safe_yaml (1.0.5)
     sassc (2.2.1)
