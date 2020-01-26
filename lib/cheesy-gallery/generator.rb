@@ -67,6 +67,14 @@ class CheesyGallery::Generator < Jekyll::Generator
       parent.data['pages'] = pages
     end
 
+    # collect additional metadata from images
+    collection.files.each do |f|
+      source = Magick::ImageList.new(f.path)
+
+      f.data['height'] = source.rows
+      f.data['width'] = source.columns
+    end
+
     # render image thumbnails and add them to the collection's files
     thumbs = collection.files.map do |f|
       CheesyGallery::ImageThumb.new(site, collection, f)

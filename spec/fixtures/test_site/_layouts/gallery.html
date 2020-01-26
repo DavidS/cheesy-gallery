@@ -16,5 +16,10 @@ layout: page
 <br/>
 
 {%- for image in page.images -%}
-<img src="{{ image.name}}_thumb.jpg" height="150", width="150"/>
+<img src="{{ image.name }}_thumb.jpg" height="150" width="150"/>
+{%- endfor -%}
+
+{%- for image in page.images -%}
+<br/>
+<img src="{{ image.name }}" height="{{ image.height | divided_by: 4 }}" width="{{ image.width | divided_by: 4 }}"/>
 {%- endfor -%}
