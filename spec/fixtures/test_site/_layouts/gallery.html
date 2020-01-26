@@ -13,13 +13,13 @@ layout: page
 
 {{ content }}
 
-<br/>
-
-{%- for image in page.images -%}
-<img src="{{ image.name }}_thumb.jpg" height="150" width="150"/>
+<div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+  {%- for image in page.images -%}
+  <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <a href="{{ image.name }}" itemprop="contentUrl" data-size="{{ image.width }}x{{ image.height }}">
+        <img src="{{ image.name }}_thumb.jpg" itemprop="thumbnail" height="150" width="150" />
+    </a>
+    <!-- <figcaption itemprop="caption description">Image caption</figcaption> -->
+  </figure>
 {%- endfor -%}
-
-{%- for image in page.images -%}
-<br/>
-<img src="{{ image.name }}" height="{{ image.height | divided_by: 4 }}" width="{{ image.width | divided_by: 4 }}"/>
-{%- endfor -%}
+</div>
