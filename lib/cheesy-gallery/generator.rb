@@ -67,6 +67,16 @@ class CheesyGallery::Generator < Jekyll::Generator
                end
       doc.data['parent'] = parent
       galleries_by_parent[parent] << doc
+
+      # add thumbnail when there are images
+      next if doc.data['images'].nil?
+
+      collection.files << doc.data['thumbnail'] = CheesyGallery::ImageThumb.new(
+        site,
+        collection,
+        doc.data['images'].first,
+        '_index.jpg', 72, 72
+      )
     end
 
     # link up sub-pages for tree navigation

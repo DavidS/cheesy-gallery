@@ -2,14 +2,23 @@
 layout: page
 ---
 
-<a href="{{ page.parent.url | relative_url }}">{{ page.parent.title }}</a>
+<a href="{{ page.parent.url | relative_url }}">
+  {%- if page.parent.thumbnail -%}
+  <img src="../{{ page.parent.thumbnail.name }}" height="72" width="72" />
+  {%- endif -%}
+  {{ page.parent.title }}
+</a>
 {% if page.pages %}
 <ul>
   {%- for sub in page.pages -%}
-    <li><a href="{{ sub.url | relative_url }}">{{ sub.title }}</a></li>
+    <li><a href="{{ sub.url | relative_url }}">
+      {%- if sub.thumbnail -%}
+      <img src="{{ sub.url | relative_url }}/../{{ sub.thumbnail.name }}" height="72" width="72" />
+      {%- endif -%}
+      {{ sub.title }}</a></li>
   {%- endfor -%}
 </ul>
-{% endif %}
+{%- endif -%}
 
 {{ content }}
 
