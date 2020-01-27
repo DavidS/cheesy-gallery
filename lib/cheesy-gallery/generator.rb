@@ -77,7 +77,7 @@ class CheesyGallery::Generator < Jekyll::Generator
     end
 
     # render image thumbnails and add them to the collection's files
-    thumbs = collection.files.map do |f|
+    thumbs = image_files.map do |f|
       CheesyGallery::ImageThumb.new(site, collection, f)
     end
 
