@@ -19,9 +19,9 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
 
   # instead of copying, renders an optimised version
   def process_and_write(img, path)
-    nuimg = img.change_geometry!('1920x1080') do |cols, rows, i|
+    img.change_geometry!('1920x1080') do |cols, rows, i|
       i.resize!(cols, rows)
     end
-    nuimg.write(path) { self.quality = 50 }
+    img.write(path) { self.quality = 50 }
   end
 end

@@ -26,7 +26,13 @@ class CheesyGallery::BaseImageFile < Jekyll::StaticFile
   # instead of copying, allow rmagick processing
   # this is only called if the mtime doesn't match
   def copy_file(dest_path)
-    process_and_write(Magick::ImageList.new(path), dest_path)
+    begin
+      source = Magick::ImageList.new(path)
+      process_and_write(source, dest_path)
+    ensure
+      # clean up cache
+      source.destroy!
+    end
 
     unless File.symlink?(dest_path) # rubocop:disable Style/GuardClause
       File.utime(self.class.mtimes[@source_file.path], self.class.mtimes[@source_file.path], dest_path)
