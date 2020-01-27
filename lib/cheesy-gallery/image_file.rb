@@ -10,6 +10,7 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
     super
 
     # read file metadata in the same way it will be processed
+    Jekyll.logger.debug 'Identifying:', path
     source = Magick::Image.ping(path).first
     source.change_geometry!('1920x1080') do |cols, rows, _img|
       data['height'] = rows
