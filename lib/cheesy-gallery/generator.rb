@@ -12,6 +12,8 @@ class CheesyGallery::Generator < Jekyll::Generator
     @site = site
     collection = site.collections['galleries']
 
+    return if collection.nil?
+
     # all galleries in the site
     galleries = Set[*collection.entries.map { |e| File.dirname(e) }]
 
