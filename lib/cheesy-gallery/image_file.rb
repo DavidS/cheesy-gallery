@@ -16,6 +16,7 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
       data['height'] = rows
       data['width'] = cols
     end
+    source.destroy!
   end
 
   # instead of copying, renders an optimised version
