@@ -3,11 +3,10 @@
 
 require 'jekyll'
 require 'fileutils'
-require 'cheesy-gallery/generator'
 
 # Main holder of all things cheesy and gallery-y
 module CheesyGallery
-  # autoload :Const, "cheesy-gallery/const"
+  autoload :Generator, 'cheesy-gallery/generator'
 end
 
 # Liquid::Template.register_tag "gallery-link", CheesyGallery::GalleryLink
