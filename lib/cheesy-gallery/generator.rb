@@ -94,5 +94,10 @@ class CheesyGallery::Generator < Jekyll::Generator
     end
 
     collection.files.push(*thumbs)
+
+    # sort files by source path, so that we have better cache hits when reading from disk
+    # with more effort files could share the Magick::ImageList instance, but destroying those
+    # at the right time to stay within Magick's cache policy would be awkward at best
+    collection.files.sort! { |a, b| a.path <=> b.path }
   end
 end
