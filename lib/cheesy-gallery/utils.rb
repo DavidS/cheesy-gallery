@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 # This Page subclass can be used to create new pages in the target site from scratch
