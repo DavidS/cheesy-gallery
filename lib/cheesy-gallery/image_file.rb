@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 require 'rmagick'
@@ -7,8 +7,7 @@ require 'cheesy-gallery/base_image_file'
 # This StaticFile subclass adds additional functionality for images in the
 # gallery
 class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
-  extend T::Sig
-
+  sig { params(site: Jekyll::Site, collection: Jekyll::Collection, file: Jekyll::StaticFile).void }
   def initialize(site, collection, file)
     super
 

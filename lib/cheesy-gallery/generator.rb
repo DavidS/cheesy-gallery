@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 # frozen_string_literal: true
 
 require 'jekyll'
@@ -9,8 +9,11 @@ require 'cheesy-gallery/image_thumb'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
 class CheesyGallery::Generator < Jekyll::Generator
+  extend T::Sig
+
+  sig { params(site: Jekyll::Site).void }
   def generate(site)
-    @site = site
+    @site = T.let(site, T.nilable(Jekyll::Site))
     collection = site.collections['galleries']
 
     return if collection.nil?
