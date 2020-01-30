@@ -28,7 +28,7 @@ class CheesyGallery::BaseImageFile < Jekyll::StaticFile
   def copy_file(dest_path)
     begin
       source = Magick::ImageList.new(path)
-      Jekyll.logger.debug 'Rendering:', path
+      Jekyll.logger.debug 'Rendering:', dest_path
       process_and_write(source, dest_path)
     ensure
       # clean up cache
