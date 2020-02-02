@@ -17,13 +17,13 @@ class CheesyGallery::Generator < Jekyll::Generator
     (site.collections.values.find_all { |c| c.metadata['cheesy-gallery'] } || [site.collections['galleries']]).compact.each do |collection|
       collection.metadata['output'] = true unless collection.metadata.key? 'output'
 
-      # all galleries in the collection
-      galleries = Set[*collection.entries.map { |e| File.dirname(e) }]
+      # all directories in the collection that have a file in them, as absolute paths from the root of the collection
+      galleries = Set[*collection.entries.map { |e| File.expand_path(File.join('/', File.dirname(e))) }]
 
-      # all galleries with an index.html
-      galleries_with_index = Set[*collection.entries.find_all { |e| File.basename(e) == 'index.html' }.map { |e| File.dirname(e) }]
+      # all directories in the collection that have an 'index' in them, as absolute paths from the root of the collection
+      galleries_with_index = Set[*collection.docs.find_all { |e| e.basename_without_ext == 'index' }.map { |e| File.dirname(e.cleaned_relative_path) }]
 
-      # fill in Documents for galleries that don't have an index.html
+      # fill in Documents for galleries that don't have an index
       (galleries - galleries_with_index).each do |e|
         doc = CheesyGallery::GalleryIndex.new(File.join(collection.relative_directory, e, 'index.html'), site: site, collection: collection)
         doc.read
@@ -59,19 +59,19 @@ class CheesyGallery::Generator < Jekyll::Generator
 
       collection.docs.each do |doc|
         gallery_path = File.dirname(doc.relative_path)
+        # fix up '_galleries/.' path of root index
+        if gallery_path == File.join(collection.relative_directory, '.')
+          gallery_path = collection.relative_directory
+        end
 
         # attach images
         doc.data['images'] = files_by_dirname[gallery_path]
 
         # attach parent
-        parent = if gallery_path == File.join(collection.relative_directory, '.')
-                   # main gallery doesn't have parent
+        parent = if gallery_path == collection.relative_directory
+                   # root gallery doesn't have a parent
                    nil
-                 elsif File.dirname(gallery_path) == collection.relative_directory
-                   # main gallery has a weird relative_path
-                   galleries_by_dirname[File.join(collection.relative_directory, '.')]
                  else
-                   # everyone else is regular
                    galleries_by_dirname[File.dirname(gallery_path)]
                  end
         doc.data['parent'] = parent
