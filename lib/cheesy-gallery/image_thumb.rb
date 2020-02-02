@@ -10,7 +10,7 @@ class CheesyGallery::ImageThumb < CheesyGallery::BaseImageFile
   attr_reader :height, :width
 
   sig { params(site: Jekyll::Site, collection: Jekyll::Collection, file: Jekyll::StaticFile, postfix: String, height: Integer, width: Integer).void }
-  def initialize(site, collection, file, postfix = '_thumb.jpg', height = 150, width = 150)
+  def initialize(site, collection, file, postfix, height, width)
     super(site, collection, file, file.name + postfix)
 
     @height = T.let(height, Integer)

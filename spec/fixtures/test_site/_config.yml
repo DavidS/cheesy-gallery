@@ -65,5 +65,7 @@ collections:
   gallery_one:
     cheesy-gallery: true
     # output: false # works to suppress output, but defaults to `true` when marked as a cheesy-gallery
+    gallery_thumbnail_size: 150
+    image_thumbnail_size: 150
   gallery_two:
     cheesy-gallery: true

@@ -80,7 +80,9 @@ class CheesyGallery::Generator < Jekyll::Generator
           site,
           collection,
           doc.data['images'].first,
-          '_index.jpg', 72, 72
+          '_index.jpg',
+          collection.metadata['gallery_thumbnail_size'] || 72,
+          collection.metadata['gallery_thumbnail_size'] || 72,
         )
       end
 
@@ -93,7 +95,12 @@ class CheesyGallery::Generator < Jekyll::Generator
 
       # render image thumbnails and add them to the collection's files
       thumbs = image_files.map do |f|
-        CheesyGallery::ImageThumb.new(site, collection, f)
+        CheesyGallery::ImageThumb.new(
+          site, collection, f,
+          '_thumb.jpg',
+          collection.metadata['image_thumbnail_size'] || 150,
+          collection.metadata['image_thumbnail_size'] || 150
+        )
       end
 
       collection.files.push(*thumbs)
