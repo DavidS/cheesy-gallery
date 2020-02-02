@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'sorbet'
 
+  spec.add_dependency 'concurrent-ruby'
   spec.add_dependency 'jekyll', '~> 4.0'
   spec.add_dependency 'rmagick', '~> 4.0'
   spec.add_dependency 'sorbet-runtime'

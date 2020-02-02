@@ -2,6 +2,7 @@ PATH
   remote: ../../..
   specs:
     cheesy-gallery (0.1.0)
+      concurrent-ruby
       jekyll (~> 4.0)
       rmagick (~> 4.0)
       sorbet-runtime
