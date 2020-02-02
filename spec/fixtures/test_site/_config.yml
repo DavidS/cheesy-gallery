@@ -55,6 +55,15 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
+# # Simple version: put everything in `_galleries`
+# collections:
+#   galleries:
+#     output: true
+
+# extended version: configure individual options and directories
 collections:
-  galleries:
-    output: true
+  gallery_one:
+    cheesy-gallery: true
+    # output: false # works to suppress output, but defaults to `true` when marked as a cheesy-gallery
+  gallery_two:
+    cheesy-gallery: true
