@@ -1,8 +1,10 @@
 # typed: strict
 # frozen_string_literal: true
 
+require 'concurrent'
 require 'jekyll'
 require 'json'
+
 require 'cheesy-gallery/gallery_index'
 require 'cheesy-gallery/image_file'
 require 'cheesy-gallery/image_thumb'
@@ -31,18 +33,26 @@ class CheesyGallery::Generator < Jekyll::Generator
         collection.docs << doc if site.unpublished || doc.published?
       end
 
+      # require'pry';binding.pry
       # create replacements for the files with additional functionality
       image_files = collection.files.map do |f|
-        CheesyGallery::ImageFile.new(
-          site, collection, f,
-          max_size: collection.metadata['max_size'] || '1920x1080',
-          quality: collection.metadata['quality'] || 50
-        )
+        # image_file_promises = collection.files.map do |f|
+        # Concurrent::Promises.future_on :fast do
+          CheesyGallery::ImageFile.new(
+            site, collection, f,
+            max_size: collection.metadata['max_size'] || '1920x1080',
+            quality: collection.metadata['quality'] || 50
+          )
+        # end
       end
+
+      # wait for all image files to get read in
+      # image_files = image_file_promises.map {|f| f.value!}
 
       # inject the `ImageFile`s into the collection
       image_files.each_with_index { |f, i| collection.files[i] = f }
 
+      raise "DIE"
       # collect files by gallery
       files_by_dirname = {}
       collection.files.each { |e| (files_by_dirname[File.dirname(e.relative_path)] ||= []) << e }
