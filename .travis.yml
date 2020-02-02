@@ -19,5 +19,4 @@ jobs:
     - bundle install --jobs=3 --retry=3 --deployment --path=${BUNDLE_PATH:-vendor/bundle}
     script:
     - (cd spec/fixtures/test_site && bundle exec jekyll build --strict --trace --verbose)
-    after_script:
-    - (cd spec/fixtures/test_site && find _site -type f && echo -e '\n===\n' && cat _site/debug.html && echo -e '\n===\n' && cat _site/galleries/first/index.html)
+    - (cd spec/fixtures/test_site && find _site -type f && echo -e '\n===\n' && cat _site/galleries/first/index.html && file _site/galleries/second/third/Morgenspaziergang-3.jpg_thumb.jpg)

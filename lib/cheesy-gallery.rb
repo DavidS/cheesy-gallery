@@ -3,10 +3,10 @@
 
 require 'jekyll'
 require 'fileutils'
+require 'sorbet-runtime'
 
 # Main holder of all things cheesy and gallery-y
 module CheesyGallery
-  autoload :Generator, 'cheesy-gallery/generator'
 end
 
-# Liquid::Template.register_tag "gallery-link", CheesyGallery::GalleryLink
+require 'cheesy-gallery/generator'
