@@ -12,7 +12,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
-    codecov (0.1.16)
+    codecov (0.1.17)
       json
       simplecov
       url
@@ -100,10 +100,10 @@ GEM
     safe_yaml (1.0.5)
     sassc (2.2.1)
       ffi (~> 1.9)
-    simplecov (0.18.0)
+    simplecov (0.18.5)
       docile (~> 1.1)
-      simplecov-html (~> 0.11.0)
-    simplecov-html (0.11.0)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     sorbet (0.5.5358)
       sorbet-static (= 0.5.5358)
     sorbet-runtime (0.5.5351)
