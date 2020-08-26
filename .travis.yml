@@ -19,3 +19,8 @@ jobs:
     script:
     - (cd spec/fixtures/test_site && bundle exec jekyll build --strict --trace --verbose)
     - (cd spec/fixtures/test_site && find _site -type f && echo -e '\n===\n' && cat _site/gallery_one/index.html && file _site/gallery_two/third/Morgenspaziergang-3.jpg_thumb.jpg)
+
+# only branch-test merges to master
+branches:
+  only:
+  - "master"
