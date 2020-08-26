@@ -384,21 +384,13 @@ end
 module Addressable
 end
 
+class Addrinfo
+  def connect_internal(local_addrinfo, timeout=T.unsafe(nil)); end
+end
+
 class Array
   include ::JSON::Ext::Generator::GeneratorMethods::Array
-  def bsearch(); end
-
-  def bsearch_index(); end
-
-  def collect!(); end
-
-  def dig(*_); end
-
-  def flatten!(*_); end
-
-  def pack(*_); end
-
-  def replace(_); end
+  def deconstruct(); end
 
   def shelljoin(); end
 
@@ -426,18 +418,25 @@ end
 class BigDecimal
   def clone(); end
   EXCEPTION_NaN = ::T.let(nil, ::T.untyped)
-  SIGN_NaN = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class BigDecimal
-  def self.ver(); end
+  def self.interpret_loosely(_); end
 end
 
 class Binding
   def clone(); end
 
   def irb(); end
+end
+
+class Bundler::Dependency
+  def branch(); end
+
+  def expanded_platforms(); end
+
+  def git(); end
 end
 
 Bundler::Deprecate = Gem::Deprecate
@@ -451,10 +450,6 @@ class Bundler::Env
   def self.report(options=T.unsafe(nil)); end
 
   def self.write(io); end
-end
-
-class Bundler::FeatureFlag
-  def github_https?(); end
 end
 
 class Bundler::Fetcher
@@ -589,6 +584,12 @@ class Bundler::Fetcher::SSLError
   def initialize(msg=T.unsafe(nil)); end
 end
 
+class Bundler::Fetcher::TooManyRequestsError
+end
+
+class Bundler::Fetcher::TooManyRequestsError
+end
+
 class Bundler::Fetcher
   def self.api_timeout(); end
 
@@ -605,6 +606,20 @@ class Bundler::Fetcher
   def self.redirect_limit(); end
 
   def self.redirect_limit=(redirect_limit); end
+end
+
+module Bundler::FileUtils
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::FileUtils::Entry_
+  def link(dest); end
+end
+
+module Bundler::FileUtils
+  def self.cp_lr(src, dest, noop: T.unsafe(nil), verbose: T.unsafe(nil), dereference_root: T.unsafe(nil), remove_destination: T.unsafe(nil)); end
+
+  def self.link_entry(src, dest, dereference_root=T.unsafe(nil), remove_destination=T.unsafe(nil)); end
 end
 
 class Bundler::GemHelper
@@ -625,6 +640,8 @@ class Bundler::GemHelper
   def clean?(); end
 
   def committed?(); end
+
+  def gem_command(); end
 
   def gem_key(); end
 
@@ -652,7 +669,9 @@ class Bundler::GemHelper
 
   def sh(cmd, &block); end
 
-  def sh_with_code(cmd, &block); end
+  def sh_with_input(cmd); end
+
+  def sh_with_status(cmd, &block); end
 
   def spec_path(); end
 
@@ -671,12 +690,6 @@ class Bundler::GemHelper
   def self.instance(); end
 
   def self.instance=(instance); end
-end
-
-class Bundler::GemRemoteFetcher
-end
-
-class Bundler::GemRemoteFetcher
 end
 
 class Bundler::GemVersionPromoter
@@ -857,6 +870,12 @@ module Bundler::Plugin::Events
   GEM_BEFORE_INSTALL_ALL = ::T.let(nil, ::T.untyped)
 end
 
+class Bundler::Plugin::Index
+  def installed_plugins(); end
+
+  def plugin_commands(plugin); end
+end
+
 class Bundler::Plugin::Index::CommandConflict
   def initialize(plugin, commands); end
 end
@@ -897,6 +916,10 @@ class Bundler::Plugin::SourceList
 end
 
 class Bundler::Plugin::SourceList
+end
+
+module Bundler::Plugin
+  def self.list(); end
 end
 
 class Bundler::ProcessLock
@@ -940,10 +963,33 @@ class Bundler::Retry
 end
 
 class Bundler::RubyGemsGemInstaller
-  def initialize(gem, options=T.unsafe(nil)); end
 end
 
 class Bundler::RubyGemsGemInstaller
+end
+
+class Bundler::RubygemsIntegration
+  def add_to_load_path(paths); end
+
+  def all_specs(); end
+
+  def backport_ext_builder_monitor(); end
+
+  def correct_for_windows_path(path); end
+
+  def default_stubs(); end
+
+  def find_name(name); end
+
+  def gem_remote_fetcher(); end
+
+  def plain_specs(); end
+
+  def plain_specs=(specs); end
+
+  def stub_rubygems(specs); end
+
+  def use_gemdeps(gemfile); end
 end
 
 class Bundler::Settings::Mirror
@@ -1005,6 +1051,10 @@ class Bundler::Settings::Validator
   def self.validate!(key, value, settings); end
 end
 
+class Bundler::Source::Git
+  def glob(); end
+end
+
 class Bundler::SpecSet
   include ::Enumerable
 end
@@ -1049,6 +1099,449 @@ class Bundler::UI::Shell
 end
 
 class Bundler::UI::Shell
+end
+
+module Bundler::URI
+  include ::Bundler::URI::RFC2396_REGEXP
+  ABS_PATH = ::T.let(nil, ::T.untyped)
+  ABS_URI = ::T.let(nil, ::T.untyped)
+  ABS_URI_REF = ::T.let(nil, ::T.untyped)
+  DEFAULT_PARSER = ::T.let(nil, ::T.untyped)
+  ESCAPED = ::T.let(nil, ::T.untyped)
+  FRAGMENT = ::T.let(nil, ::T.untyped)
+  HOST = ::T.let(nil, ::T.untyped)
+  OPAQUE = ::T.let(nil, ::T.untyped)
+  PORT = ::T.let(nil, ::T.untyped)
+  QUERY = ::T.let(nil, ::T.untyped)
+  REGISTRY = ::T.let(nil, ::T.untyped)
+  REL_PATH = ::T.let(nil, ::T.untyped)
+  REL_URI = ::T.let(nil, ::T.untyped)
+  REL_URI_REF = ::T.let(nil, ::T.untyped)
+  RFC3986_PARSER = ::T.let(nil, ::T.untyped)
+  SCHEME = ::T.let(nil, ::T.untyped)
+  TBLDECWWWCOMP_ = ::T.let(nil, ::T.untyped)
+  TBLENCWWWCOMP_ = ::T.let(nil, ::T.untyped)
+  UNSAFE = ::T.let(nil, ::T.untyped)
+  URI_REF = ::T.let(nil, ::T.untyped)
+  USERINFO = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+  VERSION_CODE = ::T.let(nil, ::T.untyped)
+  WEB_ENCODINGS_ = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::BadURIError
+end
+
+class Bundler::URI::BadURIError
+end
+
+class Bundler::URI::Error
+end
+
+class Bundler::URI::Error
+end
+
+module Bundler::URI::Escape
+  def decode(*arg); end
+
+  def encode(*arg); end
+
+  def escape(*arg); end
+
+  def unescape(*arg); end
+end
+
+module Bundler::URI::Escape
+end
+
+class Bundler::URI::FTP
+  def set_typecode(v); end
+
+  def typecode(); end
+
+  def typecode=(typecode); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  TYPECODE = ::T.let(nil, ::T.untyped)
+  TYPECODE_PREFIX = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::FTP
+  def self.new2(user, password, host, port, path, typecode=T.unsafe(nil), arg_check=T.unsafe(nil)); end
+end
+
+class Bundler::URI::File
+  def check_password(user); end
+
+  def check_user(user); end
+
+  def check_userinfo(user); end
+
+  def set_userinfo(v); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::File
+end
+
+class Bundler::URI::Generic
+  include ::Bundler::URI
+  include ::Bundler::URI::RFC2396_REGEXP
+  def +(oth); end
+
+  def -(oth); end
+
+  def ==(oth); end
+
+  def absolute(); end
+
+  def absolute?(); end
+
+  def coerce(oth); end
+
+  def component(); end
+
+  def component_ary(); end
+
+  def default_port(); end
+
+  def eql?(oth); end
+
+  def find_proxy(env=T.unsafe(nil)); end
+
+  def fragment(); end
+
+  def fragment=(v); end
+
+  def hierarchical?(); end
+
+  def host(); end
+
+  def host=(v); end
+
+  def hostname(); end
+
+  def hostname=(v); end
+
+  def initialize(scheme, userinfo, host, port, registry, path, opaque, query, fragment, parser=T.unsafe(nil), arg_check=T.unsafe(nil)); end
+
+  def merge(oth); end
+
+  def merge!(oth); end
+
+  def normalize(); end
+
+  def normalize!(); end
+
+  def opaque(); end
+
+  def opaque=(v); end
+
+  def parser(); end
+
+  def password(); end
+
+  def password=(password); end
+
+  def path(); end
+
+  def path=(v); end
+
+  def port(); end
+
+  def port=(v); end
+
+  def query(); end
+
+  def query=(v); end
+
+  def registry(); end
+
+  def registry=(v); end
+
+  def relative?(); end
+
+  def route_from(oth); end
+
+  def route_to(oth); end
+
+  def scheme(); end
+
+  def scheme=(v); end
+
+  def select(*components); end
+
+  def set_host(v); end
+
+  def set_opaque(v); end
+
+  def set_password(v); end
+
+  def set_path(v); end
+
+  def set_port(v); end
+
+  def set_registry(v); end
+
+  def set_scheme(v); end
+
+  def set_user(v); end
+
+  def set_userinfo(user, password=T.unsafe(nil)); end
+
+  def user(); end
+
+  def user=(user); end
+
+  def userinfo(); end
+
+  def userinfo=(userinfo); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  USE_REGISTRY = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::Generic
+  def self.build(args); end
+
+  def self.build2(args); end
+
+  def self.component(); end
+
+  def self.default_port(); end
+
+  def self.use_proxy?(hostname, addr, port, no_proxy); end
+
+  def self.use_registry(); end
+end
+
+class Bundler::URI::HTTP
+  def request_uri(); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::HTTP
+end
+
+class Bundler::URI::HTTPS
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::HTTPS
+end
+
+class Bundler::URI::InvalidComponentError
+end
+
+class Bundler::URI::InvalidComponentError
+end
+
+class Bundler::URI::InvalidURIError
+end
+
+class Bundler::URI::InvalidURIError
+end
+
+class Bundler::URI::LDAP
+  def attributes(); end
+
+  def attributes=(val); end
+
+  def dn(); end
+
+  def dn=(val); end
+
+  def extensions(); end
+
+  def extensions=(val); end
+
+  def filter(); end
+
+  def filter=(val); end
+
+  def initialize(*arg); end
+
+  def scope(); end
+
+  def scope=(val); end
+
+  def set_attributes(val); end
+
+  def set_dn(val); end
+
+  def set_extensions(val); end
+
+  def set_filter(val); end
+
+  def set_scope(val); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  SCOPE = ::T.let(nil, ::T.untyped)
+  SCOPE_BASE = ::T.let(nil, ::T.untyped)
+  SCOPE_ONE = ::T.let(nil, ::T.untyped)
+  SCOPE_SUB = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::LDAP
+end
+
+class Bundler::URI::LDAPS
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::LDAPS
+end
+
+class Bundler::URI::MailTo
+  def headers(); end
+
+  def headers=(v); end
+
+  def initialize(*arg); end
+
+  def set_headers(v); end
+
+  def set_to(v); end
+
+  def to(); end
+
+  def to=(v); end
+
+  def to_mailtext(); end
+
+  def to_rfc822text(); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+  EMAIL_REGEXP = ::T.let(nil, ::T.untyped)
+  HEADER_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::MailTo
+end
+
+Bundler::URI::Parser = Bundler::URI::RFC2396_Parser
+
+Bundler::URI::REGEXP = Bundler::URI::RFC2396_REGEXP
+
+class Bundler::URI::RFC2396_Parser
+  include ::Bundler::URI::RFC2396_REGEXP
+  def escape(str, unsafe=T.unsafe(nil)); end
+
+  def extract(str, schemes=T.unsafe(nil)); end
+
+  def initialize(opts=T.unsafe(nil)); end
+
+  def join(*uris); end
+
+  def make_regexp(schemes=T.unsafe(nil)); end
+
+  def parse(uri); end
+
+  def pattern(); end
+
+  def regexp(); end
+
+  def split(uri); end
+
+  def unescape(str, escaped=T.unsafe(nil)); end
+end
+
+class Bundler::URI::RFC2396_Parser
+end
+
+module Bundler::URI::RFC2396_REGEXP
+end
+
+module Bundler::URI::RFC2396_REGEXP::PATTERN
+  ABS_PATH = ::T.let(nil, ::T.untyped)
+  ABS_URI = ::T.let(nil, ::T.untyped)
+  ALNUM = ::T.let(nil, ::T.untyped)
+  ALPHA = ::T.let(nil, ::T.untyped)
+  DOMLABEL = ::T.let(nil, ::T.untyped)
+  ESCAPED = ::T.let(nil, ::T.untyped)
+  FRAGMENT = ::T.let(nil, ::T.untyped)
+  HEX = ::T.let(nil, ::T.untyped)
+  HIER_PART = ::T.let(nil, ::T.untyped)
+  HOST = ::T.let(nil, ::T.untyped)
+  HOSTNAME = ::T.let(nil, ::T.untyped)
+  HOSTPORT = ::T.let(nil, ::T.untyped)
+  IPV4ADDR = ::T.let(nil, ::T.untyped)
+  IPV6ADDR = ::T.let(nil, ::T.untyped)
+  IPV6REF = ::T.let(nil, ::T.untyped)
+  NET_PATH = ::T.let(nil, ::T.untyped)
+  OPAQUE_PART = ::T.let(nil, ::T.untyped)
+  PATH_SEGMENTS = ::T.let(nil, ::T.untyped)
+  PORT = ::T.let(nil, ::T.untyped)
+  QUERY = ::T.let(nil, ::T.untyped)
+  REG_NAME = ::T.let(nil, ::T.untyped)
+  REL_PATH = ::T.let(nil, ::T.untyped)
+  REL_SEGMENT = ::T.let(nil, ::T.untyped)
+  REL_URI = ::T.let(nil, ::T.untyped)
+  RESERVED = ::T.let(nil, ::T.untyped)
+  SCHEME = ::T.let(nil, ::T.untyped)
+  TOPLABEL = ::T.let(nil, ::T.untyped)
+  UNRESERVED = ::T.let(nil, ::T.untyped)
+  URIC = ::T.let(nil, ::T.untyped)
+  URIC_NO_SLASH = ::T.let(nil, ::T.untyped)
+  URI_REF = ::T.let(nil, ::T.untyped)
+  USERINFO = ::T.let(nil, ::T.untyped)
+  X_ABS_URI = ::T.let(nil, ::T.untyped)
+  X_REL_URI = ::T.let(nil, ::T.untyped)
+end
+
+module Bundler::URI::RFC2396_REGEXP::PATTERN
+end
+
+module Bundler::URI::RFC2396_REGEXP
+end
+
+class Bundler::URI::RFC3986_Parser
+  def join(*uris); end
+
+  def parse(uri); end
+
+  def regexp(); end
+
+  def split(uri); end
+  RFC3986_URI = ::T.let(nil, ::T.untyped)
+  RFC3986_relative_ref = ::T.let(nil, ::T.untyped)
+end
+
+class Bundler::URI::RFC3986_Parser
+end
+
+module Bundler::URI::Util
+end
+
+module Bundler::URI::Util
+  def self.make_components_hash(klass, array_hash); end
+end
+
+module Bundler::URI
+  extend ::Bundler::URI::Escape
+  def self.decode_www_form(str, enc=T.unsafe(nil), separator: T.unsafe(nil), use__charset_: T.unsafe(nil), isindex: T.unsafe(nil)); end
+
+  def self.decode_www_form_component(str, enc=T.unsafe(nil)); end
+
+  def self.encode_www_form(enum, enc=T.unsafe(nil)); end
+
+  def self.encode_www_form_component(str, enc=T.unsafe(nil)); end
+
+  def self.extract(str, schemes=T.unsafe(nil), &block); end
+
+  def self.get_encoding(label); end
+
+  def self.join(*str); end
+
+  def self.parse(uri); end
+
+  def self.regexp(schemes=T.unsafe(nil)); end
+
+  def self.scheme_list(); end
+
+  def self.split(uri); end
 end
 
 module Bundler::VersionRanges
@@ -1115,6 +1608,20 @@ module Bundler::VersionRanges
   def self.for_many(requirements); end
 end
 
+module Bundler
+  def self.original_exec(*args); end
+
+  def self.original_system(*args); end
+
+  def self.unbundled_env(); end
+
+  def self.unbundled_exec(*args); end
+
+  def self.unbundled_system(*args); end
+
+  def self.with_unbundled_env(); end
+end
+
 module CGI::HtmlExtension
   def a(href=T.unsafe(nil)); end
 
@@ -1165,12 +1672,6 @@ module CGI::HtmlExtension
 end
 
 class CSV
-  def add_row(row); end
-
-  def binmode(*args, &block); end
-
-  def binmode?(*args, &block); end
-
   def close(*args, &block); end
 
   def close_read(*args, &block); end
@@ -1179,59 +1680,19 @@ class CSV
 
   def closed?(*args, &block); end
 
-  def col_sep(); end
-
-  def convert(name=T.unsafe(nil), &converter); end
-
-  def converters(); end
-
-  def each(&blk); end
-
-  def encoding(); end
-
-  def eof(*args, &block); end
-
-  def eof?(*args, &block); end
-
   def external_encoding(*args, &block); end
 
   def fcntl(*args, &block); end
 
-  def field_size_limit(); end
-
   def fileno(*args, &block); end
-
-  def flock(*args, &block); end
 
   def flush(*args, &block); end
 
-  def force_quotes?(); end
-
   def fsync(*args, &block); end
-
-  def gets(); end
-
-  def header_convert(name=T.unsafe(nil), &converter); end
-
-  def header_converters(); end
-
-  def header_row?(); end
-
-  def headers(); end
 
   def internal_encoding(*args, &block); end
 
-  def ioctl(*args, &block); end
-
   def isatty(*args, &block); end
-
-  def liberal_parsing?(); end
-
-  def line(); end
-
-  def lineno(); end
-
-  def path(*args, &block); end
 
   def pid(*args, &block); end
 
@@ -1239,29 +1700,9 @@ class CSV
 
   def pos=(*args, &block); end
 
-  def puts(row); end
-
-  def quote_char(); end
-
-  def readlines(); end
-
   def reopen(*args, &block); end
 
-  def return_headers?(); end
-
-  def rewind(); end
-
-  def row_sep(); end
-
   def seek(*args, &block); end
-
-  def shift(); end
-
-  def skip_blanks?(); end
-
-  def skip_lines(); end
-
-  def stat(*args, &block); end
 
   def string(*args, &block); end
 
@@ -1271,17 +1712,9 @@ class CSV
 
   def tell(*args, &block); end
 
-  def to_i(*args, &block); end
-
-  def to_io(*args, &block); end
-
   def truncate(*args, &block); end
 
   def tty?(*args, &block); end
-
-  def unconverted_fields?(); end
-
-  def write_headers?(); end
   ConverterEncoding = ::T.let(nil, ::T.untyped)
   Converters = ::T.let(nil, ::T.untyped)
   DateMatcher = ::T.let(nil, ::T.untyped)
@@ -1309,66 +1742,130 @@ class CSV::FieldInfo
   def self.members(); end
 end
 
-class CSV::Row
-  def <<(arg); end
+class CSV::FieldsConverter
+  include ::Enumerable
+  def add_converter(name=T.unsafe(nil), &converter); end
 
-  def ==(other); end
-
-  def [](header_or_index, minimum_index=T.unsafe(nil)); end
-
-  def []=(*args); end
-
-  def delete(header_or_index, minimum_index=T.unsafe(nil)); end
-
-  def delete_if(&block); end
+  def convert(fields, headers, lineno); end
 
   def each(&block); end
 
-  def empty?(*args, &block); end
+  def empty?(); end
 
-  def fetch(header, *varargs); end
+  def initialize(options=T.unsafe(nil)); end
+end
 
-  def field(header_or_index, minimum_index=T.unsafe(nil)); end
+class CSV::FieldsConverter
+end
 
-  def field?(data); end
+class CSV::MalformedCSVError
+  def initialize(message, line_number); end
 
-  def field_row?(); end
+  def line_number(); end
 
-  def fields(*headers_and_or_indices); end
+  def lineno(); end
+end
 
-  def has_key?(header); end
+class CSV::Parser
+  def column_separator(); end
 
-  def header?(name); end
+  def field_size_limit(); end
 
   def header_row?(); end
 
   def headers(); end
 
-  def include?(name); end
+  def initialize(input, options); end
 
-  def index(header, minimum_index=T.unsafe(nil)); end
+  def liberal_parsing?(); end
 
-  def initialize(headers, fields, header_row=T.unsafe(nil)); end
+  def line(); end
 
-  def key?(header); end
+  def lineno(); end
+
+  def parse(&block); end
+
+  def quote_character(); end
+
+  def return_headers?(); end
+
+  def row_separator(); end
+
+  def skip_blanks?(); end
+
+  def skip_lines(); end
+
+  def unconverted_fields?(); end
+
+  def use_headers?(); end
+  SCANNER_TEST = ::T.let(nil, ::T.untyped)
+end
+
+class CSV::Parser::InputsScanner
+  def each_line(row_separator); end
+
+  def eos?(); end
+
+  def initialize(inputs, encoding, chunk_size: T.unsafe(nil)); end
+
+  def keep_back(); end
+
+  def keep_drop(); end
+
+  def keep_end(); end
+
+  def keep_start(); end
+
+  def rest(); end
+
+  def scan(pattern); end
+
+  def scan_all(pattern); end
+end
+
+class CSV::Parser::InputsScanner
+end
+
+class CSV::Parser::InvalidEncoding
+end
+
+class CSV::Parser::InvalidEncoding
+end
+
+class CSV::Parser::Scanner
+  def each_line(row_separator); end
+
+  def initialize(*args); end
+
+  def keep_back(); end
+
+  def keep_drop(); end
+
+  def keep_end(); end
+
+  def keep_start(); end
+
+  def scan_all(_); end
+end
+
+class CSV::Parser::Scanner
+end
+
+class CSV::Parser
+end
+
+class CSV::Row
+  def dig(index_or_header, *indexes); end
+
+  def each_pair(&block); end
+
+  def empty?(*args, &block); end
 
   def length(*args, &block); end
 
-  def member?(header); end
-
-  def push(*args); end
-
-  def row(); end
-
   def size(*args, &block); end
 
-  def to_csv(**options); end
-
-  def to_hash(); end
-
-  def to_s(**options); end
-
-  def values_at(*headers_and_or_indices); end
+  def to_ary(*_); end
 end
 
 class CSV::Row
@@ -1376,86 +1873,62 @@ class CSV::Row
 end
 
 class CSV::Table
-  def <<(row_or_array); end
-
-  def ==(other); end
-
-  def [](index_or_header); end
-
-  def []=(index_or_header, value); end
-
-  def by_col(); end
-
-  def by_col!(); end
-
-  def by_col_or_row(); end
-
-  def by_col_or_row!(); end
-
-  def by_row(); end
-
-  def by_row!(); end
-
-  def delete(index_or_header); end
-
-  def delete_if(&block); end
-
-  def each(&block); end
-
   def empty?(*args, &block); end
 
-  def headers(); end
-
-  def initialize(array_of_rows); end
+  def initialize(array_of_rows, headers: T.unsafe(nil)); end
 
   def length(*args, &block); end
-
-  def mode(); end
-
-  def push(*rows); end
 
   def size(*args, &block); end
 
   def table(); end
-
-  def to_a(); end
-
-  def to_csv(write_headers: T.unsafe(nil), **options); end
-
-  def to_s(write_headers: T.unsafe(nil), **options); end
-
-  def values_at(*indices_or_headers); end
 end
 
 class CSV::Table
   extend ::Forwardable
 end
 
+class CSV::Writer
+  def <<(row); end
+
+  def headers(); end
+
+  def initialize(output, options); end
+
+  def lineno(); end
+
+  def rewind(); end
+end
+
+class CSV::Writer
+end
+
 class CSV
   extend ::Forwardable
-  def self.filter(input=T.unsafe(nil), output=T.unsafe(nil), **options); end
-
-  def self.generate_line(row, **options); end
-
-  def self.instance(data=T.unsafe(nil), **options); end
-
-  def self.open(filename, mode=T.unsafe(nil), **options); end
-
-  def self.readlines(*args); end
-
-  def self.table(path, **options); end
 end
 
 class CheesyGallery::BaseImageFile
 end
 
+class CheesyGallery::BaseImageFile
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
+end
+
 class CheesyGallery::GalleryIndex
+end
+
+class CheesyGallery::GalleryIndex
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class CheesyGallery::Generator
 end
 
-class CheesyGallery::PageWithoutAFile
+class CheesyGallery::Generator
+  extend ::T::Private::Methods::MethodHooks
+  extend ::T::Private::Methods::SingletonMethodHooks
 end
 
 class Class
@@ -1557,6 +2030,96 @@ class CodeRay::Encoders::Encoder
   def self.file_extension(); end
 end
 
+class CodeRay::Encoders::HTML
+  def break_lines(text, style); end
+
+  def check_group_nesting(name, kind); end
+
+  def check_options!(options); end
+
+  def close_span(); end
+
+  def css(); end
+
+  def css_class_for_kinds(kinds); end
+
+  def make_span_for_kinds(method, hint); end
+
+  def style_for_kinds(kinds); end
+  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
+  FILE_EXTENSION = ::T.let(nil, ::T.untyped)
+  HTML_ESCAPE = ::T.let(nil, ::T.untyped)
+  HTML_ESCAPE_PATTERN = ::T.let(nil, ::T.untyped)
+  TOKEN_KIND_TO_INFO = ::T.let(nil, ::T.untyped)
+  TRANSPARENT_TOKEN_KINDS = ::T.let(nil, ::T.untyped)
+end
+
+class CodeRay::Encoders::HTML::CSS
+  def get_style_for_css_classes(css_classes); end
+
+  def initialize(style=T.unsafe(nil)); end
+
+  def stylesheet(); end
+  CSS_CLASS_PATTERN = ::T.let(nil, ::T.untyped)
+end
+
+class CodeRay::Encoders::HTML::CSS
+  def self.load_stylesheet(style=T.unsafe(nil)); end
+end
+
+module CodeRay::Encoders::HTML::Numbering
+end
+
+module CodeRay::Encoders::HTML::Numbering
+  def self.number!(output, mode=T.unsafe(nil), options=T.unsafe(nil)); end
+end
+
+module CodeRay::Encoders::HTML::Output
+  def apply_title!(title); end
+
+  def css(); end
+
+  def css=(css); end
+
+  def stylesheet(in_tag=T.unsafe(nil)); end
+
+  def wrap!(element, *args); end
+
+  def wrap_in!(template); end
+
+  def wrapped_in(); end
+
+  def wrapped_in=(wrapped_in); end
+
+  def wrapped_in?(element); end
+  DIV = ::T.let(nil, ::T.untyped)
+  PAGE = ::T.let(nil, ::T.untyped)
+  SPAN = ::T.let(nil, ::T.untyped)
+  TABLE = ::T.let(nil, ::T.untyped)
+end
+
+class CodeRay::Encoders::HTML::Output::Template
+  def apply(target, replacement); end
+end
+
+class CodeRay::Encoders::HTML::Output::Template
+  def self.wrap!(str, template, target); end
+end
+
+module CodeRay::Encoders::HTML::Output
+  def self.extended(o); end
+
+  def self.make_stylesheet(css, in_tag=T.unsafe(nil)); end
+
+  def self.page_template_for_css(css); end
+end
+
+class CodeRay::Encoders::HTML
+  def self.make_html_escape_hash(); end
+
+  def self.token_path_to_hint(hint, kinds); end
+end
+
 class CodeRay::Encoders::Terminal
   TOKEN_COLORS = ::T.let(nil, ::T.untyped)
 end
@@ -1654,6 +2217,99 @@ module CodeRay::PluginHost
 end
 
 module CodeRay::Scanners
+end
+
+class CodeRay::Scanners::Java
+  def scan_tokens(encoder, options); end
+  CONSTANTS = ::T.let(nil, ::T.untyped)
+  DIRECTIVES = ::T.let(nil, ::T.untyped)
+  ESCAPE = ::T.let(nil, ::T.untyped)
+  IDENT = ::T.let(nil, ::T.untyped)
+  IDENT_KIND = ::T.let(nil, ::T.untyped)
+  KEYWORDS = ::T.let(nil, ::T.untyped)
+  MAGIC_VARIABLES = ::T.let(nil, ::T.untyped)
+  RESERVED = ::T.let(nil, ::T.untyped)
+  STRING_CONTENT_PATTERN = ::T.let(nil, ::T.untyped)
+  TYPES = ::T.let(nil, ::T.untyped)
+  UNICODE_ESCAPE = ::T.let(nil, ::T.untyped)
+end
+
+module CodeRay::Scanners::Java::BuiltinTypes
+  List = ::T.let(nil, ::T.untyped)
+end
+
+module CodeRay::Scanners::Java::BuiltinTypes
+end
+
+class CodeRay::Scanners::Java
+end
+
+class CodeRay::Scanners::Ruby
+  def interpreted_string_state(); end
+
+  def scan_tokens(encoder, options); end
+end
+
+module CodeRay::Scanners::Ruby::Patterns
+  BINARY = ::T.let(nil, ::T.untyped)
+  CHARACTER = ::T.let(nil, ::T.untyped)
+  CLASS_VARIABLE = ::T.let(nil, ::T.untyped)
+  CONTROL_META_ESCAPE = ::T.let(nil, ::T.untyped)
+  DATA = ::T.let(nil, ::T.untyped)
+  DECIMAL = ::T.let(nil, ::T.untyped)
+  ESCAPE = ::T.let(nil, ::T.untyped)
+  EXPONENT = ::T.let(nil, ::T.untyped)
+  FANCY_STRING_INTERPRETED = ::T.let(nil, ::T.untyped)
+  FANCY_STRING_KIND = ::T.let(nil, ::T.untyped)
+  FANCY_STRING_START = ::T.let(nil, ::T.untyped)
+  FLOAT_OR_INT = ::T.let(nil, ::T.untyped)
+  FLOAT_SUFFIX = ::T.let(nil, ::T.untyped)
+  GLOBAL_VARIABLE = ::T.let(nil, ::T.untyped)
+  HEREDOC_OPEN = ::T.let(nil, ::T.untyped)
+  HEXADECIMAL = ::T.let(nil, ::T.untyped)
+  IDENT = ::T.let(nil, ::T.untyped)
+  IDENT_KIND = ::T.let(nil, ::T.untyped)
+  INSTANCE_VARIABLE = ::T.let(nil, ::T.untyped)
+  KEYWORDS = ::T.let(nil, ::T.untyped)
+  KEYWORDS_EXPECTING_VALUE = ::T.let(nil, ::T.untyped)
+  KEYWORD_NEW_STATE = ::T.let(nil, ::T.untyped)
+  METHOD_AFTER_DOT = ::T.let(nil, ::T.untyped)
+  METHOD_NAME = ::T.let(nil, ::T.untyped)
+  METHOD_NAME_EX = ::T.let(nil, ::T.untyped)
+  METHOD_NAME_OPERATOR = ::T.let(nil, ::T.untyped)
+  METHOD_NAME_OR_SYMBOL = ::T.let(nil, ::T.untyped)
+  METHOD_SUFFIX = ::T.let(nil, ::T.untyped)
+  NUMERIC = ::T.let(nil, ::T.untyped)
+  OBJECT_VARIABLE = ::T.let(nil, ::T.untyped)
+  OCTAL = ::T.let(nil, ::T.untyped)
+  PREDEFINED_CONSTANTS = ::T.let(nil, ::T.untyped)
+  PREFIX_VARIABLE = ::T.let(nil, ::T.untyped)
+  QUOTE_TO_TYPE = ::T.let(nil, ::T.untyped)
+  REGEXP_MODIFIERS = ::T.let(nil, ::T.untyped)
+  RUBYDOC = ::T.let(nil, ::T.untyped)
+  RUBYDOC_OR_DATA = ::T.let(nil, ::T.untyped)
+  SIMPLE_ESCAPE = ::T.let(nil, ::T.untyped)
+  SYMBOL = ::T.let(nil, ::T.untyped)
+  VALUE_FOLLOWS = ::T.let(nil, ::T.untyped)
+  VARIABLE = ::T.let(nil, ::T.untyped)
+end
+
+module CodeRay::Scanners::Ruby::Patterns
+end
+
+class CodeRay::Scanners::Ruby::StringState
+  def heredoc_pattern(delim, interpreted, indented); end
+
+  def initialize(kind, interpreted, delim, heredoc=T.unsafe(nil)); end
+  CLOSING_PAREN = ::T.let(nil, ::T.untyped)
+  STRING_PATTERN = ::T.let(nil, ::T.untyped)
+end
+
+class CodeRay::Scanners::Ruby::StringState
+  def self.simple_key_pattern(delim); end
+end
+
+class CodeRay::Scanners::Ruby
 end
 
 class CodeRay::Scanners::Scanner
@@ -1817,6 +2473,24 @@ end
 class CodeRay::TokensProxy
 end
 
+class CodeRay::WordList
+  def add(words, value=T.unsafe(nil)); end
+
+  def initialize(default=T.unsafe(nil)); end
+end
+
+class CodeRay::WordList::CaseIgnoring
+  def [](key); end
+
+  def []=(key, value); end
+end
+
+class CodeRay::WordList::CaseIgnoring
+end
+
+class CodeRay::WordList
+end
+
 module CodeRay
   def self.coderay_path(*path); end
 
@@ -1886,14 +2560,6 @@ module Colorator
   def self.white(str); end
 
   def self.yellow(str); end
-end
-
-class Complex
-  def self.polar(*_); end
-
-  def self.rect(*_); end
-
-  def self.rectangular(*_); end
 end
 
 module Concurrent
@@ -2229,13 +2895,209 @@ module Concurrent
   extend ::Concurrent::Utility::NativeExtensionLoader
 end
 
-module Coverage
-  def self.peek_result(); end
-
-  def self.running?(); end
+class DRb::DRbArray
+  def _dump(lv); end
 end
 
+class DRb::DRbArray
+  def self._load(s); end
+end
+
+class DRb::DRbConn
+  def alive?(); end
+
+  def close(); end
+
+  def initialize(remote_uri); end
+
+  def send_message(ref, msg_id, arg, block); end
+
+  def uri(); end
+end
+
+class DRb::DRbConn
+  def self.make_pool(); end
+
+  def self.open(remote_uri); end
+
+  def self.stop_pool(); end
+end
+
+class DRb::DRbMessage
+  def dump(obj, error=T.unsafe(nil)); end
+
+  def initialize(config); end
+
+  def load(soc); end
+
+  def recv_reply(stream); end
+
+  def recv_request(stream); end
+
+  def send_reply(stream, succ, result); end
+
+  def send_request(stream, ref, msg_id, arg, b); end
+end
+
+class DRb::DRbObject
+  def ==(other); end
+
+  def eql?(other); end
+
+  def initialize(obj, uri=T.unsafe(nil)); end
+end
+
+class DRb::DRbObject
+  def self.prepare_backtrace(uri, result); end
+
+  def self.with_friend(uri); end
+end
+
+module DRb::DRbProtocol
+  def self.auto_load(uri); end
+end
+
+class DRb::DRbRemoteError
+  def initialize(error); end
+end
+
+class DRb::DRbServer
+  def initialize(uri=T.unsafe(nil), front=T.unsafe(nil), config_or_acl=T.unsafe(nil)); end
+
+  def safe_level(); end
+end
+
+class DRb::DRbServer::InvokeMethod
+  include ::DRb::DRbServer::InvokeMethod18Mixin
+  def initialize(drb_server, client); end
+
+  def perform(); end
+end
+
+class DRb::DRbServer::InvokeMethod
+end
+
+module DRb::DRbServer::InvokeMethod18Mixin
+  def block_yield(x); end
+
+  def perform_with_block(); end
+end
+
+module DRb::DRbServer::InvokeMethod18Mixin
+end
+
+class DRb::DRbServer
+  def self.default_safe_level(level); end
+
+  def self.make_config(hash=T.unsafe(nil)); end
+end
+
+class DRb::DRbTCPSocket
+  def accept(); end
+
+  def alive?(); end
+
+  def close(); end
+
+  def initialize(uri, soc, config=T.unsafe(nil)); end
+
+  def peeraddr(); end
+
+  def recv_reply(); end
+
+  def recv_request(); end
+
+  def send_reply(succ, result); end
+
+  def send_request(ref, msg_id, arg, b); end
+
+  def set_sockopt(soc); end
+
+  def shutdown(); end
+
+  def stream(); end
+
+  def uri(); end
+end
+
+class DRb::DRbTCPSocket
+  def self.getservername(); end
+
+  def self.open(uri, config); end
+
+  def self.open_server(uri, config); end
+
+  def self.open_server_inaddr_any(host, port); end
+
+  def self.parse_uri(uri); end
+
+  def self.uri_option(uri, config); end
+end
+
+class DRb::DRbURIOption
+  def ==(other); end
+
+  def eql?(other); end
+
+  def initialize(option); end
+
+  def option(); end
+end
+
+class DRb::DRbURIOption
+end
+
+module DRb::DRbUndumped
+  def _dump(dummy); end
+end
+
+class DRb::DRbUnknown
+  def _dump(lv); end
+end
+
+class DRb::DRbUnknown
+  def self._load(s); end
+end
+
+class DRb::DRbUnknownError
+  def _dump(lv); end
+
+  def initialize(unknown); end
+end
+
+class DRb::DRbUnknownError
+  def self._load(s); end
+end
+
+class DRb::ThreadObject
+  include ::MonitorMixin
+  def _execute(); end
+
+  def alive?(); end
+
+  def initialize(&blk); end
+
+  def kill(); end
+
+  def method_missing(msg, *arg, &blk); end
+end
+
+class DRb::ThreadObject
+end
+
+module DRb
+  def self.mutex(); end
+end
+
+DRbIdConv = DRb::DRbIdConv
+
+DRbObject = DRb::DRbObject
+
+DRbUndumped = DRb::DRbUndumped
+
 class Date
+  def infinite?(); end
+
   def to_liquid(); end
 end
 
@@ -2244,50 +3106,153 @@ class Date::Infinity
 end
 
 class Delegator
-  def !=(obj); end
-
-  def ==(obj); end
-
-  def __getobj__(); end
-
-  def __setobj__(obj); end
-
-  def eql?(obj); end
-
-  def initialize(obj); end
-
-  def marshal_dump(); end
-
-  def marshal_load(data); end
-
-  def method_missing(m, *args, &block); end
-
-  def methods(all=T.unsafe(nil)); end
-
-  def protected_methods(all=T.unsafe(nil)); end
-
-  def public_methods(all=T.unsafe(nil)); end
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
 end
 
-class Delegator
-  def self.const_missing(n); end
+class DidYouMean::ClassNameChecker
+  def class_name(); end
 
-  def self.delegating_block(mid); end
+  def class_names(); end
 
-  def self.public_api(); end
+  def corrections(); end
+
+  def initialize(exception); end
+
+  def scopes(); end
+end
+
+class DidYouMean::CorrectElement
+  def call(names, element); end
+end
+
+class DidYouMean::CorrectElement
+end
+
+module DidYouMean::Correctable
+  def corrections(); end
+
+  def original_message(); end
+
+  def spell_checker(); end
+
+  def to_s(); end
+end
+
+module DidYouMean::Jaro
+  def self.distance(str1, str2); end
+end
+
+module DidYouMean::JaroWinkler
+  def self.distance(str1, str2); end
+end
+
+class DidYouMean::KeyErrorChecker
+  def corrections(); end
+
+  def initialize(key_error); end
+end
+
+class DidYouMean::KeyErrorChecker
+end
+
+module DidYouMean::Levenshtein
+  def self.distance(str1, str2); end
+
+  def self.min3(a, b, c); end
+end
+
+class DidYouMean::MethodNameChecker
+  def corrections(); end
+
+  def initialize(exception); end
+
+  def method_name(); end
+
+  def method_names(); end
+
+  def names_to_exclude(); end
+
+  def receiver(); end
+  RB_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+end
+
+class DidYouMean::NullChecker
+  def corrections(); end
+
+  def initialize(*_); end
+end
+
+class DidYouMean::ParseDimensions
+  def call(); end
+
+  def initialize(dictionary, separator); end
+end
+
+class DidYouMean::ParseDimensions
+end
+
+class DidYouMean::PlainFormatter
+  def message_for(corrections); end
+end
+
+class DidYouMean::PlainFormatter
+end
+
+class DidYouMean::TreeSpellChecker
+  def augment(); end
+
+  def correct(input); end
+
+  def dictionary(); end
+
+  def dimensions(); end
+
+  def initialize(dictionary:, separator: T.unsafe(nil), augment: T.unsafe(nil)); end
+
+  def separator(); end
+end
+
+class DidYouMean::TreeSpellChecker
+end
+
+class DidYouMean::VariableNameChecker
+  def corrections(); end
+
+  def cvar_names(); end
+
+  def initialize(exception); end
+
+  def ivar_names(); end
+
+  def lvar_names(); end
+
+  def method_names(); end
+
+  def name(); end
+  RB_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+end
+
+module DidYouMean
+  def self.correct_error(error_class, spell_checker); end
+
+  def self.formatter(); end
+
+  def self.formatter=(formatter); end
 end
 
 class Dir
-  def self.children(*_); end
+  def children(); end
 
-  def self.each_child(*_); end
+  def each_child(); end
+end
 
-  def self.empty?(_); end
+module Dir::Tmpname
+  UNUSABLE_CHARS = ::T.let(nil, ::T.untyped)
+end
 
+class Dir
   def self.exists?(_); end
 
-  def self.tmpdir(); end
 end
 
 module Docile
@@ -2333,7 +3298,6 @@ class ERB
 
   def def_module(methodname=T.unsafe(nil)); end
 
-  def result_with_hash(hash); end
 end
 
 class ERB::Compiler::Scanner
@@ -2343,100 +3307,52 @@ end
 
 class Encoding
   def _dump(*_); end
+  CESU_8 = ::T.let(nil, ::T.untyped)
 end
 
 class Encoding::Converter
-  def convert(_); end
-
-  def convpath(); end
-
-  def destination_encoding(); end
-
-  def finish(); end
-
   def initialize(*_); end
-
-  def insert_output(_); end
-
-  def last_error(); end
-
-  def primitive_convert(*_); end
-
-  def primitive_errinfo(); end
-
-  def putback(*_); end
-
-  def replacement(); end
-
-  def replacement=(replacement); end
-
-  def source_encoding(); end
-end
-
-class Encoding::Converter
-  def self.asciicompat_encoding(_); end
-
-  def self.search_convpath(*_); end
-end
-
-class Encoding::InvalidByteSequenceError
-  def destination_encoding(); end
-
-  def destination_encoding_name(); end
-
-  def error_bytes(); end
-
-  def incomplete_input?(); end
-
-  def readagain_bytes(); end
-
-  def source_encoding(); end
-
-  def source_encoding_name(); end
-end
-
-class Encoding::UndefinedConversionError
-  def destination_encoding(); end
-
-  def destination_encoding_name(); end
-
-  def error_char(); end
-
-  def source_encoding(); end
-
-  def source_encoding_name(); end
 end
 
 class Encoding
   def self._load(_); end
-
-  def self.locale_charmap(); end
 end
 
 module Enumerable
-  def chunk(); end
-
-  def chunk_while(); end
-
-  def each_entry(*_); end
-
-  def grep_v(_); end
-
-  def slice_after(*_); end
-
-  def slice_before(*_); end
-
-  def slice_when(); end
+  def chain(*_); end
 
   def sum(*_); end
 
-  def to_set(klass=T.unsafe(nil), *args, &block); end
-
-  def uniq(); end
+  def tally(); end
 end
 
 class Enumerator
+  def +(_); end
+
   def each_with_index(); end
+end
+
+class Enumerator::ArithmeticSequence
+  def begin(); end
+
+  def each(&blk); end
+
+  def end(); end
+
+  def exclude_end?(); end
+
+  def last(*_); end
+
+  def step(); end
+end
+
+class Enumerator::ArithmeticSequence
+end
+
+class Enumerator::Chain
+end
+
+class Enumerator::Chain
 end
 
 class Enumerator::Generator
@@ -2446,16 +3362,31 @@ class Enumerator::Generator
 end
 
 class Enumerator::Lazy
-  def chunk(*_); end
+  def eager(); end
+end
 
-  def chunk_while(*_); end
+class Enumerator::Producer
+  def each(&blk); end
+end
 
-  def force(*_); end
+class Enumerator::Producer
+end
 
-  def slice_when(*_); end
+class Enumerator::Yielder
+  def to_proc(); end
+end
+
+class Enumerator
+  def self.produce(*_); end
 end
 
 Errno::EAUTH = Errno::NOERROR
+
+Errno::EBADARCH = Errno::NOERROR
+
+Errno::EBADEXEC = Errno::NOERROR
+
+Errno::EBADMACHO = Errno::NOERROR
 
 Errno::EBADRPC = Errno::NOERROR
 
@@ -2463,19 +3394,30 @@ Errno::ECAPMODE = Errno::NOERROR
 
 Errno::EDEADLOCK = Errno::EDEADLK
 
+Errno::EDEVERR = Errno::NOERROR
+
 Errno::EDOOFUS = Errno::NOERROR
 
 Errno::EFTYPE = Errno::NOERROR
 
 Errno::EIPSEC = Errno::NOERROR
 
+Errno::ELAST = Errno::NOERROR
+
 Errno::ENEEDAUTH = Errno::NOERROR
 
 Errno::ENOATTR = Errno::NOERROR
 
+Errno::ENOPOLICY = Errno::NOERROR
+
 Errno::ENOTCAPABLE = Errno::NOERROR
 
-Errno::ENOTSUP = Errno::EOPNOTSUPP
+class Errno::ENOTSUP
+  Errno = ::T.let(nil, ::T.untyped)
+end
+
+class Errno::ENOTSUP
+end
 
 Errno::EPROCLIM = Errno::NOERROR
 
@@ -2485,7 +3427,17 @@ Errno::EPROGMISMATCH = Errno::NOERROR
 
 Errno::EPROGUNAVAIL = Errno::NOERROR
 
+Errno::EPWROFF = Errno::NOERROR
+
+Errno::EQFULL = Errno::NOERROR
+
 Errno::ERPCMISMATCH = Errno::NOERROR
+
+Errno::ESHLIBVERS = Errno::NOERROR
+
+module Etc
+  VERSION = ::T.let(nil, ::T.untyped)
+end
 
 class Etc::Group
   def gid(); end
@@ -2539,16 +3491,6 @@ class Etc::Passwd
   def self.each(&blk); end
 
   def self.members(); end
-end
-
-class Exception
-  def full_message(*_); end
-end
-
-class Exception
-  def self.exception(*_); end
-
-  def self.to_tty?(); end
 end
 
 class ExitCalledError
@@ -3322,6 +4264,8 @@ module FFI::Platform
   LIBSUFFIX = ::T.let(nil, ::T.untyped)
   LITTLE_ENDIAN = ::T.let(nil, ::T.untyped)
   LONG_ALIGN = ::T.let(nil, ::T.untyped)
+  LONG_DOUBLE_ALIGN = ::T.let(nil, ::T.untyped)
+  LONG_DOUBLE_SIZE = ::T.let(nil, ::T.untyped)
   LONG_SIZE = ::T.let(nil, ::T.untyped)
   NAME = ::T.let(nil, ::T.untyped)
   OS = ::T.let(nil, ::T.untyped)
@@ -3798,29 +4742,13 @@ class FalseClass
 end
 
 class Fiber
-  def resume(*_); end
-end
-
-class Fiber
-  def self.yield(*_); end
+  def initialize(*_); end
 end
 
 class File
-  Separator = ::T.let(nil, ::T.untyped)
-end
-
-class File::Stat
-  def size?(); end
-end
-
-class File
-  def self.empty?(_); end
+  def self.absolute_path?(_); end
 
   def self.exists?(_); end
-
-  def self.lutime(*_); end
-
-  def self.mkfifo(*_); end
 end
 
 FileList = Rake::FileList
@@ -3879,31 +4807,12 @@ module FileUtils
   extend ::FileUtils::StreamUtils_
 end
 
-module Find
-end
-
-module Find
-  def self.find(*paths, ignore_error: T.unsafe(nil)); end
-
-  def self.prune(); end
-end
-
 class Float
   include ::JSON::Ext::Generator::GeneratorMethods::Float
 end
 
 module Forwardable
-  def def_delegator(accessor, method, ali=T.unsafe(nil)); end
-
-  def def_delegators(accessor, *methods); end
-
-  def def_instance_delegator(accessor, method, ali=T.unsafe(nil)); end
-
-  def def_instance_delegators(accessor, *methods); end
-
-  def delegate(hash); end
-
-  def instance_delegate(hash); end
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 module Forwardable::Extended
@@ -3937,144 +4846,598 @@ module Forwardable
   def self.debug=(debug); end
 end
 
-module GC
-  def garbage_collect(*_); end
+class FrozenError
+  def receiver(); end
 end
 
 module GC
-  def self.latest_gc_info(*_); end
-
-  def self.stress=(stress); end
-
-  def self.verify_internal_consistency(); end
+  def garbage_collect(full_mark: T.unsafe(nil), immediate_mark: T.unsafe(nil), immediate_sweep: T.unsafe(nil)); end
 end
 
-class Gem::BasicSpecification
-  def self.upstream_default_specifications_dir(); end
+module GC
+  def self.verify_compaction_references(*_); end
+
+  def self.verify_transient_heap_internal_consistency(); end
 end
 
-class Gem::DependencyInstaller
-  def _deprecated_gems_to_install(); end
-
-  def gems_to_install(*args, &block); end
+module Gem
+  ConfigMap = ::T.let(nil, ::T.untyped)
+  RbConfigPriorities = ::T.let(nil, ::T.untyped)
+  RubyGemsVersion = ::T.let(nil, ::T.untyped)
+  UNTAINT = ::T.let(nil, ::T.untyped)
 end
 
-class Gem::Resolver
+class Gem::Exception
+  extend ::Gem::Deprecate
 end
 
-Gem::DependencyResolver::Conflict = Gem::Resolver::Conflict
-
-Gem::DependencyResolver::DependencyConflict = Gem::Resolver::Conflict
-
-module Gem::Resolver::Molinillo
+class Gem::Ext::BuildError
 end
 
-Gem::DependencyResolver::Molinillo::SpecificationProvider = Gem::Resolver::Molinillo::SpecificationProvider
-
-Gem::DependencyResolver::Molinillo::UI = Gem::Resolver::Molinillo::UI
-
-module Gem::Resolver::Molinillo
+class Gem::Ext::BuildError
 end
 
-class Gem::Resolver
+class Gem::Ext::ExtConfBuilder
 end
 
-class Gem::Licenses
-  IDENTIFIERS = ::T.let(nil, ::T.untyped)
+Gem::Ext::ExtConfBuilder::FileEntry = FileUtils::Entry_
+
+class Gem::Ext::ExtConfBuilder
+  def self.build(extension, dest_path, results, args=T.unsafe(nil), lib_dir=T.unsafe(nil)); end
+
+  def self.get_relative_path(path); end
 end
 
 class Gem::Package
-  def realpath(file); end
+  def gem(); end
 end
 
-class Gem::RemoteFetcher
-  def api_endpoint(uri); end
+class Gem::Package::DigestIO
+  def digests(); end
+
+  def initialize(io, digests); end
+
+  def write(data); end
 end
 
-Gem::RequestSet::GemDepedencyAPI = Gem::RequestSet::GemDependencyAPI
+class Gem::Package::DigestIO
+  def self.wrap(io, digests); end
+end
+
+class Gem::Package::FileSource
+  def initialize(path); end
+
+  def path(); end
+
+  def present?(); end
+
+  def start(); end
+
+  def with_read_io(&block); end
+
+  def with_write_io(&block); end
+end
+
+class Gem::Package::FileSource
+end
+
+class Gem::Package::IOSource
+  def initialize(io); end
+
+  def io(); end
+
+  def path(); end
+
+  def present?(); end
+
+  def start(); end
+
+  def with_read_io(); end
+
+  def with_write_io(); end
+end
+
+class Gem::Package::IOSource
+end
+
+class Gem::Package::Old
+  def extract_files(destination_dir); end
+
+  def file_list(io); end
+
+  def read_until_dashes(io); end
+
+  def skip_ruby(io); end
+end
+
+class Gem::Package::Old
+end
+
+class Gem::Package::Source
+end
+
+class Gem::Package::Source
+end
+
+class Gem::Package::TarHeader
+  def ==(other); end
+
+  def checksum(); end
+
+  def devmajor(); end
+
+  def devminor(); end
+
+  def empty?(); end
+
+  def gid(); end
+
+  def gname(); end
+
+  def initialize(vals); end
+
+  def linkname(); end
+
+  def magic(); end
+
+  def mode(); end
+
+  def mtime(); end
+
+  def name(); end
+
+  def prefix(); end
+
+  def size(); end
+
+  def typeflag(); end
+
+  def uid(); end
+
+  def uname(); end
+
+  def update_checksum(); end
+
+  def version(); end
+  EMPTY_HEADER = ::T.let(nil, ::T.untyped)
+  FIELDS = ::T.let(nil, ::T.untyped)
+  PACK_FORMAT = ::T.let(nil, ::T.untyped)
+  UNPACK_FORMAT = ::T.let(nil, ::T.untyped)
+end
+
+class Gem::Package::TarHeader
+  def self.from(stream); end
+
+  def self.oct_or_256based(str); end
+
+  def self.strict_oct(str); end
+end
+
+class Gem::Package::TarReader::Entry
+  def bytes_read(); end
+
+  def check_closed(); end
+
+  def close(); end
+
+  def closed?(); end
+
+  def directory?(); end
+
+  def eof?(); end
+
+  def file?(); end
+
+  def full_name(); end
+
+  def getc(); end
+
+  def header(); end
+
+  def initialize(header, io); end
+
+  def length(); end
+
+  def pos(); end
+
+  def read(len=T.unsafe(nil)); end
+
+  def readpartial(maxlen=T.unsafe(nil), outbuf=T.unsafe(nil)); end
+
+  def rewind(); end
+
+  def size(); end
+
+  def symlink?(); end
+end
+
+class Gem::Package::TarReader::Entry
+end
+
+class Gem::Package::TarReader
+  def self.new(io); end
+end
+
+class Gem::Package::TarWriter
+  def self.new(io); end
+end
+
+class Gem::Package
+  def self.new(gem, security_policy=T.unsafe(nil)); end
+
+  def self.raw_spec(path, security_policy=T.unsafe(nil)); end
+end
+
+class Gem::PathSupport
+  def home(); end
+
+  def initialize(env); end
+
+  def path(); end
+
+  def spec_cache_dir(); end
+end
+
+class Gem::RemoteFetcher::FetchError
+  include ::Gem::UriParsing
+  def initialize(message, uri); end
+
+  def uri(); end
+
+  def uri=(uri); end
+end
+
+class Gem::RemoteFetcher::FetchError
+end
+
+class Gem::RemoteFetcher::UnknownHostError
+end
+
+class Gem::RemoteFetcher::UnknownHostError
+end
+
+class Gem::Request
+  extend ::Gem::UserInteraction
+  extend ::Gem::DefaultUserInteraction
+  extend ::Gem::Text
+end
+
+class Gem::Resolver::CurrentSet
+end
+
+class Gem::Resolver::CurrentSet
+end
+
+class Gem::Resolver::LocalSpecification
+end
+
+class Gem::Resolver::LocalSpecification
+end
+
+class Gem::Resolver::Molinillo::DependencyGraph::Log
+  def add_edge_no_circular(graph, origin, destination, requirement); end
+
+  def add_vertex(graph, name, payload, root); end
+
+  def delete_edge(graph, origin_name, destination_name, requirement); end
+
+  def detach_vertex_named(graph, name); end
+
+  def each(&blk); end
+
+  def pop!(graph); end
+
+  def reverse_each(); end
+
+  def rewind_to(graph, tag); end
+
+  def set_payload(graph, name, payload); end
+
+  def tag(graph, tag); end
+end
 
 class Gem::Resolver::Molinillo::DependencyGraph::Log
   extend ::Enumerable
 end
 
-class Gem::Source
-  def api_uri(); end
+class Gem::RuntimeRequirementNotMetError
+  def suggestion(); end
+
+  def suggestion=(suggestion); end
+end
+
+class Gem::RuntimeRequirementNotMetError
+end
+
+class Gem::Security::Exception
+end
+
+class Gem::Security::Exception
+end
+
+Gem::Security::KEY_ALGORITHM = OpenSSL::PKey::RSA
+
+class Gem::Security::Policy
+  include ::Gem::UserInteraction
+  include ::Gem::DefaultUserInteraction
+  include ::Gem::Text
+  def check_cert(signer, issuer, time); end
+
+  def check_chain(chain, time); end
+
+  def check_data(public_key, digest, signature, data); end
+
+  def check_key(signer, key); end
+
+  def check_root(chain, time); end
+
+  def check_trust(chain, digester, trust_dir); end
+
+  def initialize(name, policy=T.unsafe(nil), opt=T.unsafe(nil)); end
+
+  def name(); end
+
+  def only_signed(); end
+
+  def only_signed=(only_signed); end
+
+  def only_trusted(); end
+
+  def only_trusted=(only_trusted); end
+
+  def subject(certificate); end
+
+  def verify(chain, key=T.unsafe(nil), digests=T.unsafe(nil), signatures=T.unsafe(nil), full_name=T.unsafe(nil)); end
+
+  def verify_chain(); end
+
+  def verify_chain=(verify_chain); end
+
+  def verify_data(); end
+
+  def verify_data=(verify_data); end
+
+  def verify_root(); end
+
+  def verify_root=(verify_root); end
+
+  def verify_signatures(spec, digests, signatures); end
+
+  def verify_signer(); end
+
+  def verify_signer=(verify_signer); end
+end
+
+class Gem::Security::Policy
+end
+
+class Gem::Security::Signer
+  include ::Gem::UserInteraction
+  include ::Gem::DefaultUserInteraction
+  include ::Gem::Text
+  def cert_chain(); end
+
+  def cert_chain=(cert_chain); end
+
+  def digest_algorithm(); end
+
+  def digest_name(); end
+
+  def extract_name(cert); end
+
+  def initialize(key, cert_chain, passphrase=T.unsafe(nil), options=T.unsafe(nil)); end
+
+  def key(); end
+
+  def key=(key); end
+
+  def load_cert_chain(); end
+
+  def options(); end
+
+  def re_sign_key(expiration_length: T.unsafe(nil)); end
+
+  def sign(data); end
+end
+
+class Gem::Security::Signer
+  def self.re_sign_cert(expired_cert, expired_cert_path, private_key); end
+end
+
+class Gem::Security::TrustDir
+  def cert_path(certificate); end
+
+  def dir(); end
+
+  def each_certificate(); end
+
+  def initialize(dir, permissions=T.unsafe(nil)); end
+
+  def issuer_of(certificate); end
+
+  def load_certificate(certificate_file); end
+
+  def name_path(name); end
+
+  def trust_cert(certificate); end
+
+  def verify(); end
+end
+
+module Gem::Security
+  def self.alt_name_or_x509_entry(certificate, x509_entry); end
+
+  def self.create_cert(subject, key, age=T.unsafe(nil), extensions=T.unsafe(nil), serial=T.unsafe(nil)); end
+
+  def self.create_cert_email(email, key, age=T.unsafe(nil), extensions=T.unsafe(nil)); end
+
+  def self.create_cert_self_signed(subject, key, age=T.unsafe(nil), extensions=T.unsafe(nil), serial=T.unsafe(nil)); end
+
+  def self.create_key(length=T.unsafe(nil), algorithm=T.unsafe(nil)); end
+
+  def self.email_to_name(email_address); end
+
+  def self.re_sign(expired_certificate, private_key, age=T.unsafe(nil), extensions=T.unsafe(nil)); end
+
+  def self.reset(); end
+
+  def self.sign(certificate, signing_key, signing_cert, age=T.unsafe(nil), extensions=T.unsafe(nil), serial=T.unsafe(nil)); end
+
+  def self.trust_dir(); end
+
+  def self.trusted_certificates(&block); end
+
+  def self.write(pemmable, path, permissions=T.unsafe(nil), passphrase=T.unsafe(nil), cipher=T.unsafe(nil)); end
+end
+
+class Gem::SpecFetcher
+  include ::Gem::UserInteraction
+  include ::Gem::DefaultUserInteraction
+  include ::Gem::Text
+  def available_specs(type); end
+
+  def detect(type=T.unsafe(nil)); end
+
+  def initialize(sources=T.unsafe(nil)); end
+
+  def latest_specs(); end
+
+  def prerelease_specs(); end
+
+  def search_for_dependency(dependency, matching_platform=T.unsafe(nil)); end
+
+  def sources(); end
+
+  def spec_for_dependency(dependency, matching_platform=T.unsafe(nil)); end
+
+  def specs(); end
+
+  def suggest_gems_from_name(gem_name, type=T.unsafe(nil)); end
+
+  def tuples_for(source, type, gracefully_ignore=T.unsafe(nil)); end
+end
+
+class Gem::SpecFetcher
+  def self.fetcher(); end
+
+  def self.fetcher=(fetcher); end
 end
 
 class Gem::Specification
-  def bundled_gem_in_old_ruby?(); end
+  include ::Bundler::MatchPlatform
+  include ::Bundler::GemHelpers
+  def to_ruby(); end
 
-  def rubyforge_project(); end
-
-  def warning(statement); end
+  def upstream_rubyforge_project=(*args, &block); end
 end
 
 class Gem::Specification
+  extend ::Gem::Deprecate
   extend ::Enumerable
 end
 
-module Gem::Util
-  NULL_DEVICE = ::T.let(nil, ::T.untyped)
+class Gem::SpecificationPolicy
+  include ::Gem::UserInteraction
+  include ::Gem::DefaultUserInteraction
+  include ::Gem::Text
+  def initialize(specification); end
+
+  def packaging(); end
+
+  def packaging=(packaging); end
+
+  def validate(strict=T.unsafe(nil)); end
+
+  def validate_dependencies(); end
+
+  def validate_metadata(); end
+
+  def validate_permissions(); end
+  HOMEPAGE_URI_PATTERN = ::T.let(nil, ::T.untyped)
+  LAZY = ::T.let(nil, ::T.untyped)
+  LAZY_PATTERN = ::T.let(nil, ::T.untyped)
+  METADATA_LINK_KEYS = ::T.let(nil, ::T.untyped)
+  SPECIAL_CHARACTERS = ::T.let(nil, ::T.untyped)
+  VALID_NAME_PATTERN = ::T.let(nil, ::T.untyped)
+  VALID_URI_PATTERN = ::T.let(nil, ::T.untyped)
 end
 
+class Gem::SpecificationPolicy
+end
+
+class Gem::StreamUI
+  def _deprecated_debug(statement); end
+end
+
+class Gem::StubSpecification
+  def build_extensions(); end
+
+  def extensions(); end
+
+  def initialize(filename, base_dir, gems_dir, default_gem); end
+
+  def missing_extensions?(); end
+
+  def valid?(); end
+end
+
+class Gem::StubSpecification::StubLine
+  def extensions(); end
+
+  def full_name(); end
+
+  def initialize(data, extensions); end
+
+  def name(); end
+
+  def platform(); end
+
+  def require_paths(); end
+
+  def version(); end
+end
+
+class Gem::StubSpecification
+  def self.default_gemspec_stub(filename, base_dir, gems_dir); end
+
+  def self.gemspec_stub(filename, base_dir, gems_dir); end
+end
+
+class Gem::UninstallError
+  def spec(); end
+
+  def spec=(spec); end
+end
+
+class Gem::UninstallError
+end
+
+Gem::UnsatisfiableDepedencyError = Gem::UnsatisfiableDependencyError
+
+Gem::Version::Requirement = Gem::Requirement
+
 module Gem
-  def self._deprecated_datadir(gem_name); end
-
-  def self.default_specifications_dir(); end
-
   def self.upstream_default_bindir(); end
 
   def self.upstream_default_dir(); end
 
   def self.upstream_default_path(); end
+
+  def self.upstream_default_specifications_dir(); end
 end
 
 class Hash
   include ::JSON::Ext::Generator::GeneratorMethods::Hash
-  def <(_); end
-
-  def <=(_); end
-
-  def >(_); end
-
-  def >=(_); end
-
-  def compact(); end
-
-  def compact!(); end
-
-  def default_proc(); end
-
-  def default_proc=(default_proc); end
-
-  def fetch_values(*_); end
-
-  def flatten(*_); end
-
-  def index(_); end
-
-  def replace(_); end
-
-  def slice(*_); end
-
-  def to_h(); end
+  def deconstruct_keys(_); end
 
   def to_liquid(); end
-
-  def to_proc(); end
-
-  def transform_keys(); end
-
-  def transform_keys!(); end
-
-  def transform_values(); end
-
-  def transform_values!(); end
-
-  def update(_); end
 end
 
 class Hash
+  def self.ruby2_keywords_hash(_); end
+
+  def self.ruby2_keywords_hash?(_); end
+
   def self.try_convert(_); end
 end
 
@@ -4108,7 +5471,7 @@ module I18n::Backend::Base
 
   def eager_loaded?(); end
 
-  def exists?(locale, key); end
+  def exists?(locale, key, options=T.unsafe(nil)); end
 
   def interpolate(locale, subject, values=T.unsafe(nil)); end
 
@@ -4198,7 +5561,7 @@ module I18n::Backend::Chain::Implementation
 
   def eager_load!(); end
 
-  def exists?(locale, key); end
+  def exists?(locale, key, options=T.unsafe(nil)); end
 
   def init_translations(); end
 
@@ -4226,7 +5589,7 @@ class I18n::Backend::Chain
 end
 
 module I18n::Backend::Fallbacks
-  def exists?(locale, key); end
+  def exists?(locale, key, options=T.unsafe(nil)); end
 
   def extract_non_symbol_default!(options); end
 
@@ -4471,7 +5834,7 @@ module I18n::Base
 
   def exception_handler=(value); end
 
-  def exists?(key, _locale=T.unsafe(nil), locale: T.unsafe(nil)); end
+  def exists?(key, _locale=T.unsafe(nil), locale: T.unsafe(nil), **options); end
 
   def l(object, locale: T.unsafe(nil), format: T.unsafe(nil), **options); end
 
@@ -4852,25 +6215,45 @@ end
 class IO
   def beep(); end
 
+  def check_winsize_changed(); end
+
+  def clear_screen(); end
+
+  def console_mode(); end
+
+  def console_mode=(console_mode); end
+
   def cooked(); end
 
   def cooked!(); end
 
   def cursor(); end
 
-  def cursor=(); end
+  def cursor=(cursor); end
+
+  def cursor_down(_); end
+
+  def cursor_left(_); end
+
+  def cursor_right(_); end
+
+  def cursor_up(_); end
 
   def echo=(echo); end
 
   def echo?(); end
 
-  def external_encoding(); end
+  def erase_line(_); end
+
+  def erase_screen(_); end
 
   def getch(*_); end
 
   def getpass(*_); end
 
-  def goto(); end
+  def goto(_, _1); end
+
+  def goto_column(_); end
 
   def iflush(); end
 
@@ -4890,17 +6273,19 @@ class IO
 
   def pathconf(_); end
 
-  def pread(*_); end
-
   def pressed?(); end
-
-  def pwrite(_, _1); end
 
   def raw(*_); end
 
   def raw!(*_); end
 
   def ready?(); end
+
+  def scroll_backward(_); end
+
+  def scroll_forward(_); end
+
+  def set_encoding_by_bom(); end
 
   def wait(*_); end
 
@@ -4911,8 +6296,17 @@ class IO
   def winsize(); end
 
   def winsize=(winsize); end
+end
 
-  def write_nonblock(buf, exception: T.unsafe(nil)); end
+class IO::ConsoleMode
+  def echo=(echo); end
+
+  def raw(*_); end
+
+  def raw!(*_); end
+end
+
+class IO::ConsoleMode
 end
 
 IO::EWOULDBLOCKWaitReadable = IO::EAGAINWaitReadable
@@ -4921,135 +6315,18 @@ IO::EWOULDBLOCKWaitWritable = IO::EAGAINWaitWritable
 
 class IO
   def self.console(*_); end
-
-  def self.foreach(*_); end
 end
 
 class IPAddr
-  include ::Comparable
-  def &(other); end
-
-  def <<(num); end
-
   def ==(other); end
 
-  def ===(other); end
-
-  def >>(num); end
-
-  def eql?(other); end
-
-  def family(); end
-
-  def hton(); end
-
-  def include?(other); end
-
   def initialize(addr=T.unsafe(nil), family=T.unsafe(nil)); end
-
-  def ip6_arpa(); end
-
-  def ip6_int(); end
-
-  def ipv4?(); end
-
-  def ipv4_compat(); end
-
-  def ipv4_compat?(); end
-
-  def ipv4_mapped(); end
-
-  def ipv4_mapped?(); end
-
-  def ipv6?(); end
-
-  def link_local?(); end
-
-  def loopback?(); end
-
-  def mask(prefixlen); end
-
-  def mask!(mask); end
-
-  def native(); end
-
-  def prefix(); end
-
-  def prefix=(prefix); end
-
-  def private?(); end
-
-  def reverse(); end
-
-  def set(addr, *family); end
-
-  def succ(); end
-
-  def to_i(); end
-
-  def to_range(); end
-
-  def to_string(); end
-
-  def |(other); end
-
-  def ~(); end
-  IN4MASK = ::T.let(nil, ::T.untyped)
-  IN6FORMAT = ::T.let(nil, ::T.untyped)
-  IN6MASK = ::T.let(nil, ::T.untyped)
-  RE_IPV4ADDRLIKE = ::T.let(nil, ::T.untyped)
-  RE_IPV6ADDRLIKE_COMPRESSED = ::T.let(nil, ::T.untyped)
-  RE_IPV6ADDRLIKE_FULL = ::T.let(nil, ::T.untyped)
-end
-
-class IPAddr::AddressFamilyError
-end
-
-class IPAddr::AddressFamilyError
-end
-
-class IPAddr::Error
-end
-
-class IPAddr::Error
-end
-
-class IPAddr::InvalidAddressError
-end
-
-class IPAddr::InvalidAddressError
-end
-
-class IPAddr::InvalidPrefixError
-end
-
-class IPAddr::InvalidPrefixError
-end
-
-class IPAddr
-  def self.new_ntoh(addr); end
-
-  def self.ntop(addr); end
 end
 
 class Integer
   include ::JSON::Ext::Generator::GeneratorMethods::Integer
-  def allbits?(_); end
-
-  def anybits?(_); end
-
-  def digits(*_); end
-
-  def nobits?(_); end
-
-  def pow(*_); end
-
   def to_bn(); end
   GMP_VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Integer
-  def self.sqrt(_); end
 end
 
 class JSON::Ext::Generator::State
@@ -5065,28 +6342,6 @@ JSON::Parser = JSON::Ext::Parser
 JSON::State = JSON::Ext::Generator::State
 
 JSON::UnparserError = JSON::GeneratorError
-
-module JaroWinkler
-  VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class JaroWinkler::Error
-end
-
-class JaroWinkler::Error
-end
-
-class JaroWinkler::InvalidWeightError
-end
-
-class JaroWinkler::InvalidWeightError
-end
-
-module JaroWinkler
-  def self.distance(*_); end
-
-  def self.jaro_distance(*_); end
-end
 
 module Jekyll
   VERSION = ::T.let(nil, ::T.untyped)
@@ -5522,6 +6777,8 @@ module Jekyll::Convertible
 
   def render_with_liquid?(); end
 
+  def renderer(); end
+
   def sass_file?(); end
 
   def to_liquid(attrs=T.unsafe(nil)); end
@@ -5655,6 +6912,8 @@ class Jekyll::Document
 
   def render_with_liquid?(); end
 
+  def renderer(); end
+
   def sass_file?(); end
 
   def site(); end
@@ -5712,6 +6971,8 @@ class Jekyll::Drops::CollectionDrop
 end
 
 class Jekyll::Drops::DocumentDrop
+  def categories(); end
+
   def collapse_document(doc); end
 
   def collection(); end
@@ -5735,6 +6996,10 @@ class Jekyll::Drops::DocumentDrop
   def previous(); end
 
   def relative_path(*args, &block); end
+
+  def tags(); end
+
+  def title(); end
 
   def to_s(*args, &block); end
 
@@ -5930,6 +7195,8 @@ class Jekyll::Drops::UrlDrop
   def short_year(); end
 
   def slug(); end
+
+  def slugified_categories(); end
 
   def title(); end
 
@@ -6140,6 +7407,10 @@ module Jekyll::Filters
 
   def cgi_escape(input); end
 
+  def find(input, property, value); end
+
+  def find_exp(input, variable, expression); end
+
   def inspect(input); end
 
   def jsonify(input); end
@@ -6148,7 +7419,7 @@ module Jekyll::Filters
 
   def normalize_whitespace(input); end
 
-  def number_of_words(input); end
+  def number_of_words(input, mode=T.unsafe(nil)); end
 
   def pop(array, num=T.unsafe(nil)); end
 
@@ -6229,7 +7500,6 @@ class Jekyll::FrontmatterDefaults
   def reset(); end
 
   def update_deprecated_types(set); end
-  SANITIZATION_REGEX = ::T.let(nil, ::T.untyped)
 end
 
 class Jekyll::FrontmatterDefaults
@@ -6269,6 +7539,21 @@ module Jekyll::Hooks
   def self.register_one(owner, event, priority, &block); end
 
   def self.trigger(owner, event, *args); end
+end
+
+class Jekyll::Inclusion
+  def content(); end
+
+  def initialize(site, base, name); end
+
+  def name(); end
+
+  def path(); end
+
+  def render(context); end
+end
+
+class Jekyll::Inclusion
 end
 
 class Jekyll::Layout
@@ -6367,7 +7652,6 @@ class Jekyll::LiquidRenderer::Table
 end
 
 class Jekyll::LiquidRenderer
-  extend ::Forwardable
   def self.format_error(error, path); end
 end
 
@@ -6427,11 +7711,17 @@ class Jekyll::Page
 
   def dir=(dir); end
 
+  def excerpt(); end
+
+  def excerpt_separator(); end
+
   def ext(); end
 
   def ext=(ext); end
 
   def extname(); end
+
+  def generate_excerpt?(); end
 
   def html?(); end
 
@@ -6479,6 +7769,12 @@ class Jekyll::Page
 end
 
 class Jekyll::Page
+end
+
+class Jekyll::PageExcerpt
+end
+
+class Jekyll::PageExcerpt
 end
 
 class Jekyll::PageReader
@@ -6570,6 +7866,16 @@ class Jekyll::PostReader
 end
 
 class Jekyll::PostReader
+end
+
+class Jekyll::Profiler
+  def initialize(site); end
+
+  def profile_process(); end
+end
+
+class Jekyll::Profiler
+  def self.tabulate(table_rows); end
 end
 
 class Jekyll::Publisher
@@ -6753,6 +8059,8 @@ class Jekyll::Site
 
   def file_read_opts=(file_read_opts); end
 
+  def filter_cache(); end
+
   def find_converter_instance(klass); end
 
   def frontmatter_defaults(); end
@@ -6788,6 +8096,10 @@ class Jekyll::Site
   def include=(include); end
 
   def includes_load_paths(); end
+
+  def inclusions(); end
+
+  def inclusions=(inclusions); end
 
   def incremental?(override=T.unsafe(nil)); end
 
@@ -6836,6 +8148,8 @@ class Jekyll::Site
   def print_stats(); end
 
   def process(); end
+
+  def profiler(); end
 
   def publisher(); end
 
@@ -7051,6 +8365,12 @@ class Jekyll::Tags::Link
   def self.tag_name(); end
 end
 
+class Jekyll::Tags::OptimizedIncludeTag
+end
+
+class Jekyll::Tags::OptimizedIncludeTag
+end
+
 class Jekyll::Tags::PostComparer
   def ==(other); end
 
@@ -7088,6 +8408,8 @@ end
 
 class Jekyll::Theme
   def assets_path(); end
+
+  def basename(); end
 
   def includes_path(); end
 
@@ -7347,15 +8669,13 @@ module JekyllSassConverter
 end
 
 module Kernel
-  def gem(dep, *reqs); end
-
   def itself(); end
 
   def object_id(); end
 
   def pretty_inspect(); end
 
-  def respond_to?(*_); end
+  def then(); end
 
   def yield_self(); end
 end
@@ -7365,9 +8685,7 @@ module Kernel
 end
 
 class KeyError
-  def key(); end
-
-  def receiver(); end
+  include ::DidYouMean::Correctable
 end
 
 module Kramdown
@@ -7539,7 +8857,6 @@ class Kramdown::Converter::Html
   def remove_footnotes(elements); end
 
   def unwrap_links(elements); end
-  DISPATCHER = ::T.let(nil, ::T.untyped)
   ENTITY_NBSP = ::T.let(nil, ::T.untyped)
   FOOTNOTE_BACKLINK_FMT = ::T.let(nil, ::T.untyped)
   TYPOGRAPHIC_SYMS = ::T.let(nil, ::T.untyped)
@@ -7805,6 +9122,8 @@ end
 class Kramdown::Element
   def attr(); end
 
+  def block?(); end
+
   def children(); end
 
   def children=(children); end
@@ -7812,6 +9131,8 @@ class Kramdown::Element
   def initialize(type, value=T.unsafe(nil), attr=T.unsafe(nil), options=T.unsafe(nil)); end
 
   def options(); end
+
+  def span?(); end
 
   def type(); end
 
@@ -7831,6 +9152,18 @@ class Kramdown::Error
 end
 
 class Kramdown::Error
+end
+
+class Kramdown::JekyllDocument
+  def to_html(); end
+end
+
+class Kramdown::JekyllDocument
+  def self.options(); end
+
+  def self.parser(); end
+
+  def self.setup(options); end
 end
 
 module Kramdown::Options
@@ -8228,6 +9561,7 @@ class Kramdown::Parser::Kramdown
   PARAGRAPH_MATCH = ::T.let(nil, ::T.untyped)
   PARAGRAPH_START = ::T.let(nil, ::T.untyped)
   PARSE_FIRST_LIST_LINE_REGEXP_CACHE = ::T.let(nil, ::T.untyped)
+  PATTERN_TAIL = ::T.let(nil, ::T.untyped)
   SETEXT_HEADER_START = ::T.let(nil, ::T.untyped)
   SMART_QUOTES_RE = ::T.let(nil, ::T.untyped)
   SPAN_EXTENSIONS_START = ::T.let(nil, ::T.untyped)
@@ -8329,12 +9663,15 @@ module Kramdown::Utils::Html
 
   def escape_html(str, type=T.unsafe(nil)); end
 
+  def fix_cjk_line_break(str); end
+
   def html_attributes(attr); end
   ESCAPE_ALL_RE = ::T.let(nil, ::T.untyped)
   ESCAPE_ATTRIBUTE_RE = ::T.let(nil, ::T.untyped)
   ESCAPE_MAP = ::T.let(nil, ::T.untyped)
   ESCAPE_RE_FROM_TYPE = ::T.let(nil, ::T.untyped)
   ESCAPE_TEXT_RE = ::T.let(nil, ::T.untyped)
+  REDUNDANT_LINE_BREAK_REGEX = ::T.let(nil, ::T.untyped)
 end
 
 module Kramdown::Utils::Html
@@ -9542,17 +10879,16 @@ module Liquid
   def self.cache_classes=(cache_classes); end
 end
 
-class LoadError
-  def path(); end
-end
-
-class LocalJumpError
-  def exit_value(); end
-
-  def reason(); end
-end
-
 class Logger
+  def debug!(); end
+
+  def error!(); end
+
+  def fatal!(); end
+
+  def info!(); end
+
+  def warn!(); end
   SEV_LABEL = ::T.let(nil, ::T.untyped)
 end
 
@@ -9781,6 +11117,7 @@ module Magick
   HueChannel = ::T.let(nil, ::T.untyped)
   HueCompositeOp = ::T.let(nil, ::T.untyped)
   HuePreview = ::T.let(nil, ::T.untyped)
+  IMAGEMAGICK_VERSION = ::T.let(nil, ::T.untyped)
   ImplodePreview = ::T.let(nil, ::T.untyped)
   ImpulseNoise = ::T.let(nil, ::T.untyped)
   ImpulseNoiseQuantumOperator = ::T.let(nil, ::T.untyped)
@@ -11859,6 +13196,10 @@ class Magick::ImageList
 
   def append(_); end
 
+  def assert_image(obj); end
+
+  def assert_image_array(ary); end
+
   def at(*args, &block); end
 
   def average(); end
@@ -11933,15 +13274,13 @@ class Magick::ImageList
 
   def insert(index, *args); end
 
-  def is_an_image(obj); end
-
-  def is_an_image_array(ary); end
-
   def iterations=(n); end
 
   def last(*args); end
 
   def length(*args, &block); end
+
+  def map(&block); end
 
   def map!(&block); end
 
@@ -12021,8 +13360,6 @@ class Magick::ImageList
 
   def values_at(*args); end
 
-  def write(_); end
-
   def |(other); end
 end
 
@@ -12063,9 +13400,6 @@ class Magick::ImageList::Montage
 end
 
 class Magick::ImageList::Montage
-end
-
-class Magick::ImageList
 end
 
 class Magick::ImageMagickError
@@ -12177,8 +13511,8 @@ class Magick::PaintMethod
 end
 
 class Magick::Pixel
-  include ::Observable
   include ::Comparable
+  include ::Observable
   def alpha(); end
 
   def alpha=(alpha); end
@@ -12484,10 +13818,6 @@ module Magick
   def self.trace_proc=(p); end
 end
 
-module Marshal
-  def self.restore(*_); end
-end
-
 class Method
   include ::MethodSource::SourceLocation::MethodExtensions
   include ::MethodSource::MethodExtensions
@@ -12583,15 +13913,9 @@ module MethodSource
 end
 
 class Module
-  def deprecate_constant(*_); end
+  def const_source_location(*_); end
 
   def rake_extension(method); end
-
-  def undef_method(*_); end
-end
-
-class Module
-  def self.used_modules(); end
 end
 
 module Molinillo
@@ -13174,11 +14498,7 @@ class Monitor
 
   def exit(); end
 
-  def try_enter(); end
-end
-
-module MonitorMixin
-  def initialize(*args); end
+  def mon_check_owner(); end
 
   def mon_enter(); end
 
@@ -13196,36 +14516,36 @@ module MonitorMixin
 
   def synchronize(); end
 
+  def try_enter(); end
+
   def try_mon_enter(); end
-  EXCEPTION_IMMEDIATE = ::T.let(nil, ::T.untyped)
-  EXCEPTION_NEVER = ::T.let(nil, ::T.untyped)
-end
 
-class MonitorMixin::ConditionVariable
-  def broadcast(); end
-
-  def initialize(monitor); end
-
-  def signal(); end
-
-  def wait(timeout=T.unsafe(nil)); end
-
-  def wait_until(); end
-
-  def wait_while(); end
+  def wait_for_cond(_, _1); end
 end
 
 module MonitorMixin
-  def self.extend_object(obj); end
+  def initialize(*args); end
+end
+
+class MonitorMixin::ConditionVariable
+  def initialize(monitor); end
 end
 
 class NameError
-  def name(); end
+  include ::DidYouMean::Correctable
+end
 
-  def receiver(); end
+class Net::BufferedIO
+  def write_timeout(); end
+
+  def write_timeout=(write_timeout); end
 end
 
 class Net::HTTP
+  def ipaddr(); end
+
+  def ipaddr=(addr); end
+
   def max_retries(); end
 
   def max_retries=(retries); end
@@ -13237,11 +14557,11 @@ class Net::HTTP
   def min_version(); end
 
   def min_version=(min_version); end
-  ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
-end
 
-class Net::HTTP::Persistent
-  def unescape(str); end
+  def write_timeout(); end
+
+  def write_timeout=(sec); end
+  ENVIRONMENT_VARIABLE_IS_MULTIUSER_SAFE = ::T.let(nil, ::T.untyped)
 end
 
 Net::HTTP::ProxyMod = Net::HTTP::ProxyDelta
@@ -13253,13 +14573,18 @@ end
 class Net::HTTPAlreadyReported
 end
 
-Net::HTTPClientError::EXCEPTION_TYPE = Net::HTTPServerException
-
 Net::HTTPClientErrorCode = Net::HTTPClientError
 
-Net::HTTPFatalErrorCode = Net::HTTPClientError
+Net::HTTPClientException = Net::HTTPServerException
 
-Net::HTTPInformation::EXCEPTION_TYPE = Net::HTTPError
+class Net::HTTPEarlyHints
+  HAS_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class Net::HTTPEarlyHints
+end
+
+Net::HTTPFatalErrorCode = Net::HTTPClientError
 
 Net::HTTPInformationCode = Net::HTTPInformation
 
@@ -13288,6 +14613,13 @@ end
 class Net::HTTPNotExtended
 end
 
+class Net::HTTPPayloadTooLarge
+  HAS_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class Net::HTTPPayloadTooLarge
+end
+
 class Net::HTTPProcessing
   HAS_BODY = ::T.let(nil, ::T.untyped)
 end
@@ -13295,25 +14627,33 @@ end
 class Net::HTTPProcessing
 end
 
-Net::HTTPRedirection::EXCEPTION_TYPE = Net::HTTPRetriableError
+class Net::HTTPRangeNotSatisfiable
+  HAS_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class Net::HTTPRangeNotSatisfiable
+end
 
 Net::HTTPRedirectionCode = Net::HTTPRedirection
 
-Net::HTTPRequestURITooLarge = Net::HTTPRequestURITooLong
+Net::HTTPRequestURITooLarge = Net::HTTPURITooLong
 
 Net::HTTPResponceReceiver = Net::HTTPResponse
 
 Net::HTTPRetriableCode = Net::HTTPRedirection
 
-Net::HTTPServerError::EXCEPTION_TYPE = Net::HTTPFatalError
-
 Net::HTTPServerErrorCode = Net::HTTPServerError
 
 Net::HTTPSession = Net::HTTP
 
-Net::HTTPSuccess::EXCEPTION_TYPE = Net::HTTPError
-
 Net::HTTPSuccessCode = Net::HTTPSuccess
+
+class Net::HTTPURITooLong
+  HAS_BODY = ::T.let(nil, ::T.untyped)
+end
+
+class Net::HTTPURITooLong
+end
 
 Net::HTTPUnknownResponse::EXCEPTION_TYPE = Net::HTTPError
 
@@ -13330,17 +14670,27 @@ Net::NetPrivate::Socket = Net::InternetMessageIO
 
 Net::ProtocRetryError = Net::ProtoRetriableError
 
+class Net::ReadTimeout
+  def initialize(io=T.unsafe(nil)); end
+
+  def io(); end
+end
+
+class Net::WriteTimeout
+  def initialize(io=T.unsafe(nil)); end
+
+  def io(); end
+end
+
 class NilClass
   include ::JSON::Ext::Generator::GeneratorMethods::NilClass
-  def to_i(); end
-
   def to_liquid(); end
 end
 
-class NoMethodError
-  def args(); end
+class NoMatchingPatternError
+end
 
-  def private_call?(); end
+class NoMatchingPatternError
 end
 
 class Numeric
@@ -13350,6 +14700,8 @@ end
 class Object
   include ::JSON::Ext::Generator::GeneratorMethods::Object
   include ::PP::ObjectMixin
+  def dclone(); end
+
   def pry(object=T.unsafe(nil), hash=T.unsafe(nil)); end
 
   def to_yaml(options=T.unsafe(nil)); end
@@ -13374,59 +14726,6 @@ end
 
 class Object
   def self.yaml_tag(url); end
-end
-
-class ObjectSpace::WeakMap
-  def [](_); end
-
-  def []=(_, _1); end
-
-  def each(&blk); end
-
-  def each_key(); end
-
-  def each_pair(); end
-
-  def each_value(); end
-
-  def key?(_); end
-
-  def keys(); end
-
-  def length(); end
-
-  def size(); end
-
-  def values(); end
-end
-
-module ObjectSpace
-  def self.count_objects(*_); end
-
-  def self.define_finalizer(*_); end
-
-  def self.garbage_collect(*_); end
-
-  def self.undefine_finalizer(_); end
-end
-
-module Observable
-  def add_observer(observer, func=T.unsafe(nil)); end
-
-  def changed(state=T.unsafe(nil)); end
-
-  def changed?(); end
-
-  def count_observers(); end
-
-  def delete_observer(observer); end
-
-  def delete_observers(); end
-
-  def notify_observers(*arg); end
-end
-
-module Observable
 end
 
 class OpenSSL::ASN1::ASN1Data
@@ -13474,12 +14773,6 @@ end
 
 class OpenSSL::PKey::EC::Point
   def to_octet_string(_); end
-end
-
-class OpenSSL::PKey::RSA
-  def sign_pss(*_); end
-
-  def verify_pss(*_); end
 end
 
 module OpenSSL::SSL
@@ -13558,6 +14851,25 @@ end
 
 module OpenSSL
   def self.fips_mode(); end
+end
+
+class OpenStruct
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class OptionParser
+  def additional_message(typ, opt); end
+end
+
+class OptionParser::List
+  def get_candidates(id); end
+end
+
+class OptionParser::ParseError
+  def additional(); end
+
+  def additional=(additional); end
+
 end
 
 module Parallel
@@ -13756,9 +15068,13 @@ class Parser::AST::Processor
 
   def on_def(node); end
 
+  def on_def_e(node); end
+
   def on_defined?(node); end
 
   def on_defs(node); end
+
+  def on_defs_e(node); end
 
   def on_dstr(node); end
 
@@ -13766,11 +15082,17 @@ class Parser::AST::Processor
 
   def on_eflipflop(node); end
 
+  def on_empty_else(node); end
+
   def on_ensure(node); end
 
   def on_erange(node); end
 
+  def on_find_pattern(node); end
+
   def on_for(node); end
+
+  def on_forward_arg(node); end
 
   def on_gvar(node); end
 
@@ -13834,6 +15156,8 @@ class Parser::AST::Processor
 
   def on_module(node); end
 
+  def on_mrasgn(node); end
+
   def on_next(node); end
 
   def on_not(node); end
@@ -13859,6 +15183,8 @@ class Parser::AST::Processor
   def on_preexe(node); end
 
   def on_procarg0(node); end
+
+  def on_rasgn(node); end
 
   def on_redo(node); end
 
@@ -14051,6 +15377,10 @@ class Parser::Builders::Default
 
   def def_class(class_t, name, lt_t, superclass, body, end_t); end
 
+  def def_endless_method(def_t, name_t, args, assignment_t, body); end
+
+  def def_endless_singleton(def_t, definee, dot_t, name_t, args, assignment_t, body); end
+
   def def_method(def_t, name_t, args, body, end_t); end
 
   def def_module(module_t, name, body, end_t); end
@@ -14065,11 +15395,15 @@ class Parser::Builders::Default
 
   def false(false_t); end
 
+  def find_pattern(lbrack_t, elements, rbrack_t); end
+
   def float(float_t); end
 
   def for(for_t, iterator, in_t, iteratee, do_t, body, end_t); end
 
-  def forward_args(begin_t, dots_t, end_t); end
+  def forward_arg(dots_t); end
+
+  def forward_only_args(begin_t, dots_t, end_t); end
 
   def forwarded_args(dots_t); end
 
@@ -14131,11 +15465,13 @@ class Parser::Builders::Default
 
   def match_var(name_t); end
 
-  def match_with_trailing_comma(match); end
+  def match_with_trailing_comma(match, comma_t); end
 
   def multi_assign(lhs, eql_t, rhs); end
 
   def multi_lhs(begin_t, items, end_t); end
+
+  def multi_rassign(lhs, assoc_t, rhs); end
 
   def nil(nil_t); end
 
@@ -14178,6 +15514,8 @@ class Parser::Builders::Default
   def range_exclusive(lhs, dot3_t, rhs); end
 
   def range_inclusive(lhs, dot2_t, rhs); end
+
+  def rassign(lhs, assoc_t, rhs); end
 
   def rational(rational_t); end
 
@@ -14240,6 +15578,10 @@ class Parser::Builders::Default
   def self.emit_encoding(); end
 
   def self.emit_encoding=(emit_encoding); end
+
+  def self.emit_forward_arg(); end
+
+  def self.emit_forward_arg=(emit_forward_arg); end
 
   def self.emit_index(); end
 
@@ -14697,6 +16039,13 @@ end
 class Parser::MaxNumparamStack
 end
 
+module Parser::Messages
+end
+
+module Parser::Messages
+  def self.compile(reason, arguments); end
+end
+
 module Parser::Meta
   NODE_TYPES = ::T.let(nil, ::T.untyped)
 end
@@ -14727,6 +16076,890 @@ class Parser::Rewriter
   extend ::Parser::Deprecation
 end
 
+class Parser::Ruby24
+  def _reduce_10(val, _values, result); end
+
+  def _reduce_100(val, _values, result); end
+
+  def _reduce_101(val, _values, result); end
+
+  def _reduce_102(val, _values, result); end
+
+  def _reduce_103(val, _values, result); end
+
+  def _reduce_104(val, _values, result); end
+
+  def _reduce_105(val, _values, result); end
+
+  def _reduce_106(val, _values, result); end
+
+  def _reduce_107(val, _values, result); end
+
+  def _reduce_108(val, _values, result); end
+
+  def _reduce_11(val, _values, result); end
+
+  def _reduce_110(val, _values, result); end
+
+  def _reduce_111(val, _values, result); end
+
+  def _reduce_112(val, _values, result); end
+
+  def _reduce_118(val, _values, result); end
+
+  def _reduce_12(val, _values, result); end
+
+  def _reduce_122(val, _values, result); end
+
+  def _reduce_123(val, _values, result); end
+
+  def _reduce_124(val, _values, result); end
+
+  def _reduce_13(val, _values, result); end
+
+  def _reduce_14(val, _values, result); end
+
+  def _reduce_16(val, _values, result); end
+
+  def _reduce_17(val, _values, result); end
+
+  def _reduce_18(val, _values, result); end
+
+  def _reduce_19(val, _values, result); end
+
+  def _reduce_196(val, _values, result); end
+
+  def _reduce_197(val, _values, result); end
+
+  def _reduce_198(val, _values, result); end
+
+  def _reduce_199(val, _values, result); end
+
+  def _reduce_2(val, _values, result); end
+
+  def _reduce_20(val, _values, result); end
+
+  def _reduce_200(val, _values, result); end
+
+  def _reduce_201(val, _values, result); end
+
+  def _reduce_202(val, _values, result); end
+
+  def _reduce_203(val, _values, result); end
+
+  def _reduce_204(val, _values, result); end
+
+  def _reduce_205(val, _values, result); end
+
+  def _reduce_206(val, _values, result); end
+
+  def _reduce_207(val, _values, result); end
+
+  def _reduce_208(val, _values, result); end
+
+  def _reduce_209(val, _values, result); end
+
+  def _reduce_21(val, _values, result); end
+
+  def _reduce_210(val, _values, result); end
+
+  def _reduce_211(val, _values, result); end
+
+  def _reduce_212(val, _values, result); end
+
+  def _reduce_213(val, _values, result); end
+
+  def _reduce_214(val, _values, result); end
+
+  def _reduce_215(val, _values, result); end
+
+  def _reduce_216(val, _values, result); end
+
+  def _reduce_217(val, _values, result); end
+
+  def _reduce_218(val, _values, result); end
+
+  def _reduce_219(val, _values, result); end
+
+  def _reduce_22(val, _values, result); end
+
+  def _reduce_220(val, _values, result); end
+
+  def _reduce_221(val, _values, result); end
+
+  def _reduce_222(val, _values, result); end
+
+  def _reduce_223(val, _values, result); end
+
+  def _reduce_224(val, _values, result); end
+
+  def _reduce_225(val, _values, result); end
+
+  def _reduce_226(val, _values, result); end
+
+  def _reduce_227(val, _values, result); end
+
+  def _reduce_228(val, _values, result); end
+
+  def _reduce_229(val, _values, result); end
+
+  def _reduce_23(val, _values, result); end
+
+  def _reduce_230(val, _values, result); end
+
+  def _reduce_231(val, _values, result); end
+
+  def _reduce_232(val, _values, result); end
+
+  def _reduce_233(val, _values, result); end
+
+  def _reduce_234(val, _values, result); end
+
+  def _reduce_235(val, _values, result); end
+
+  def _reduce_236(val, _values, result); end
+
+  def _reduce_24(val, _values, result); end
+
+  def _reduce_241(val, _values, result); end
+
+  def _reduce_242(val, _values, result); end
+
+  def _reduce_244(val, _values, result); end
+
+  def _reduce_245(val, _values, result); end
+
+  def _reduce_246(val, _values, result); end
+
+  def _reduce_248(val, _values, result); end
+
+  def _reduce_25(val, _values, result); end
+
+  def _reduce_251(val, _values, result); end
+
+  def _reduce_252(val, _values, result); end
+
+  def _reduce_253(val, _values, result); end
+
+  def _reduce_254(val, _values, result); end
+
+  def _reduce_255(val, _values, result); end
+
+  def _reduce_256(val, _values, result); end
+
+  def _reduce_257(val, _values, result); end
+
+  def _reduce_258(val, _values, result); end
+
+  def _reduce_259(val, _values, result); end
+
+  def _reduce_26(val, _values, result); end
+
+  def _reduce_260(val, _values, result); end
+
+  def _reduce_261(val, _values, result); end
+
+  def _reduce_262(val, _values, result); end
+
+  def _reduce_263(val, _values, result); end
+
+  def _reduce_264(val, _values, result); end
+
+  def _reduce_265(val, _values, result); end
+
+  def _reduce_266(val, _values, result); end
+
+  def _reduce_267(val, _values, result); end
+
+  def _reduce_269(val, _values, result); end
+
+  def _reduce_27(val, _values, result); end
+
+  def _reduce_270(val, _values, result); end
+
+  def _reduce_271(val, _values, result); end
+
+  def _reduce_28(val, _values, result); end
+
+  def _reduce_282(val, _values, result); end
+
+  def _reduce_283(val, _values, result); end
+
+  def _reduce_284(val, _values, result); end
+
+  def _reduce_285(val, _values, result); end
+
+  def _reduce_286(val, _values, result); end
+
+  def _reduce_287(val, _values, result); end
+
+  def _reduce_288(val, _values, result); end
+
+  def _reduce_289(val, _values, result); end
+
+  def _reduce_290(val, _values, result); end
+
+  def _reduce_291(val, _values, result); end
+
+  def _reduce_292(val, _values, result); end
+
+  def _reduce_293(val, _values, result); end
+
+  def _reduce_294(val, _values, result); end
+
+  def _reduce_295(val, _values, result); end
+
+  def _reduce_296(val, _values, result); end
+
+  def _reduce_297(val, _values, result); end
+
+  def _reduce_298(val, _values, result); end
+
+  def _reduce_299(val, _values, result); end
+
+  def _reduce_3(val, _values, result); end
+
+  def _reduce_30(val, _values, result); end
+
+  def _reduce_300(val, _values, result); end
+
+  def _reduce_301(val, _values, result); end
+
+  def _reduce_303(val, _values, result); end
+
+  def _reduce_304(val, _values, result); end
+
+  def _reduce_305(val, _values, result); end
+
+  def _reduce_306(val, _values, result); end
+
+  def _reduce_307(val, _values, result); end
+
+  def _reduce_308(val, _values, result); end
+
+  def _reduce_309(val, _values, result); end
+
+  def _reduce_31(val, _values, result); end
+
+  def _reduce_310(val, _values, result); end
+
+  def _reduce_311(val, _values, result); end
+
+  def _reduce_312(val, _values, result); end
+
+  def _reduce_313(val, _values, result); end
+
+  def _reduce_314(val, _values, result); end
+
+  def _reduce_315(val, _values, result); end
+
+  def _reduce_316(val, _values, result); end
+
+  def _reduce_317(val, _values, result); end
+
+  def _reduce_318(val, _values, result); end
+
+  def _reduce_319(val, _values, result); end
+
+  def _reduce_32(val, _values, result); end
+
+  def _reduce_320(val, _values, result); end
+
+  def _reduce_321(val, _values, result); end
+
+  def _reduce_322(val, _values, result); end
+
+  def _reduce_323(val, _values, result); end
+
+  def _reduce_324(val, _values, result); end
+
+  def _reduce_325(val, _values, result); end
+
+  def _reduce_326(val, _values, result); end
+
+  def _reduce_327(val, _values, result); end
+
+  def _reduce_328(val, _values, result); end
+
+  def _reduce_329(val, _values, result); end
+
+  def _reduce_330(val, _values, result); end
+
+  def _reduce_331(val, _values, result); end
+
+  def _reduce_332(val, _values, result); end
+
+  def _reduce_333(val, _values, result); end
+
+  def _reduce_337(val, _values, result); end
+
+  def _reduce_34(val, _values, result); end
+
+  def _reduce_341(val, _values, result); end
+
+  def _reduce_343(val, _values, result); end
+
+  def _reduce_346(val, _values, result); end
+
+  def _reduce_347(val, _values, result); end
+
+  def _reduce_348(val, _values, result); end
+
+  def _reduce_349(val, _values, result); end
+
+  def _reduce_35(val, _values, result); end
+
+  def _reduce_351(val, _values, result); end
+
+  def _reduce_352(val, _values, result); end
+
+  def _reduce_353(val, _values, result); end
+
+  def _reduce_354(val, _values, result); end
+
+  def _reduce_355(val, _values, result); end
+
+  def _reduce_356(val, _values, result); end
+
+  def _reduce_357(val, _values, result); end
+
+  def _reduce_358(val, _values, result); end
+
+  def _reduce_359(val, _values, result); end
+
+  def _reduce_36(val, _values, result); end
+
+  def _reduce_360(val, _values, result); end
+
+  def _reduce_361(val, _values, result); end
+
+  def _reduce_362(val, _values, result); end
+
+  def _reduce_363(val, _values, result); end
+
+  def _reduce_364(val, _values, result); end
+
+  def _reduce_365(val, _values, result); end
+
+  def _reduce_366(val, _values, result); end
+
+  def _reduce_367(val, _values, result); end
+
+  def _reduce_368(val, _values, result); end
+
+  def _reduce_369(val, _values, result); end
+
+  def _reduce_37(val, _values, result); end
+
+  def _reduce_371(val, _values, result); end
+
+  def _reduce_372(val, _values, result); end
+
+  def _reduce_373(val, _values, result); end
+
+  def _reduce_374(val, _values, result); end
+
+  def _reduce_375(val, _values, result); end
+
+  def _reduce_376(val, _values, result); end
+
+  def _reduce_377(val, _values, result); end
+
+  def _reduce_378(val, _values, result); end
+
+  def _reduce_38(val, _values, result); end
+
+  def _reduce_380(val, _values, result); end
+
+  def _reduce_381(val, _values, result); end
+
+  def _reduce_382(val, _values, result); end
+
+  def _reduce_383(val, _values, result); end
+
+  def _reduce_384(val, _values, result); end
+
+  def _reduce_385(val, _values, result); end
+
+  def _reduce_386(val, _values, result); end
+
+  def _reduce_387(val, _values, result); end
+
+  def _reduce_388(val, _values, result); end
+
+  def _reduce_389(val, _values, result); end
+
+  def _reduce_39(val, _values, result); end
+
+  def _reduce_391(val, _values, result); end
+
+  def _reduce_392(val, _values, result); end
+
+  def _reduce_393(val, _values, result); end
+
+  def _reduce_394(val, _values, result); end
+
+  def _reduce_395(val, _values, result); end
+
+  def _reduce_396(val, _values, result); end
+
+  def _reduce_397(val, _values, result); end
+
+  def _reduce_398(val, _values, result); end
+
+  def _reduce_399(val, _values, result); end
+
+  def _reduce_4(val, _values, result); end
+
+  def _reduce_40(val, _values, result); end
+
+  def _reduce_400(val, _values, result); end
+
+  def _reduce_401(val, _values, result); end
+
+  def _reduce_402(val, _values, result); end
+
+  def _reduce_403(val, _values, result); end
+
+  def _reduce_404(val, _values, result); end
+
+  def _reduce_405(val, _values, result); end
+
+  def _reduce_406(val, _values, result); end
+
+  def _reduce_407(val, _values, result); end
+
+  def _reduce_408(val, _values, result); end
+
+  def _reduce_409(val, _values, result); end
+
+  def _reduce_41(val, _values, result); end
+
+  def _reduce_410(val, _values, result); end
+
+  def _reduce_411(val, _values, result); end
+
+  def _reduce_412(val, _values, result); end
+
+  def _reduce_413(val, _values, result); end
+
+  def _reduce_414(val, _values, result); end
+
+  def _reduce_415(val, _values, result); end
+
+  def _reduce_416(val, _values, result); end
+
+  def _reduce_417(val, _values, result); end
+
+  def _reduce_418(val, _values, result); end
+
+  def _reduce_419(val, _values, result); end
+
+  def _reduce_420(val, _values, result); end
+
+  def _reduce_421(val, _values, result); end
+
+  def _reduce_422(val, _values, result); end
+
+  def _reduce_423(val, _values, result); end
+
+  def _reduce_424(val, _values, result); end
+
+  def _reduce_425(val, _values, result); end
+
+  def _reduce_427(val, _values, result); end
+
+  def _reduce_428(val, _values, result); end
+
+  def _reduce_429(val, _values, result); end
+
+  def _reduce_43(val, _values, result); end
+
+  def _reduce_432(val, _values, result); end
+
+  def _reduce_434(val, _values, result); end
+
+  def _reduce_439(val, _values, result); end
+
+  def _reduce_440(val, _values, result); end
+
+  def _reduce_441(val, _values, result); end
+
+  def _reduce_442(val, _values, result); end
+
+  def _reduce_443(val, _values, result); end
+
+  def _reduce_444(val, _values, result); end
+
+  def _reduce_445(val, _values, result); end
+
+  def _reduce_446(val, _values, result); end
+
+  def _reduce_447(val, _values, result); end
+
+  def _reduce_448(val, _values, result); end
+
+  def _reduce_449(val, _values, result); end
+
+  def _reduce_450(val, _values, result); end
+
+  def _reduce_451(val, _values, result); end
+
+  def _reduce_452(val, _values, result); end
+
+  def _reduce_453(val, _values, result); end
+
+  def _reduce_454(val, _values, result); end
+
+  def _reduce_455(val, _values, result); end
+
+  def _reduce_456(val, _values, result); end
+
+  def _reduce_457(val, _values, result); end
+
+  def _reduce_458(val, _values, result); end
+
+  def _reduce_459(val, _values, result); end
+
+  def _reduce_46(val, _values, result); end
+
+  def _reduce_460(val, _values, result); end
+
+  def _reduce_461(val, _values, result); end
+
+  def _reduce_462(val, _values, result); end
+
+  def _reduce_463(val, _values, result); end
+
+  def _reduce_464(val, _values, result); end
+
+  def _reduce_465(val, _values, result); end
+
+  def _reduce_466(val, _values, result); end
+
+  def _reduce_467(val, _values, result); end
+
+  def _reduce_468(val, _values, result); end
+
+  def _reduce_469(val, _values, result); end
+
+  def _reduce_47(val, _values, result); end
+
+  def _reduce_470(val, _values, result); end
+
+  def _reduce_471(val, _values, result); end
+
+  def _reduce_472(val, _values, result); end
+
+  def _reduce_473(val, _values, result); end
+
+  def _reduce_475(val, _values, result); end
+
+  def _reduce_476(val, _values, result); end
+
+  def _reduce_477(val, _values, result); end
+
+  def _reduce_478(val, _values, result); end
+
+  def _reduce_479(val, _values, result); end
+
+  def _reduce_48(val, _values, result); end
+
+  def _reduce_480(val, _values, result); end
+
+  def _reduce_481(val, _values, result); end
+
+  def _reduce_482(val, _values, result); end
+
+  def _reduce_483(val, _values, result); end
+
+  def _reduce_484(val, _values, result); end
+
+  def _reduce_485(val, _values, result); end
+
+  def _reduce_486(val, _values, result); end
+
+  def _reduce_487(val, _values, result); end
+
+  def _reduce_488(val, _values, result); end
+
+  def _reduce_489(val, _values, result); end
+
+  def _reduce_49(val, _values, result); end
+
+  def _reduce_490(val, _values, result); end
+
+  def _reduce_491(val, _values, result); end
+
+  def _reduce_492(val, _values, result); end
+
+  def _reduce_493(val, _values, result); end
+
+  def _reduce_494(val, _values, result); end
+
+  def _reduce_495(val, _values, result); end
+
+  def _reduce_496(val, _values, result); end
+
+  def _reduce_497(val, _values, result); end
+
+  def _reduce_498(val, _values, result); end
+
+  def _reduce_499(val, _values, result); end
+
+  def _reduce_5(val, _values, result); end
+
+  def _reduce_500(val, _values, result); end
+
+  def _reduce_501(val, _values, result); end
+
+  def _reduce_502(val, _values, result); end
+
+  def _reduce_503(val, _values, result); end
+
+  def _reduce_504(val, _values, result); end
+
+  def _reduce_505(val, _values, result); end
+
+  def _reduce_506(val, _values, result); end
+
+  def _reduce_507(val, _values, result); end
+
+  def _reduce_508(val, _values, result); end
+
+  def _reduce_509(val, _values, result); end
+
+  def _reduce_510(val, _values, result); end
+
+  def _reduce_511(val, _values, result); end
+
+  def _reduce_512(val, _values, result); end
+
+  def _reduce_513(val, _values, result); end
+
+  def _reduce_514(val, _values, result); end
+
+  def _reduce_515(val, _values, result); end
+
+  def _reduce_516(val, _values, result); end
+
+  def _reduce_517(val, _values, result); end
+
+  def _reduce_518(val, _values, result); end
+
+  def _reduce_519(val, _values, result); end
+
+  def _reduce_520(val, _values, result); end
+
+  def _reduce_521(val, _values, result); end
+
+  def _reduce_522(val, _values, result); end
+
+  def _reduce_523(val, _values, result); end
+
+  def _reduce_524(val, _values, result); end
+
+  def _reduce_525(val, _values, result); end
+
+  def _reduce_526(val, _values, result); end
+
+  def _reduce_527(val, _values, result); end
+
+  def _reduce_528(val, _values, result); end
+
+  def _reduce_529(val, _values, result); end
+
+  def _reduce_530(val, _values, result); end
+
+  def _reduce_531(val, _values, result); end
+
+  def _reduce_533(val, _values, result); end
+
+  def _reduce_534(val, _values, result); end
+
+  def _reduce_535(val, _values, result); end
+
+  def _reduce_536(val, _values, result); end
+
+  def _reduce_537(val, _values, result); end
+
+  def _reduce_538(val, _values, result); end
+
+  def _reduce_539(val, _values, result); end
+
+  def _reduce_540(val, _values, result); end
+
+  def _reduce_541(val, _values, result); end
+
+  def _reduce_542(val, _values, result); end
+
+  def _reduce_543(val, _values, result); end
+
+  def _reduce_544(val, _values, result); end
+
+  def _reduce_545(val, _values, result); end
+
+  def _reduce_546(val, _values, result); end
+
+  def _reduce_547(val, _values, result); end
+
+  def _reduce_55(val, _values, result); end
+
+  def _reduce_550(val, _values, result); end
+
+  def _reduce_551(val, _values, result); end
+
+  def _reduce_552(val, _values, result); end
+
+  def _reduce_553(val, _values, result); end
+
+  def _reduce_554(val, _values, result); end
+
+  def _reduce_555(val, _values, result); end
+
+  def _reduce_556(val, _values, result); end
+
+  def _reduce_557(val, _values, result); end
+
+  def _reduce_56(val, _values, result); end
+
+  def _reduce_560(val, _values, result); end
+
+  def _reduce_561(val, _values, result); end
+
+  def _reduce_564(val, _values, result); end
+
+  def _reduce_565(val, _values, result); end
+
+  def _reduce_566(val, _values, result); end
+
+  def _reduce_568(val, _values, result); end
+
+  def _reduce_569(val, _values, result); end
+
+  def _reduce_57(val, _values, result); end
+
+  def _reduce_571(val, _values, result); end
+
+  def _reduce_572(val, _values, result); end
+
+  def _reduce_573(val, _values, result); end
+
+  def _reduce_574(val, _values, result); end
+
+  def _reduce_575(val, _values, result); end
+
+  def _reduce_576(val, _values, result); end
+
+  def _reduce_589(val, _values, result); end
+
+  def _reduce_59(val, _values, result); end
+
+  def _reduce_590(val, _values, result); end
+
+  def _reduce_595(val, _values, result); end
+
+  def _reduce_596(val, _values, result); end
+
+  def _reduce_6(val, _values, result); end
+
+  def _reduce_60(val, _values, result); end
+
+  def _reduce_600(val, _values, result); end
+
+  def _reduce_604(val, _values, result); end
+
+  def _reduce_61(val, _values, result); end
+
+  def _reduce_62(val, _values, result); end
+
+  def _reduce_63(val, _values, result); end
+
+  def _reduce_64(val, _values, result); end
+
+  def _reduce_65(val, _values, result); end
+
+  def _reduce_66(val, _values, result); end
+
+  def _reduce_67(val, _values, result); end
+
+  def _reduce_68(val, _values, result); end
+
+  def _reduce_69(val, _values, result); end
+
+  def _reduce_70(val, _values, result); end
+
+  def _reduce_71(val, _values, result); end
+
+  def _reduce_72(val, _values, result); end
+
+  def _reduce_73(val, _values, result); end
+
+  def _reduce_75(val, _values, result); end
+
+  def _reduce_76(val, _values, result); end
+
+  def _reduce_77(val, _values, result); end
+
+  def _reduce_78(val, _values, result); end
+
+  def _reduce_79(val, _values, result); end
+
+  def _reduce_8(val, _values, result); end
+
+  def _reduce_80(val, _values, result); end
+
+  def _reduce_81(val, _values, result); end
+
+  def _reduce_82(val, _values, result); end
+
+  def _reduce_83(val, _values, result); end
+
+  def _reduce_85(val, _values, result); end
+
+  def _reduce_86(val, _values, result); end
+
+  def _reduce_87(val, _values, result); end
+
+  def _reduce_88(val, _values, result); end
+
+  def _reduce_89(val, _values, result); end
+
+  def _reduce_9(val, _values, result); end
+
+  def _reduce_90(val, _values, result); end
+
+  def _reduce_91(val, _values, result); end
+
+  def _reduce_92(val, _values, result); end
+
+  def _reduce_93(val, _values, result); end
+
+  def _reduce_94(val, _values, result); end
+
+  def _reduce_95(val, _values, result); end
+
+  def _reduce_96(val, _values, result); end
+
+  def _reduce_97(val, _values, result); end
+
+  def _reduce_98(val, _values, result); end
+
+  def _reduce_99(val, _values, result); end
+
+  def _reduce_none(val, _values, result); end
+
+  def default_encoding(); end
+
+  def version(); end
+  Racc_arg = ::T.let(nil, ::T.untyped)
+  Racc_debug_parser = ::T.let(nil, ::T.untyped)
+  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
+end
+
+class Parser::Ruby24
+end
+
 module Parser::Source
 end
 
@@ -14737,7 +16970,7 @@ class Parser::Source::Buffer
 
   def first_line(); end
 
-  def initialize(name, first_line=T.unsafe(nil)); end
+  def initialize(name, first_line=T.unsafe(nil), source: T.unsafe(nil)); end
 
   def last_line(); end
 
@@ -14800,6 +17033,7 @@ class Parser::Source::Comment::Associator
 
   def skip_directives=(skip_directives); end
   MAGIC_COMMENT_RE = ::T.let(nil, ::T.untyped)
+  POSTFIX_TYPES = ::T.let(nil, ::T.untyped)
 end
 
 class Parser::Source::Comment::Associator
@@ -14897,6 +17131,21 @@ class Parser::Source::Map::Definition
 end
 
 class Parser::Source::Map::Definition
+end
+
+class Parser::Source::Map::EndlessDefinition
+  def assignment(); end
+
+  def initialize(keyword_l, operator_l, name_l, assignment_l, body_l); end
+
+  def keyword(); end
+
+  def name(); end
+
+  def operator(); end
+end
+
+class Parser::Source::Map::EndlessDefinition
 end
 
 class Parser::Source::Map::For
@@ -15042,6 +17291,7 @@ end
 
 class Parser::Source::Range
   include ::Comparable
+  include ::RuboCop::AST::Ext::Range
   def adjust(begin_pos: T.unsafe(nil), end_pos: T.unsafe(nil)); end
 
   def begin(); end
@@ -15097,6 +17347,8 @@ class Parser::Source::Range
   def source_line(); end
 
   def to_a(); end
+
+  def to_range(); end
 
   def with(begin_pos: T.unsafe(nil), end_pos: T.unsafe(nil)); end
 end
@@ -15154,7 +17406,17 @@ class Parser::Source::Rewriter
 end
 
 class Parser::Source::TreeRewriter
+  def action_root(); end
+
+  def as_nested_actions(); end
+
+  def as_replacements(); end
+
   def diagnostics(); end
+
+  def empty?(); end
+
+  def import!(foreign_rewriter, offset: T.unsafe(nil)); end
 
   def in_transaction?(); end
 
@@ -15167,6 +17429,10 @@ class Parser::Source::TreeRewriter
   def insert_before(range, content); end
 
   def insert_before_multi(range, text); end
+
+  def merge(with); end
+
+  def merge!(with); end
 
   def process(); end
 
@@ -15185,11 +17451,25 @@ class Parser::Source::TreeRewriter
 end
 
 class Parser::Source::TreeRewriter::Action
+  def analyse_hierarchy(action); end
+
+  def bsearch_child_index(from=T.unsafe(nil)); end
+
   def call_enforcer_for_merge(action); end
+
+  def check_fusible(action, *fusible); end
+
+  def children(); end
 
   def combine(action); end
 
+  def combine_children(more_children); end
+
+  def contract(); end
+
   def do_combine(action); end
+
+  def empty?(); end
 
   def fuse_deletions(action, fusible, other_sibblings); end
 
@@ -15203,19 +17483,21 @@ class Parser::Source::TreeRewriter::Action
 
   def merge(action); end
 
+  def moved(source_buffer, offset); end
+
+  def nested_actions(); end
+
   def ordered_replacements(); end
 
-  def place_in_hierachy(action); end
+  def place_in_hierarchy(action); end
 
   def range(); end
-
-  def relationship_with(action); end
 
   def replacement(); end
 
   def swallow(children); end
 
-  def with(range: T.unsafe(nil), children: T.unsafe(nil), insert_before: T.unsafe(nil), replacement: T.unsafe(nil), insert_after: T.unsafe(nil)); end
+  def with(range: T.unsafe(nil), enforcer: T.unsafe(nil), children: T.unsafe(nil), insert_before: T.unsafe(nil), replacement: T.unsafe(nil), insert_after: T.unsafe(nil)); end
 end
 
 class Parser::Source::TreeRewriter::Action
@@ -15297,8 +17579,6 @@ module Parser
 end
 
 class Pathname
-  def empty?(); end
-
   def fnmatch?(*_); end
 
   def glob(*_); end
@@ -15629,45 +17909,15 @@ end
 class Proc
   include ::MethodSource::SourceLocation::ProcExtensions
   include ::MethodSource::MethodExtensions
-  def ===(*_); end
+  def <<(_); end
+
+  def >>(_); end
 
   def clone(); end
-
-  def yield(*_); end
-end
-
-module Process::Sys
-  def self.getegid(); end
-end
-
-class Process::Tms
-  def cstime(); end
-
-  def cstime=(_); end
-
-  def cutime(); end
-
-  def cutime=(_); end
-
-  def stime(); end
-
-  def stime=(_); end
-
-  def utime(); end
-
-  def utime=(_); end
-end
-
-class Process::Tms
-  def self.[](*_); end
-
-  def self.members(); end
 end
 
 module Process
-  def self.last_status(); end
-
-  def self.setpgrp(); end
+  CLOCK_TAI = ::T.let(nil, ::T.untyped)
 end
 
 class ProgressBar
@@ -16253,15 +18503,13 @@ class Pry
 
   def binding_stack=(binding_stack); end
 
-  def color(); end
+  def color(*args, &block); end
 
-  def color=(value); end
+  def color=(*args, &block); end
 
-  def command_state(); end
+  def commands(*args, &block); end
 
-  def commands(); end
-
-  def commands=(value); end
+  def commands=(*args, &block); end
 
   def complete(str); end
 
@@ -16275,9 +18523,9 @@ class Pry
 
   def custom_completions=(custom_completions); end
 
-  def editor(); end
+  def editor(*args, &block); end
 
-  def editor=(value); end
+  def editor=(*args, &block); end
 
   def eval(line, options=T.unsafe(nil)); end
 
@@ -16287,33 +18535,31 @@ class Pry
 
   def evaluate_ruby(code); end
 
-  def exception_handler(); end
+  def exception_handler(*args, &block); end
 
-  def exception_handler=(value); end
+  def exception_handler=(*args, &block); end
 
   def exec_hook(name, *args, &block); end
 
   def exit_value(); end
 
-  def extra_sticky_locals(); end
+  def extra_sticky_locals(*args, &block); end
 
-  def extra_sticky_locals=(value); end
+  def extra_sticky_locals=(*args, &block); end
 
-  def hooks(); end
+  def hooks(*args, &block); end
 
-  def hooks=(value); end
+  def hooks=(*args, &block); end
 
   def initialize(options=T.unsafe(nil)); end
 
-  def inject_local(name, value, b); end
+  def inject_local(name, value, binding); end
 
   def inject_sticky_locals!(); end
 
-  def input(); end
+  def input(*args, &block); end
 
-  def input=(value); end
-
-  def input_array(); end
+  def input=(*args, &block); end
 
   def input_ring(); end
 
@@ -16323,7 +18569,7 @@ class Pry
 
   def last_exception(); end
 
-  def last_exception=(e); end
+  def last_exception=(exception); end
 
   def last_file(); end
 
@@ -16341,21 +18587,19 @@ class Pry
 
   def output(); end
 
-  def output=(value); end
-
-  def output_array(); end
+  def output=(*args, &block); end
 
   def output_ring(); end
 
   def pager(); end
 
-  def pager=(value); end
+  def pager=(*args, &block); end
 
   def pop_prompt(); end
 
-  def print(); end
+  def print(*args, &block); end
 
-  def print=(value); end
+  def print=(*args, &block); end
 
   def process_command(val); end
 
@@ -16401,26 +18645,25 @@ class Pry
 
   def update_input_history(code); end
   BINDING_METHOD_IMPL = ::T.let(nil, ::T.untyped)
-  CLIPPED_PRINT = ::T.let(nil, ::T.untyped)
   Commands = ::T.let(nil, ::T.untyped)
-  DEFAULT_CONTROL_D_HANDLER = ::T.let(nil, ::T.untyped)
-  DEFAULT_EXCEPTION_HANDLER = ::T.let(nil, ::T.untyped)
-  DEFAULT_EXCEPTION_WHITELIST = ::T.let(nil, ::T.untyped)
-  DEFAULT_HOOKS = ::T.let(nil, ::T.untyped)
-  DEFAULT_PRINT = ::T.let(nil, ::T.untyped)
-  DEFAULT_SYSTEM = ::T.let(nil, ::T.untyped)
   EMPTY_COMPLETIONS = ::T.let(nil, ::T.untyped)
-  HOME_RC_FILE = ::T.let(nil, ::T.untyped)
+  HAS_SAFE_LEVEL = ::T.let(nil, ::T.untyped)
   LOCAL_RC_FILE = ::T.let(nil, ::T.untyped)
-  SIMPLE_PRINT = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class Pry::BasicObject
   include ::Kernel
+  ENV = ::T.let(nil, ::T.untyped)
 end
 
+Pry::BasicObject::Dir = Dir
+
+Pry::BasicObject::File = File
+
 Pry::BasicObject::Kernel = Kernel
+
+Pry::BasicObject::LoadError = LoadError
 
 Pry::BasicObject::Pry = Pry
 
@@ -16431,8 +18674,6 @@ class Pry::BlockCommand
   def call(*args); end
 
   def help(); end
-
-  def opts(); end
 end
 
 class Pry::BlockCommand
@@ -16506,7 +18747,7 @@ class Pry::ClassCommand
 end
 
 class Pry::Code
-  def <<(line, lineno=T.unsafe(nil)); end
+  def <<(line); end
 
   def ==(other); end
 
@@ -16538,15 +18779,17 @@ class Pry::Code
 
   def max_lineno_width(); end
 
-  def method_missing(name, *args, &block); end
+  def method_missing(method_name, *args, &block); end
 
   def nesting_at(line_number); end
 
   def print_to_output(output, color=T.unsafe(nil)); end
 
-  def push(line, lineno=T.unsafe(nil)); end
+  def push(line); end
 
   def raw(); end
+
+  def reject(&block); end
 
   def select(&block); end
 
@@ -16620,19 +18863,19 @@ end
 class Pry::CodeObject
   include ::Pry::Helpers::CommandHelpers
   include ::Pry::Helpers::OptionsHelpers
-  def _pry_(); end
-
-  def _pry_=(_pry_); end
-
   def command_lookup(); end
 
   def default_lookup(); end
 
   def empty_lookup(); end
 
-  def initialize(str, _pry_, options=T.unsafe(nil)); end
+  def initialize(str, pry_instance, options=T.unsafe(nil)); end
 
   def method_or_class_lookup(); end
+
+  def pry_instance(); end
+
+  def pry_instance=(pry_instance); end
 
   def str(); end
 
@@ -16663,16 +18906,19 @@ module Pry::CodeObject::Helpers
 end
 
 class Pry::CodeObject
-  def self.lookup(str, _pry_, options=T.unsafe(nil)); end
+  def self.lookup(str, pry_instance, options=T.unsafe(nil)); end
 end
 
 class Pry::ColorPrinter
-  def text(str, width=T.unsafe(nil)); end
-  OBJ_COLOR = ::T.let(nil, ::T.untyped)
+  def pp(object); end
+
+  def text(str, max_width=T.unsafe(nil)); end
 end
 
 class Pry::ColorPrinter
-  def self.pp(obj, out=T.unsafe(nil), width=T.unsafe(nil), newline=T.unsafe(nil)); end
+  def self.default(_output, value, pry_instance); end
+
+  def self.pp(obj, output=T.unsafe(nil), max_width=T.unsafe(nil)); end
 end
 
 class Pry::Command
@@ -16689,8 +18935,6 @@ class Pry::Command
   def arg_string=(arg_string); end
 
   def block(); end
-
-  def call_safely(*args); end
 
   def captures(); end
 
@@ -16718,8 +18962,6 @@ class Pry::Command
 
   def context=(context); end
 
-  def dependencies_met?(); end
-
   def description(); end
 
   def eval_string(); end
@@ -16744,6 +18986,10 @@ class Pry::Command
 
   def process_line(line); end
 
+  def pry_instance(); end
+
+  def pry_instance=(pry_instance); end
+
   def run(command_string, *args); end
 
   def source(); end
@@ -16756,11 +19002,7 @@ class Pry::Command
 
   def target_self(); end
 
-  def text(); end
-
   def tokenize(val); end
-
-  def use_unpatched_symbol(); end
 
   def void(); end
   VOID_VALUE = ::T.let(nil, ::T.untyped)
@@ -16799,32 +19041,32 @@ end
 
 class Pry::Command::Cat::ExceptionFormatter
   include ::Pry::Helpers::Text
-  def _pry_(); end
-
   def ex(); end
 
   def format(); end
 
-  def initialize(exception, _pry_, opts); end
+  def initialize(exception, pry_instance, opts); end
 
   def opts(); end
+
+  def pry_instance(); end
 end
 
 class Pry::Command::Cat::ExceptionFormatter
 end
 
 class Pry::Command::Cat::FileFormatter
-  def _pry_(); end
-
   def file_and_line(); end
 
   def file_with_embedded_line(); end
 
   def format(); end
 
-  def initialize(file_with_embedded_line, _pry_, opts); end
+  def initialize(file_with_embedded_line, pry_instance, opts); end
 
   def opts(); end
+
+  def pry_instance(); end
 end
 
 class Pry::Command::Cat::FileFormatter
@@ -16879,8 +19121,6 @@ end
 class Pry::Command::CodeCollector
   include ::Pry::Helpers::CommandHelpers
   include ::Pry::Helpers::OptionsHelpers
-  def _pry_(); end
-
   def args(); end
 
   def code_object(); end
@@ -16891,7 +19131,7 @@ class Pry::Command::CodeCollector
 
   def file=(file); end
 
-  def initialize(args, opts, _pry_); end
+  def initialize(args, opts, pry_instance); end
 
   def line_range(); end
 
@@ -16900,6 +19140,8 @@ class Pry::Command::CodeCollector
   def opts(); end
 
   def pry_input_content(); end
+
+  def pry_instance(); end
 
   def pry_output_content(); end
 
@@ -16969,17 +19211,17 @@ class Pry::Command::Edit
 end
 
 class Pry::Command::Edit::ExceptionPatcher
-  def _pry_(); end
-
-  def _pry_=(_pry_); end
-
   def file_and_line(); end
 
   def file_and_line=(file_and_line); end
 
-  def initialize(_pry_, state, exception_file_and_line); end
+  def initialize(pry_instance, state, exception_file_and_line); end
 
   def perform_patch(); end
+
+  def pry_instance(); end
+
+  def pry_instance=(pry_instance); end
 
   def state(); end
 
@@ -17037,77 +19279,6 @@ end
 class Pry::Command::FixIndent
 end
 
-class Pry::Command::GemCd
-  def complete(str); end
-
-  def process(gem); end
-end
-
-class Pry::Command::GemCd
-end
-
-class Pry::Command::GemInstall
-  def process(gem); end
-end
-
-class Pry::Command::GemInstall
-end
-
-class Pry::Command::GemList
-  def process(pattern=T.unsafe(nil)); end
-end
-
-class Pry::Command::GemList
-end
-
-class Pry::Command::GemOpen
-  def complete(str); end
-
-  def process(gem); end
-end
-
-class Pry::Command::GemOpen
-end
-
-class Pry::Command::GemReadme
-  def process(name); end
-end
-
-class Pry::Command::GemReadme
-end
-
-class Pry::Command::GemSearch
-  def process(str); end
-  API_ENDPOINT = ::T.let(nil, ::T.untyped)
-end
-
-class Pry::Command::GemSearch
-end
-
-class Pry::Command::GemStat
-  def process(name); end
-  FAIL_WHALE = ::T.let(nil, ::T.untyped)
-  STAT_HOST = ::T.let(nil, ::T.untyped)
-  STAT_PATH = ::T.let(nil, ::T.untyped)
-  STAT_PORT = ::T.let(nil, ::T.untyped)
-end
-
-class Pry::Command::GemStat
-end
-
-class Pry::Command::Gist
-  def clipboard_content(content); end
-
-  def comment_expression_result_for_gist(result); end
-
-  def gist_content(content, filename); end
-
-  def input_content(); end
-end
-
-class Pry::Command::Gist
-end
-
 class Pry::Command::Help
   def command_groups(); end
 
@@ -17152,13 +19323,6 @@ end
 class Pry::Command::ImportSet
 end
 
-class Pry::Command::InstallCommand
-  def process(name); end
-end
-
-class Pry::Command::InstallCommand
-end
-
 class Pry::Command::JumpTo
   def process(break_level); end
 end
@@ -17179,7 +19343,7 @@ end
 
 class Pry::Command::Ls::Constants
   include ::Pry::Command::Ls::Interrogatable
-  def initialize(interrogatee, no_user_opts, opts, _pry_); end
+  def initialize(interrogatee, no_user_opts, opts, pry_instance); end
   DEPRECATED_CONSTANTS = ::T.let(nil, ::T.untyped)
 end
 
@@ -17187,11 +19351,11 @@ class Pry::Command::Ls::Constants
 end
 
 class Pry::Command::Ls::Formatter
-  def _pry_(); end
-
   def grep=(grep); end
 
-  def initialize(_pry_); end
+  def initialize(pry_instance); end
+
+  def pry_instance(); end
 
   def write_out(); end
 end
@@ -17200,7 +19364,7 @@ class Pry::Command::Ls::Formatter
 end
 
 class Pry::Command::Ls::Globals
-  def initialize(opts, _pry_); end
+  def initialize(opts, pry_instance); end
   BUILTIN_GLOBALS = ::T.let(nil, ::T.untyped)
   PSEUDO_GLOBALS = ::T.let(nil, ::T.untyped)
 end
@@ -17219,7 +19383,7 @@ end
 
 class Pry::Command::Ls::InstanceVars
   include ::Pry::Command::Ls::Interrogatable
-  def initialize(interrogatee, no_user_opts, opts, _pry_); end
+  def initialize(interrogatee, no_user_opts, opts, pry_instance); end
 end
 
 class Pry::Command::Ls::InstanceVars
@@ -17238,25 +19402,25 @@ module Pry::Command::Ls::JRubyHacks
 end
 
 class Pry::Command::Ls::LocalNames
-  def initialize(no_user_opts, args, _pry_); end
+  def initialize(no_user_opts, args, pry_instance); end
 end
 
 class Pry::Command::Ls::LocalNames
 end
 
 class Pry::Command::Ls::LocalVars
-  def initialize(opts, _pry_); end
+  def initialize(opts, pry_instance); end
 end
 
 class Pry::Command::Ls::LocalVars
 end
 
 class Pry::Command::Ls::LsEntity
-  def _pry_(); end
-
   def entities_table(); end
 
   def initialize(opts); end
+
+  def pry_instance(); end
 end
 
 class Pry::Command::Ls::LsEntity
@@ -17266,7 +19430,7 @@ class Pry::Command::Ls::Methods
   include ::Pry::Command::Ls::Interrogatable
   include ::Pry::Command::Ls::MethodsHelper
   include ::Pry::Command::Ls::JRubyHacks
-  def initialize(interrogatee, no_user_opts, opts, _pry_); end
+  def initialize(interrogatee, no_user_opts, opts, pry_instance); end
 end
 
 class Pry::Command::Ls::Methods
@@ -17283,7 +19447,7 @@ class Pry::Command::Ls::SelfMethods
   include ::Pry::Command::Ls::Interrogatable
   include ::Pry::Command::Ls::MethodsHelper
   include ::Pry::Command::Ls::JRubyHacks
-  def initialize(interrogatee, no_user_opts, opts, _pry_); end
+  def initialize(interrogatee, no_user_opts, opts, pry_instance); end
 end
 
 class Pry::Command::Ls::SelfMethods
@@ -17439,7 +19603,12 @@ class Pry::Command::ShowInput
 end
 
 class Pry::Command::ShowSource
+  include ::Pry::Helpers::DocumentationHelpers
   def content_for(code_object); end
+
+  def docs_for(code_object); end
+
+  def render_doc_markup_for(code_object); end
 end
 
 class Pry::Command::ShowSource
@@ -17475,15 +19644,15 @@ class Pry::Command::WatchExpression
 end
 
 class Pry::Command::WatchExpression::Expression
-  def _pry_(); end
-
   def changed?(); end
 
   def eval!(); end
 
-  def initialize(_pry_, target, source); end
+  def initialize(pry_instance, target, source); end
 
   def previous_value(); end
+
+  def pry_instance(); end
 
   def source(); end
 
@@ -17517,6 +19686,7 @@ class Pry::Command::Whereami
 end
 
 class Pry::Command::Wtf
+  RUBY_FRAME_PATTERN = ::T.let(nil, ::T.untyped)
 end
 
 class Pry::Command::Wtf
@@ -17553,8 +19723,6 @@ class Pry::Command
 
   def self.group(name=T.unsafe(nil)); end
 
-  def self.hooks(); end
-
   def self.line(); end
 
   def self.match(arg=T.unsafe(nil)); end
@@ -17574,6 +19742,8 @@ class Pry::Command
   def self.source_file(); end
 
   def self.source_line(); end
+
+  def self.state(); end
 
   def self.subclass(match, description, options, helpers, &block); end
 end
@@ -17607,8 +19777,6 @@ class Pry::CommandSet
 
   def desc(search, description=T.unsafe(nil)); end
 
-  def disabled_command(name_of_disabled_command, message, matcher=T.unsafe(nil)); end
-
   def each(&block); end
 
   def find_command(pattern); end
@@ -17618,8 +19786,6 @@ class Pry::CommandSet
   def find_command_for_help(search); end
 
   def helper_module(); end
-
-  def helpers(&block); end
 
   def import(*sets); end
 
@@ -17635,8 +19801,6 @@ class Pry::CommandSet
 
   def rename_command(new_match, search, options=T.unsafe(nil)); end
 
-  def run_command(context, match, *args); end
-
   def to_h(); end
 
   def to_hash(); end
@@ -17647,216 +19811,279 @@ end
 class Pry::CommandSet
 end
 
+class Pry::CommandState
+  def reset(command_name); end
+
+  def state_for(command_name); end
+end
+
+class Pry::CommandState
+  def self.default(); end
+end
+
 class Pry::Config
-  include ::Pry::Config::Behavior
-end
+  def [](attr); end
 
-module Pry::Config::Behavior
-  def ==(other); end
+  def []=(attr, value); end
 
-  def [](key); end
-
-  def []=(key, value); end
-
-  def clear(); end
-
-  def default(); end
-
-  def eager_load!(); end
-
-  def eql?(other); end
-
-  def forget(key); end
-
-  def initialize(default=T.unsafe(nil)); end
-
-  def inspect(); end
-
-  def key?(key); end
-
-  def keys(); end
-
-  def last_default(); end
-
-  def merge!(other); end
-
-  def method_missing(name, *args, &block); end
-
-  def pretty_print(q); end
-
-  def to_h(); end
-
-  def to_hash(); end
-  ASSIGNMENT = ::T.let(nil, ::T.untyped)
-  INSPECT_REGEXP = ::T.let(nil, ::T.untyped)
-  NODUP = ::T.let(nil, ::T.untyped)
-end
-
-module Pry::Config::Behavior::Builder
-  def assign(attributes, default=T.unsafe(nil)); end
-
-  def from_hash(attributes, default=T.unsafe(nil)); end
-end
-
-module Pry::Config::Behavior::Builder
-end
-
-class Pry::Config::Behavior::ReservedKeyError
-end
-
-class Pry::Config::Behavior::ReservedKeyError
-end
-
-module Pry::Config::Behavior
-  def self.included(klass); end
-end
-
-module Pry::Config::Convenience
-  def config_shortcut(*names); end
-  SHORTCUTS = ::T.let(nil, ::T.untyped)
-end
-
-module Pry::Config::Convenience
-end
-
-class Pry::Config::Default
-  include ::Pry::Config::Behavior
-  include ::Pry::Config::Memoization
   def auto_indent(); end
+
+  def auto_indent=(auto_indent); end
 
   def collision_warning(); end
 
+  def collision_warning=(collision_warning); end
+
   def color(); end
+
+  def color=(color); end
 
   def command_completions(); end
 
+  def command_completions=(command_completions); end
+
   def command_prefix(); end
+
+  def command_prefix=(command_prefix); end
 
   def commands(); end
 
+  def commands=(commands); end
+
   def completer(); end
+
+  def completer=(completer); end
 
   def control_d_handler(); end
 
+  def control_d_handler=(value); end
+
   def correct_indent(); end
+
+  def correct_indent=(correct_indent); end
 
   def default_window_size(); end
 
+  def default_window_size=(default_window_size); end
+
   def disable_auto_reload(); end
+
+  def disable_auto_reload=(disable_auto_reload); end
 
   def editor(); end
 
+  def editor=(editor); end
+
   def exception_handler(); end
+
+  def exception_handler=(exception_handler); end
 
   def exception_whitelist(); end
 
+  def exception_whitelist=(exception_whitelist); end
+
   def exec_string(); end
+
+  def exec_string=(exec_string); end
 
   def extra_sticky_locals(); end
 
+  def extra_sticky_locals=(extra_sticky_locals); end
+
   def file_completions(); end
 
-  def gist(); end
+  def file_completions=(file_completions); end
 
   def history(); end
 
+  def history=(history); end
+
+  def history_file(); end
+
+  def history_file=(history_file); end
+
+  def history_ignorelist(); end
+
+  def history_ignorelist=(history_ignorelist); end
+
+  def history_load(); end
+
+  def history_load=(history_load); end
+
+  def history_save(); end
+
+  def history_save=(history_save); end
+
   def hooks(); end
 
-  def initialize(); end
+  def hooks=(hooks); end
 
   def input(); end
 
+  def input=(input); end
+
   def ls(); end
+
+  def ls=(ls); end
 
   def memory_size(); end
 
+  def memory_size=(memory_size); end
+
+  def merge(config_hash); end
+
+  def merge!(config_hash); end
+
+  def method_missing(method_name, *args, &_block); end
+
   def output(); end
+
+  def output=(output); end
 
   def output_prefix(); end
 
+  def output_prefix=(output_prefix); end
+
   def pager(); end
+
+  def pager=(pager); end
 
   def print(); end
 
+  def print=(print); end
+
   def prompt(); end
+
+  def prompt=(prompt); end
 
   def prompt_name(); end
 
+  def prompt_name=(prompt_name); end
+
   def prompt_safe_contexts(); end
+
+  def prompt_safe_contexts=(prompt_safe_contexts); end
 
   def quiet(); end
 
+  def quiet=(quiet); end
+
+  def rc_file(); end
+
+  def rc_file=(rc_file); end
+
   def requires(); end
+
+  def requires=(requires); end
 
   def should_load_local_rc(); end
 
+  def should_load_local_rc=(should_load_local_rc); end
+
   def should_load_plugins(); end
+
+  def should_load_plugins=(should_load_plugins); end
 
   def should_load_rc(); end
 
+  def should_load_rc=(should_load_rc); end
+
   def should_load_requires(); end
+
+  def should_load_requires=(should_load_requires); end
 
   def should_trap_interrupts(); end
 
+  def should_trap_interrupts=(should_trap_interrupts); end
+
   def system(); end
 
+  def system=(system); end
+
+  def unrescued_exceptions(); end
+
+  def unrescued_exceptions=(unrescued_exceptions); end
+
   def windows_console_warning(); end
+
+  def windows_console_warning=(windows_console_warning); end
 end
 
-class Pry::Config::Default
-  extend ::Pry::Config::Behavior::Builder
-  extend ::Pry::Config::Memoization::ClassMethods
+module Pry::Config::Attributable
+  def attribute(attr_name); end
 end
 
-class Pry::Config::Lazy
+module Pry::Config::Attributable
+end
+
+class Pry::Config::LazyValue
   def call(); end
 
   def initialize(&block); end
 end
 
-class Pry::Config::Lazy
+class Pry::Config::LazyValue
 end
 
-module Pry::Config::Memoization
-  def memoized_methods(); end
-  MEMOIZED_METHODS = ::T.let(nil, ::T.untyped)
+class Pry::Config::MemoizedValue
+  def call(); end
+
+  def initialize(&block); end
 end
 
-module Pry::Config::Memoization::ClassMethods
-  def def_memoized(method_table); end
+class Pry::Config::MemoizedValue
 end
 
-module Pry::Config::Memoization::ClassMethods
+class Pry::Config::Value
+  def call(); end
+
+  def initialize(value); end
 end
 
-module Pry::Config::Memoization
-  def self.included(mod); end
+class Pry::Config::Value
 end
 
 class Pry::Config
-  extend ::Pry::Config::Behavior::Builder
-  def self.shortcuts(); end
+  extend ::Pry::Config::Attributable
+end
+
+module Pry::ControlDHandler
+end
+
+module Pry::ControlDHandler
+  def self.default(pry_instance); end
 end
 
 class Pry::Editor
   include ::Pry::Helpers::CommandHelpers
   include ::Pry::Helpers::OptionsHelpers
-  def _pry_(); end
+  def build_editor_invocation_string(file, line, blocking); end
 
   def edit_tempfile_with_content(initial_content, line=T.unsafe(nil)); end
 
-  def initialize(_pry_); end
+  def initialize(pry_instance); end
 
   def invoke_editor(file, line, blocking=T.unsafe(nil)); end
+
+  def pry_instance(); end
 end
 
 class Pry::Editor
+  def self.default(); end
 end
 
-module Pry::ExtendCommandBundle
+module Pry::Env
 end
 
-module Pry::ExtendCommandBundle
+module Pry::Env
+  def self.[](key); end
+end
+
+module Pry::ExceptionHandler
+end
+
+module Pry::ExceptionHandler
+  def self.handle_exception(output, exception, _pry_instance); end
 end
 
 module Pry::Forwardable
@@ -17880,27 +20107,11 @@ end
 module Pry::Helpers::BaseHelpers
   def colorize_code(code); end
 
-  def command_dependencies_met?(options); end
-
   def find_command(name, set=T.unsafe(nil)); end
 
   def heading(text); end
 
   def highlight(string, regexp, highlight_color=T.unsafe(nil)); end
-
-  def jruby?(); end
-
-  def jruby_19?(); end
-
-  def linux?(); end
-
-  def mac_osx?(); end
-
-  def mri?(); end
-
-  def mri_19?(); end
-
-  def mri_2?(); end
 
   def not_a_real_file?(file); end
 
@@ -17911,10 +20122,6 @@ module Pry::Helpers::BaseHelpers
   def stagger_output(text, _out=T.unsafe(nil)); end
 
   def use_ansi_codes?(); end
-
-  def windows?(); end
-
-  def windows_ansi?(); end
 end
 
 module Pry::Helpers::BaseHelpers
@@ -17923,35 +20130,36 @@ end
 
 module Pry::Helpers::CommandHelpers
   include ::Pry::Helpers::OptionsHelpers
+  def absolute_index_number(line_number, array_length); end
+
+  def absolute_index_range(range_or_number, array_length); end
+
+  def get_method_or_raise(method_name, context, opts=T.unsafe(nil)); end
+
+  def internal_binding?(context); end
+
+  def one_index_number(line_number); end
+
+  def one_index_range(range); end
+
+  def one_index_range_or_number(range_or_number); end
+
+  def restrict_to_lines(content, lines); end
+
+  def set_file_and_dir_locals(file_name, pry=T.unsafe(nil), ctx=T.unsafe(nil)); end
+
+  def temp_file(ext=T.unsafe(nil)); end
+
+  def unindent(dirty_text, left_padding=T.unsafe(nil)); end
 end
 
 module Pry::Helpers::CommandHelpers
-  def self.absolute_index_number(line_number, array_length); end
-
-  def self.absolute_index_range(range_or_number, array_length); end
-
-  def self.command_error(message, omit_help, klass=T.unsafe(nil)); end
-
-  def self.get_method_or_raise(name, target, opts=T.unsafe(nil), omit_help=T.unsafe(nil)); end
-
-  def self.internal_binding?(target); end
-
-  def self.one_index_number(line_number); end
-
-  def self.one_index_range(range); end
-
-  def self.one_index_range_or_number(range_or_number); end
-
-  def self.restrict_to_lines(content, lines); end
-
-  def self.set_file_and_dir_locals(file_name, _pry_=T.unsafe(nil), target=T.unsafe(nil)); end
-
-  def self.temp_file(ext=T.unsafe(nil)); end
-
-  def self.unindent(text, left_padding=T.unsafe(nil)); end
+  extend ::Pry::Helpers::CommandHelpers
+  extend ::Pry::Helpers::OptionsHelpers
 end
 
 module Pry::Helpers::DocumentationHelpers
+  YARD_TAGS = ::T.let(nil, ::T.untyped)
 end
 
 module Pry::Helpers::DocumentationHelpers
@@ -18007,13 +20215,13 @@ class Pry::Helpers::Table
 
   def column_count(); end
 
-  def column_count=(n); end
+  def column_count=(count); end
 
   def columns(); end
 
   def fits_on_line?(line_length); end
 
-  def initialize(items, args, config=T.unsafe(nil)); end
+  def initialize(items, args, pry_instance=T.unsafe(nil)); end
 
   def items(); end
 
@@ -18409,21 +20617,17 @@ module Pry::Helpers::Text
 end
 
 module Pry::Helpers
-  def self.tablify(things, line_length, config=T.unsafe(nil)); end
+  def self.tablify(things, line_length, pry_instance=T.unsafe(nil)); end
 
-  def self.tablify_or_one_line(heading, things, config=T.unsafe(nil)); end
+  def self.tablify_or_one_line(heading, things, pry_instance=T.unsafe(nil)); end
 
-  def self.tablify_to_screen_width(things, options, config=T.unsafe(nil)); end
+  def self.tablify_to_screen_width(things, options, pry_instance=T.unsafe(nil)); end
 end
 
 class Pry::History
   def <<(line); end
 
   def clear(); end
-
-  def clearer(); end
-
-  def clearer=(clearer); end
 
   def filter(history); end
 
@@ -18441,12 +20645,6 @@ class Pry::History
 
   def push(line); end
 
-  def pusher(); end
-
-  def pusher=(pusher); end
-
-  def restore_default_behavior(); end
-
   def saver(); end
 
   def saver=(saver); end
@@ -18457,6 +20655,7 @@ class Pry::History
 end
 
 class Pry::History
+  def self.default_file(); end
 end
 
 class Pry::Hooks
@@ -18486,6 +20685,7 @@ class Pry::Hooks
 end
 
 class Pry::Hooks
+  def self.default(); end
 end
 
 class Pry::Indent
@@ -18503,6 +20703,8 @@ class Pry::Indent
   def indent_level(); end
 
   def indentation_delta(tokens); end
+
+  def initialize(pry_instance=T.unsafe(nil)); end
 
   def module_nesting(); end
 
@@ -18542,12 +20744,41 @@ class Pry::Indent
   def self.nesting_at(str, line_number); end
 end
 
+class Pry::InputCompleter
+  def build_path(input); end
+
+  def call(str, options=T.unsafe(nil)); end
+
+  def ignored_modules(); end
+
+  def initialize(input, pry=T.unsafe(nil)); end
+
+  def select_message(path, receiver, message, candidates); end
+  ARRAY_REGEXP = ::T.let(nil, ::T.untyped)
+  CONSTANT_OR_METHOD_REGEXP = ::T.let(nil, ::T.untyped)
+  CONSTANT_REGEXP = ::T.let(nil, ::T.untyped)
+  GLOBALVARIABLE_REGEXP = ::T.let(nil, ::T.untyped)
+  HEX_REGEXP = ::T.let(nil, ::T.untyped)
+  NUMERIC_REGEXP = ::T.let(nil, ::T.untyped)
+  PROC_OR_HASH_REGEXP = ::T.let(nil, ::T.untyped)
+  REGEX_REGEXP = ::T.let(nil, ::T.untyped)
+  RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+  SYMBOL_METHOD_CALL_REGEXP = ::T.let(nil, ::T.untyped)
+  SYMBOL_REGEXP = ::T.let(nil, ::T.untyped)
+  TOPLEVEL_LOOKUP_REGEXP = ::T.let(nil, ::T.untyped)
+  VARIABLE_REGEXP = ::T.let(nil, ::T.untyped)
+  WORD_ESCAPE_STR = ::T.let(nil, ::T.untyped)
+end
+
+class Pry::InputCompleter
+end
+
 class Pry::InputLock
-  def __with_ownership(&block); end
+  def __with_ownership(); end
 
   def enter_interruptible_region(); end
 
-  def interruptible_region(&block); end
+  def interruptible_region(); end
 
   def leave_interruptible_region(); end
 
@@ -18590,7 +20821,7 @@ class Pry::LastException
 
   def inc_bt_index(); end
 
-  def initialize(e); end
+  def initialize(exception); end
 
   def line(); end
 
@@ -18606,7 +20837,7 @@ class Pry::Method
   include ::Pry::Helpers::BaseHelpers
   include ::Pry::Helpers::DocumentationHelpers
   include ::Pry::CodeObject::Helpers
-  def ==(obj); end
+  def ==(other); end
 
   def alias?(); end
 
@@ -18634,7 +20865,13 @@ class Pry::Method
 
   def original_name(); end
 
+  def owner(*args, &block); end
+
+  def parameters(*args, &block); end
+
   def pry_method?(); end
+
+  def receiver(*args, &block); end
 
   def redefine(source); end
 
@@ -18672,8 +20909,6 @@ end
 class Pry::Method::Disowned
   def initialize(receiver, method_name); end
 
-  def method_missing(meth_name, *args, &block); end
-
   def owner(); end
 
   def receiver(); end
@@ -18697,7 +20932,7 @@ class Pry::Method::Patcher
 end
 
 class Pry::Method::WeirdMethodLocator
-  def get_method(); end
+  def find_method(); end
 
   def initialize(method, target); end
 
@@ -18713,20 +20948,20 @@ class Pry::Method::WeirdMethodLocator
 end
 
 class Pry::Method::WeirdMethodLocator
-  def self.normal_method?(method, b); end
+  def self.normal_method?(method, binding); end
 
-  def self.weird_method?(method, b); end
+  def self.weird_method?(method, binding); end
 end
 
 class Pry::Method
   extend ::Pry::Helpers::BaseHelpers
+  extend ::Pry::Forwardable
+  extend ::Forwardable
   def self.all_from_class(klass, include_super=T.unsafe(nil)); end
-
-  def self.all_from_common(obj, _method_type=T.unsafe(nil), include_super=T.unsafe(nil)); end
 
   def self.all_from_obj(obj, include_super=T.unsafe(nil)); end
 
-  def self.from_binding(b); end
+  def self.from_binding(binding); end
 
   def self.from_class(klass, name, target=T.unsafe(nil)); end
 
@@ -18785,34 +21020,41 @@ end
 class Pry::Output
   def <<(*objs); end
 
-  def _pry_(); end
-
   def decolorize_maybe(str); end
 
-  def initialize(_pry_); end
+  def height(); end
 
-  def method_missing(name, *args, &block); end
+  def initialize(pry_instance); end
+
+  def method_missing(method_name, *args, &block); end
 
   def print(*objs); end
 
+  def pry_instance(); end
+
   def puts(*objs); end
+
+  def size(); end
 
   def tty?(); end
 
+  def width(); end
+
   def write(*objs); end
+  DEFAULT_SIZE = ::T.let(nil, ::T.untyped)
 end
 
 class Pry::Output
 end
 
 class Pry::Pager
-  def _pry_(); end
-
-  def initialize(_pry_); end
+  def initialize(pry_instance); end
 
   def open(); end
 
   def page(text); end
+
+  def pry_instance(); end
 end
 
 class Pry::Pager::NullPager
@@ -18882,8 +21124,6 @@ end
 
 class Pry::PluginManager::NoPlugin
   def initialize(name); end
-
-  def method_missing(*_args); end
 end
 
 class Pry::PluginManager::NoPlugin
@@ -18933,15 +21173,26 @@ end
 class Pry::PluginManager
 end
 
-module Pry::Prompt
-  DEFAULT_NAME = ::T.let(nil, ::T.untyped)
-  SAFE_CONTEXTS = ::T.let(nil, ::T.untyped)
+class Pry::Prompt
+  def [](key); end
+
+  def description(); end
+
+  def incomplete_proc(); end
+
+  def initialize(name, description, prompt_procs); end
+
+  def name(); end
+
+  def prompt_procs(); end
+
+  def wait_proc(); end
 end
 
-module Pry::Prompt
-  def self.[](prompt_name); end
+class Pry::Prompt
+  def self.[](name); end
 
-  def self.add(prompt_name, description=T.unsafe(nil), separators=T.unsafe(nil)); end
+  def self.add(name, description=T.unsafe(nil), separators=T.unsafe(nil)); end
 
   def self.all(); end
 end
@@ -18964,6 +21215,21 @@ class Pry::REPL
   extend ::Pry::Forwardable
   extend ::Forwardable
   def self.start(options); end
+end
+
+class Pry::REPLFileLoader
+  def define_additional_commands(); end
+
+  def initialize(file_name); end
+
+  def interactive_mode(pry_instance); end
+
+  def load(); end
+
+  def non_interactive_mode(pry_instance, content); end
+end
+
+class Pry::REPLFileLoader
 end
 
 module Pry::RescuableException
@@ -19005,21 +21271,6 @@ class Pry::Ring
 end
 
 class Pry::Ring
-end
-
-module Pry::Rubygem
-end
-
-module Pry::Rubygem
-  def self.complete(so_far); end
-
-  def self.install(name); end
-
-  def self.installed?(name); end
-
-  def self.list(pattern=T.unsafe(nil)); end
-
-  def self.spec(name); end
 end
 
 class Pry::Slop
@@ -19229,27 +21480,24 @@ class Pry::Slop
   def self.parse!(items=T.unsafe(nil), config=T.unsafe(nil), &block); end
 end
 
-class Pry::Terminal
+class Pry::SyntaxHighlighter
 end
 
-class Pry::Terminal
-  def self.actual_screen_size(); end
+class Pry::SyntaxHighlighter
+  def self.highlight(code, language=T.unsafe(nil)); end
 
-  def self.height!(); end
+  def self.keyword_token_color(); end
 
-  def self.screen_size(); end
+  def self.overwrite_coderay_comment_token!(); end
 
-  def self.screen_size_according_to_ansicon_env(); end
+  def self.tokenize(code, language=T.unsafe(nil)); end
+end
 
-  def self.screen_size_according_to_env(); end
+module Pry::SystemCommandHandler
+end
 
-  def self.screen_size_according_to_io_console(); end
-
-  def self.screen_size_according_to_readline(); end
-
-  def self.size!(default=T.unsafe(nil)); end
-
-  def self.width!(); end
+module Pry::SystemCommandHandler
+  def self.default(output, command, _pry_instance); end
 end
 
 module Pry::TooSafeException
@@ -19263,6 +21511,13 @@ module Pry::UserError
 end
 
 module Pry::UserError
+end
+
+module Pry::Warning
+end
+
+module Pry::Warning
+  def self.warn(message); end
 end
 
 class Pry::WrappedModule
@@ -19293,8 +21548,6 @@ class Pry::WrappedModule
   def nonblank_name(); end
 
   def number_of_candidates(); end
-
-  def respond_to?(method_name, include_all=T.unsafe(nil)); end
 
   def singleton_class?(); end
 
@@ -19361,7 +21614,8 @@ class Pry::WrappedModule
 end
 
 class Pry
-  extend ::Pry::Config::Convenience
+  extend ::Pry::Forwardable
+  extend ::Forwardable
   def self.Code(obj); end
 
   def self.Method(obj); end
@@ -19376,13 +21630,13 @@ class Pry
 
   def self.cli=(cli); end
 
-  def self.color(); end
+  def self.color(*args, &block); end
 
-  def self.color=(value); end
+  def self.color=(*args, &block); end
 
-  def self.commands(); end
+  def self.commands(*args, &block); end
 
-  def self.commands=(value); end
+  def self.commands=(*args, &block); end
 
   def self.config(); end
 
@@ -19402,33 +21656,31 @@ class Pry
 
   def self.custom_completions=(custom_completions); end
 
-  def self.default_editor_for_platform(); end
+  def self.editor(*args, &block); end
 
-  def self.editor(); end
-
-  def self.editor=(value); end
+  def self.editor=(*args, &block); end
 
   def self.eval_path(); end
 
   def self.eval_path=(eval_path); end
 
-  def self.exception_handler(); end
+  def self.exception_handler(*args, &block); end
 
-  def self.exception_handler=(value); end
+  def self.exception_handler=(*args, &block); end
 
-  def self.extra_sticky_locals(); end
+  def self.extra_sticky_locals(*args, &block); end
 
-  def self.extra_sticky_locals=(value); end
+  def self.extra_sticky_locals=(*args, &block); end
 
   def self.final_session_setup(); end
 
-  def self.history(); end
+  def self.history(*args, &block); end
 
-  def self.history=(history); end
+  def self.history=(*args, &block); end
 
-  def self.hooks(); end
+  def self.hooks(*args, &block); end
 
-  def self.hooks=(value); end
+  def self.hooks=(*args, &block); end
 
   def self.in_critical_section?(); end
 
@@ -19438,15 +21690,13 @@ class Pry
 
   def self.initial_session_setup(); end
 
-  def self.input(); end
+  def self.input(*args, &block); end
 
-  def self.input=(value); end
+  def self.input=(*args, &block); end
 
   def self.last_internal_error(); end
 
   def self.last_internal_error=(last_internal_error); end
-
-  def self.lazy(&block); end
 
   def self.line_buffer(); end
 
@@ -19472,27 +21722,27 @@ class Pry
 
   def self.main(); end
 
-  def self.memory_size(); end
+  def self.memory_size(*args, &block); end
 
-  def self.memory_size=(value); end
+  def self.memory_size=(*args, &block); end
 
-  def self.output(); end
+  def self.output(*args, &block); end
 
-  def self.output=(value); end
+  def self.output=(*args, &block); end
 
-  def self.pager(); end
+  def self.pager(*args, &block); end
 
-  def self.pager=(value); end
+  def self.pager=(*args, &block); end
 
   def self.plugins(*args, &block); end
 
-  def self.print(); end
+  def self.print(*args, &block); end
 
-  def self.print=(value); end
+  def self.print=(*args, &block); end
 
-  def self.prompt(); end
+  def self.prompt(*args, &block); end
 
-  def self.prompt=(value); end
+  def self.prompt=(*args, &block); end
 
   def self.quiet(); end
 
@@ -19510,755 +21760,13 @@ class Pry
 
   def self.toplevel_binding(); end
 
-  def self.toplevel_binding=(binding); end
+  def self.toplevel_binding=(toplevel_binding); end
 
   def self.view_clip(obj, options=T.unsafe(nil)); end
 end
 
 module Psych
-  LIBYAML_VERSION = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::BadAlias
-end
-
-class Psych::BadAlias
-end
-
-class Psych::ClassLoader
-  def big_decimal(); end
-
-  def complex(); end
-
-  def date(); end
-
-  def date_time(); end
-
-  def exception(); end
-
-  def load(klassname); end
-
-  def object(); end
-
-  def psych_omap(); end
-
-  def psych_set(); end
-
-  def range(); end
-
-  def rational(); end
-
-  def regexp(); end
-
-  def struct(); end
-
-  def symbol(); end
-
-  def symbolize(sym); end
-  BIG_DECIMAL = ::T.let(nil, ::T.untyped)
-  CACHE = ::T.let(nil, ::T.untyped)
-  COMPLEX = ::T.let(nil, ::T.untyped)
-  DATE = ::T.let(nil, ::T.untyped)
-  DATE_TIME = ::T.let(nil, ::T.untyped)
-  EXCEPTION = ::T.let(nil, ::T.untyped)
-  OBJECT = ::T.let(nil, ::T.untyped)
-  PSYCH_OMAP = ::T.let(nil, ::T.untyped)
-  PSYCH_SET = ::T.let(nil, ::T.untyped)
-  RANGE = ::T.let(nil, ::T.untyped)
-  RATIONAL = ::T.let(nil, ::T.untyped)
-  REGEXP = ::T.let(nil, ::T.untyped)
-  STRUCT = ::T.let(nil, ::T.untyped)
-  SYMBOL = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::ClassLoader::Restricted
-  def initialize(classes, symbols); end
-end
-
-class Psych::ClassLoader::Restricted
-end
-
-class Psych::ClassLoader
-end
-
-class Psych::Coder
-  def [](k); end
-
-  def []=(k, v); end
-
-  def add(k, v); end
-
-  def implicit(); end
-
-  def implicit=(implicit); end
-
-  def initialize(tag); end
-
-  def map(tag=T.unsafe(nil), style=T.unsafe(nil)); end
-
-  def map=(map); end
-
-  def object(); end
-
-  def object=(object); end
-
-  def represent_map(tag, map); end
-
-  def represent_object(tag, obj); end
-
-  def represent_scalar(tag, value); end
-
-  def represent_seq(tag, list); end
-
-  def scalar(*args); end
-
-  def scalar=(value); end
-
-  def seq(); end
-
-  def seq=(list); end
-
-  def style(); end
-
-  def style=(style); end
-
-  def tag(); end
-
-  def tag=(tag); end
-
-  def type(); end
-end
-
-class Psych::Coder
-end
-
-class Psych::DisallowedClass
-  def initialize(klass_name); end
-end
-
-class Psych::DisallowedClass
-end
-
-class Psych::Emitter
-  def alias(_); end
-
-  def canonical(); end
-
-  def canonical=(canonical); end
-
-  def end_document(_); end
-
-  def indentation(); end
-
-  def indentation=(indentation); end
-
-  def initialize(*_); end
-
-  def line_width(); end
-
-  def line_width=(line_width); end
-
-  def scalar(_, _1, _2, _3, _4, _5); end
-
-  def start_document(_, _1, _2); end
-
-  def start_mapping(_, _1, _2, _3); end
-
-  def start_sequence(_, _1, _2, _3); end
-
-  def start_stream(_); end
-end
-
-class Psych::Emitter
-end
-
-class Psych::Exception
-end
-
-class Psych::Exception
-end
-
-class Psych::FALLBACK
-  def to_ruby(); end
-
-  def to_ruby=(_); end
-end
-
-class Psych::FALLBACK
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class Psych::Handler
-  def alias(anchor); end
-
-  def empty(); end
-
-  def end_document(implicit); end
-
-  def end_mapping(); end
-
-  def end_sequence(); end
-
-  def end_stream(); end
-
-  def event_location(start_line, start_column, end_line, end_column); end
-
-  def scalar(value, anchor, tag, plain, quoted, style); end
-
-  def start_document(version, tag_directives, implicit); end
-
-  def start_mapping(anchor, tag, implicit, style); end
-
-  def start_sequence(anchor, tag, implicit, style); end
-
-  def start_stream(encoding); end
-
-  def streaming?(); end
-  EVENTS = ::T.let(nil, ::T.untyped)
-  OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Handler::DumperOptions
-  def canonical(); end
-
-  def canonical=(canonical); end
-
-  def indentation(); end
-
-  def indentation=(indentation); end
-
-  def line_width(); end
-
-  def line_width=(line_width); end
-end
-
-class Psych::Handler::DumperOptions
-end
-
-class Psych::Handler
-end
-
-module Psych::Handlers
-end
-
-class Psych::Handlers::DocumentStream
-  def initialize(&block); end
-end
-
-class Psych::Handlers::DocumentStream
-end
-
-module Psych::Handlers
-end
-
-module Psych::JSON
-end
-
-module Psych::JSON::RubyEvents
-  def visit_DateTime(o); end
-
-  def visit_String(o); end
-
-  def visit_Symbol(o); end
-
-  def visit_Time(o); end
-end
-
-module Psych::JSON::RubyEvents
-end
-
-class Psych::JSON::Stream
-  include ::Psych::Streaming
-end
-
-class Psych::JSON::Stream::Emitter
-  include ::Psych::JSON::YAMLEvents
-end
-
-class Psych::JSON::Stream::Emitter
-end
-
-class Psych::JSON::Stream
-  extend ::Psych::Streaming::ClassMethods
-end
-
-class Psych::JSON::TreeBuilder
-  include ::Psych::JSON::YAMLEvents
-end
-
-class Psych::JSON::TreeBuilder
-end
-
-module Psych::JSON::YAMLEvents
-  def end_document(implicit_end=T.unsafe(nil)); end
-
-  def scalar(value, anchor, tag, plain, quoted, style); end
-
-  def start_document(version, tag_directives, implicit); end
-
-  def start_mapping(anchor, tag, implicit, style); end
-
-  def start_sequence(anchor, tag, implicit, style); end
-end
-
-module Psych::JSON::YAMLEvents
-end
-
-module Psych::JSON
-end
-
-module Psych::Nodes
-end
-
-class Psych::Nodes::Alias
-  def anchor(); end
-
-  def anchor=(anchor); end
-
-  def initialize(anchor); end
-end
-
-class Psych::Nodes::Alias
-end
-
-class Psych::Nodes::Document
-  def implicit(); end
-
-  def implicit=(implicit); end
-
-  def implicit_end(); end
-
-  def implicit_end=(implicit_end); end
-
-  def initialize(version=T.unsafe(nil), tag_directives=T.unsafe(nil), implicit=T.unsafe(nil)); end
-
-  def root(); end
-
-  def tag_directives(); end
-
-  def tag_directives=(tag_directives); end
-
-  def version(); end
-
-  def version=(version); end
-end
-
-class Psych::Nodes::Document
-end
-
-class Psych::Nodes::Mapping
-  def anchor(); end
-
-  def anchor=(anchor); end
-
-  def implicit(); end
-
-  def implicit=(implicit); end
-
-  def initialize(anchor=T.unsafe(nil), tag=T.unsafe(nil), implicit=T.unsafe(nil), style=T.unsafe(nil)); end
-
-  def style(); end
-
-  def style=(style); end
-
-  def tag=(tag); end
-  ANY = ::T.let(nil, ::T.untyped)
-  BLOCK = ::T.let(nil, ::T.untyped)
-  FLOW = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Nodes::Mapping
-end
-
-class Psych::Nodes::Node
-  include ::Enumerable
-  def children(); end
-
-  def each(&block); end
-
-  def end_column(); end
-
-  def end_column=(end_column); end
-
-  def end_line(); end
-
-  def end_line=(end_line); end
-
-  def start_column(); end
-
-  def start_column=(start_column); end
-
-  def start_line(); end
-
-  def start_line=(start_line); end
-
-  def tag(); end
-
-  def to_ruby(); end
-
-  def to_yaml(io=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def transform(); end
-
-  def yaml(io=T.unsafe(nil), options=T.unsafe(nil)); end
-end
-
-class Psych::Nodes::Node
-end
-
-class Psych::Nodes::Scalar
-  def anchor(); end
-
-  def anchor=(anchor); end
-
-  def initialize(value, anchor=T.unsafe(nil), tag=T.unsafe(nil), plain=T.unsafe(nil), quoted=T.unsafe(nil), style=T.unsafe(nil)); end
-
-  def plain(); end
-
-  def plain=(plain); end
-
-  def quoted(); end
-
-  def quoted=(quoted); end
-
-  def style(); end
-
-  def style=(style); end
-
-  def tag=(tag); end
-
-  def value(); end
-
-  def value=(value); end
-  ANY = ::T.let(nil, ::T.untyped)
-  DOUBLE_QUOTED = ::T.let(nil, ::T.untyped)
-  FOLDED = ::T.let(nil, ::T.untyped)
-  LITERAL = ::T.let(nil, ::T.untyped)
-  PLAIN = ::T.let(nil, ::T.untyped)
-  SINGLE_QUOTED = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Nodes::Scalar
-end
-
-class Psych::Nodes::Sequence
-  def anchor(); end
-
-  def anchor=(anchor); end
-
-  def implicit(); end
-
-  def implicit=(implicit); end
-
-  def initialize(anchor=T.unsafe(nil), tag=T.unsafe(nil), implicit=T.unsafe(nil), style=T.unsafe(nil)); end
-
-  def style(); end
-
-  def style=(style); end
-
-  def tag=(tag); end
-  ANY = ::T.let(nil, ::T.untyped)
-  BLOCK = ::T.let(nil, ::T.untyped)
-  FLOW = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Nodes::Sequence
-end
-
-class Psych::Nodes::Stream
-  def encoding(); end
-
-  def encoding=(encoding); end
-
-  def initialize(encoding=T.unsafe(nil)); end
-  ANY = ::T.let(nil, ::T.untyped)
-  UTF16BE = ::T.let(nil, ::T.untyped)
-  UTF16LE = ::T.let(nil, ::T.untyped)
-  UTF8 = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Nodes::Stream
-end
-
-module Psych::Nodes
-end
-
-class Psych::Omap
-end
-
-class Psych::Omap
-end
-
-class Psych::Parser
-  def external_encoding=(external_encoding); end
-
-  def handler(); end
-
-  def handler=(handler); end
-
-  def initialize(handler=T.unsafe(nil)); end
-
-  def mark(); end
-
-  def parse(*_); end
-  ANY = ::T.let(nil, ::T.untyped)
-  UTF16BE = ::T.let(nil, ::T.untyped)
-  UTF16LE = ::T.let(nil, ::T.untyped)
-  UTF8 = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Parser::Mark
-end
-
-class Psych::Parser::Mark
-end
-
-class Psych::Parser
-end
-
-class Psych::ScalarScanner
-  def class_loader(); end
-
-  def initialize(class_loader); end
-
-  def parse_int(string); end
-
-  def parse_time(string); end
-
-  def tokenize(string); end
-  FLOAT = ::T.let(nil, ::T.untyped)
-  INTEGER = ::T.let(nil, ::T.untyped)
-  TIME = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::ScalarScanner
-end
-
-class Psych::Set
-end
-
-class Psych::Set
-end
-
-class Psych::Stream
-  include ::Psych::Streaming
-end
-
-class Psych::Stream::Emitter
-  def end_document(implicit_end=T.unsafe(nil)); end
-end
-
-class Psych::Stream::Emitter
-end
-
-class Psych::Stream
-  extend ::Psych::Streaming::ClassMethods
-end
-
-module Psych::Streaming
-  def start(encoding=T.unsafe(nil)); end
-end
-
-module Psych::Streaming::ClassMethods
-  def new(io); end
-end
-
-module Psych::Streaming::ClassMethods
-end
-
-module Psych::Streaming
-end
-
-class Psych::SyntaxError
-  def column(); end
-
-  def context(); end
-
-  def file(); end
-
-  def initialize(file, line, col, offset, problem, context); end
-
-  def line(); end
-
-  def offset(); end
-
-  def problem(); end
-end
-
-class Psych::SyntaxError
-end
-
-class Psych::TreeBuilder
-  def end_document(implicit_end=T.unsafe(nil)); end
-
-  def root(); end
-end
-
-class Psych::TreeBuilder
-end
-
-module Psych::Visitors
-end
-
-class Psych::Visitors::DepthFirst
-  def initialize(block); end
-end
-
-class Psych::Visitors::DepthFirst
-end
-
-class Psych::Visitors::Emitter
-  def initialize(io, options=T.unsafe(nil)); end
-
-  def visit_Psych_Nodes_Alias(o); end
-
-  def visit_Psych_Nodes_Document(o); end
-
-  def visit_Psych_Nodes_Mapping(o); end
-
-  def visit_Psych_Nodes_Scalar(o); end
-
-  def visit_Psych_Nodes_Sequence(o); end
-
-  def visit_Psych_Nodes_Stream(o); end
-end
-
-class Psych::Visitors::Emitter
-end
-
-class Psych::Visitors::JSONTree
-  include ::Psych::JSON::RubyEvents
-end
-
-class Psych::Visitors::JSONTree
-  def self.create(options=T.unsafe(nil)); end
-end
-
-class Psych::Visitors::NoAliasRuby
-end
-
-class Psych::Visitors::NoAliasRuby
-end
-
-class Psych::Visitors::ToRuby
-  def class_loader(); end
-
-  def initialize(ss, class_loader); end
-
-  def visit_Psych_Nodes_Alias(o); end
-
-  def visit_Psych_Nodes_Document(o); end
-
-  def visit_Psych_Nodes_Mapping(o); end
-
-  def visit_Psych_Nodes_Scalar(o); end
-
-  def visit_Psych_Nodes_Sequence(o); end
-
-  def visit_Psych_Nodes_Stream(o); end
-  SHOVEL = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Visitors::ToRuby
-  def self.create(); end
-end
-
-class Psych::Visitors::Visitor
-  def accept(target); end
-  DISPATCH = ::T.let(nil, ::T.untyped)
-end
-
-class Psych::Visitors::Visitor
-end
-
-class Psych::Visitors::YAMLTree
-  def <<(object); end
-
-  def finish(); end
-
-  def finished(); end
-
-  def finished?(); end
-
-  def initialize(emitter, ss, options); end
-
-  def push(object); end
-
-  def start(encoding=T.unsafe(nil)); end
-
-  def started(); end
-
-  def started?(); end
-
-  def tree(); end
-
-  def visit_Array(o); end
-
-  def visit_BasicObject(o); end
-
-  def visit_BigDecimal(o); end
-
-  def visit_Class(o); end
-
-  def visit_Complex(o); end
-
-  def visit_Date(o); end
-
-  def visit_DateTime(o); end
-
-  def visit_Delegator(o); end
-
-  def visit_Encoding(o); end
-
-  def visit_Enumerator(o); end
-
-  def visit_Exception(o); end
-
-  def visit_FalseClass(o); end
-
-  def visit_Float(o); end
-
-  def visit_Hash(o); end
-
-  def visit_Integer(o); end
-
-  def visit_Module(o); end
-
-  def visit_NameError(o); end
-
-  def visit_NilClass(o); end
-
-  def visit_Object(o); end
-
-  def visit_Psych_Omap(o); end
-
-  def visit_Psych_Set(o); end
-
-  def visit_Range(o); end
-
-  def visit_Rational(o); end
-
-  def visit_Regexp(o); end
-
-  def visit_String(o); end
-
-  def visit_Struct(o); end
-
-  def visit_Symbol(o); end
-
-  def visit_Time(o); end
-
-  def visit_TrueClass(o); end
-end
-
-class Psych::Visitors::YAMLTree
-  def self.create(options=T.unsafe(nil), emitter=T.unsafe(nil)); end
-end
-
-module Psych::Visitors
 end
 
 module Psych
@@ -20272,39 +21780,17 @@ module Psych
 
   def self.domain_types=(domain_types); end
 
-  def self.dump(o, io=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def self.dump_stream(*objects); end
-
   def self.dump_tags(); end
 
   def self.dump_tags=(dump_tags); end
 
   def self.libyaml_version(); end
 
-  def self.load(yaml, filename=T.unsafe(nil), fallback: T.unsafe(nil), symbolize_names: T.unsafe(nil)); end
-
-  def self.load_file(filename, fallback: T.unsafe(nil)); end
-
-  def self.load_stream(yaml, filename=T.unsafe(nil)); end
-
   def self.load_tags(); end
 
   def self.load_tags=(load_tags); end
 
-  def self.parse(yaml, filename=T.unsafe(nil), fallback: T.unsafe(nil)); end
-
-  def self.parse_file(filename); end
-
-  def self.parse_stream(yaml, filename=T.unsafe(nil), &block); end
-
-  def self.parser(); end
-
   def self.remove_type(type_tag); end
-
-  def self.safe_load(yaml, whitelist_classes=T.unsafe(nil), whitelist_symbols=T.unsafe(nil), aliases=T.unsafe(nil), filename=T.unsafe(nil), symbolize_names: T.unsafe(nil)); end
-
-  def self.to_json(object); end
 end
 
 module PublicSuffix
@@ -20481,203 +21967,145 @@ module PublicSuffix
   def self.valid?(name, list: T.unsafe(nil), default_rule: T.unsafe(nil), ignore_private: T.unsafe(nil)); end
 end
 
-module REXML
+class REXML::AttlistDecl
+  def initialize(source); end
 end
 
-module REXML::Encoding
-  def decode(string); end
-
-  def encode(string); end
-
-  def encoding(); end
-
-  def encoding=(encoding); end
+class REXML::Attribute
+  def initialize(first, second=T.unsafe(nil), parent=T.unsafe(nil)); end
 end
 
-module REXML::Encoding
+class REXML::Attributes
+  def initialize(element); end
+end
+
+class REXML::CData
+  def initialize(first, whitespace=T.unsafe(nil), parent=T.unsafe(nil)); end
+end
+
+class REXML::Child
+  def initialize(parent=T.unsafe(nil)); end
+end
+
+class REXML::Comment
+  def initialize(first, second=T.unsafe(nil)); end
+end
+
+class REXML::Declaration
+  def initialize(src); end
+end
+
+class REXML::DocType
+  def initialize(first, parent=T.unsafe(nil)); end
+end
+
+class REXML::Document
+  def initialize(source=T.unsafe(nil), context=T.unsafe(nil)); end
+end
+
+class REXML::Element
+  def initialize(arg=T.unsafe(nil), parent=T.unsafe(nil), context=T.unsafe(nil)); end
+end
+
+class REXML::Elements
+  def initialize(parent); end
+end
+
+class REXML::Entity
+  def initialize(stream, value=T.unsafe(nil), parent=T.unsafe(nil), reference=T.unsafe(nil)); end
+end
+
+class REXML::ExternalEntity
+  def initialize(src); end
+end
+
+class REXML::Formatters::Default
+  def initialize(ie_hack=T.unsafe(nil)); end
+end
+
+class REXML::Formatters::Pretty
+  def initialize(indentation=T.unsafe(nil), ie_hack=T.unsafe(nil)); end
 end
 
 class REXML::IOSource
   def initialize(arg, block_size=T.unsafe(nil), encoding=T.unsafe(nil)); end
 end
 
-class REXML::IOSource
+class REXML::Instruction
+  def initialize(target, content=T.unsafe(nil)); end
+end
+
+class REXML::NotationDecl
+  def initialize(name, middle, pub, sys); end
+end
+
+class REXML::Output
+  def initialize(real_IO, encd=T.unsafe(nil)); end
 end
 
 class REXML::ParseException
-  def context(); end
-
-  def continued_exception(); end
-
-  def continued_exception=(continued_exception); end
-
   def initialize(message, source=T.unsafe(nil), parser=T.unsafe(nil), exception=T.unsafe(nil)); end
-
-  def line(); end
-
-  def parser(); end
-
-  def parser=(parser); end
-
-  def position(); end
-
-  def source(); end
-
-  def source=(source); end
-end
-
-class REXML::ParseException
-end
-
-module REXML::Parsers
 end
 
 class REXML::Parsers::BaseParser
-  def add_listener(listener); end
-
-  def empty?(); end
-
-  def entity(reference, entities); end
-
-  def has_next?(); end
-
   def initialize(source); end
-
-  def normalize(input, entities=T.unsafe(nil), entity_filter=T.unsafe(nil)); end
-
-  def peek(depth=T.unsafe(nil)); end
-
-  def position(); end
-
-  def pull(); end
-
-  def source(); end
-
-  def stream=(source); end
-
-  def unnormalize(string, entities=T.unsafe(nil), filter=T.unsafe(nil)); end
-
-  def unshift(token); end
-  ATTDEF = ::T.let(nil, ::T.untyped)
-  ATTDEF_RE = ::T.let(nil, ::T.untyped)
-  ATTLISTDECL_PATTERN = ::T.let(nil, ::T.untyped)
-  ATTLISTDECL_START = ::T.let(nil, ::T.untyped)
-  ATTRIBUTE_PATTERN = ::T.let(nil, ::T.untyped)
-  ATTTYPE = ::T.let(nil, ::T.untyped)
-  ATTVALUE = ::T.let(nil, ::T.untyped)
-  CDATA_END = ::T.let(nil, ::T.untyped)
-  CDATA_PATTERN = ::T.let(nil, ::T.untyped)
-  CDATA_START = ::T.let(nil, ::T.untyped)
-  CLOSE_MATCH = ::T.let(nil, ::T.untyped)
-  COMBININGCHAR = ::T.let(nil, ::T.untyped)
-  COMMENT_PATTERN = ::T.let(nil, ::T.untyped)
-  COMMENT_START = ::T.let(nil, ::T.untyped)
-  DEFAULTDECL = ::T.let(nil, ::T.untyped)
-  DEFAULT_ENTITIES = ::T.let(nil, ::T.untyped)
-  DIGIT = ::T.let(nil, ::T.untyped)
-  DOCTYPE_END = ::T.let(nil, ::T.untyped)
-  DOCTYPE_PATTERN = ::T.let(nil, ::T.untyped)
-  DOCTYPE_START = ::T.let(nil, ::T.untyped)
-  ELEMENTDECL_PATTERN = ::T.let(nil, ::T.untyped)
-  ELEMENTDECL_START = ::T.let(nil, ::T.untyped)
-  ENCODING = ::T.let(nil, ::T.untyped)
-  ENTITYDECL = ::T.let(nil, ::T.untyped)
-  ENTITYDEF = ::T.let(nil, ::T.untyped)
-  ENTITYVALUE = ::T.let(nil, ::T.untyped)
-  ENTITY_START = ::T.let(nil, ::T.untyped)
-  ENUMERATEDTYPE = ::T.let(nil, ::T.untyped)
-  ENUMERATION = ::T.let(nil, ::T.untyped)
-  EREFERENCE = ::T.let(nil, ::T.untyped)
-  EXTENDER = ::T.let(nil, ::T.untyped)
-  EXTERNALID = ::T.let(nil, ::T.untyped)
-  GEDECL = ::T.let(nil, ::T.untyped)
-  IDENTITY = ::T.let(nil, ::T.untyped)
-  INSTRUCTION_PATTERN = ::T.let(nil, ::T.untyped)
-  INSTRUCTION_START = ::T.let(nil, ::T.untyped)
-  LETTER = ::T.let(nil, ::T.untyped)
-  MISSING_ATTRIBUTE_QUOTES = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  NAMECHAR = ::T.let(nil, ::T.untyped)
-  NAME_STR = ::T.let(nil, ::T.untyped)
-  NCNAME_STR = ::T.let(nil, ::T.untyped)
-  NDATADECL = ::T.let(nil, ::T.untyped)
-  NMTOKEN = ::T.let(nil, ::T.untyped)
-  NMTOKENS = ::T.let(nil, ::T.untyped)
-  NOTATIONDECL_START = ::T.let(nil, ::T.untyped)
-  NOTATIONTYPE = ::T.let(nil, ::T.untyped)
-  PEDECL = ::T.let(nil, ::T.untyped)
-  PEDEF = ::T.let(nil, ::T.untyped)
-  PEREFERENCE = ::T.let(nil, ::T.untyped)
-  PUBIDCHAR = ::T.let(nil, ::T.untyped)
-  PUBIDLITERAL = ::T.let(nil, ::T.untyped)
-  PUBLIC = ::T.let(nil, ::T.untyped)
-  REFERENCE = ::T.let(nil, ::T.untyped)
-  REFERENCE_RE = ::T.let(nil, ::T.untyped)
-  STANDALONE = ::T.let(nil, ::T.untyped)
-  SYSTEM = ::T.let(nil, ::T.untyped)
-  SYSTEMENTITY = ::T.let(nil, ::T.untyped)
-  SYSTEMLITERAL = ::T.let(nil, ::T.untyped)
-  TAG_MATCH = ::T.let(nil, ::T.untyped)
-  TEXT_PATTERN = ::T.let(nil, ::T.untyped)
-  UNAME_STR = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-  XMLDECL_PATTERN = ::T.let(nil, ::T.untyped)
-  XMLDECL_START = ::T.let(nil, ::T.untyped)
+  QNAME = ::T.let(nil, ::T.untyped)
+  QNAME_STR = ::T.let(nil, ::T.untyped)
 end
 
-class REXML::Parsers::BaseParser
+class REXML::Parsers::StreamParser
+  def initialize(source, listener); end
 end
 
-module REXML::Parsers
+class REXML::Parsers::TreeParser
+  def initialize(source, build_context=T.unsafe(nil)); end
+end
+
+class REXML::Parsers::XPathParser
+  LOCAL_NAME_WILDCARD = ::T.let(nil, ::T.untyped)
+  PREFIX_WILDCARD = ::T.let(nil, ::T.untyped)
 end
 
 class REXML::Source
-  include ::REXML::Encoding
-  def buffer(); end
-
-  def consume(pattern); end
-
-  def current_line(); end
-
-  def empty?(); end
-
-  def encoding=(enc); end
-
   def initialize(arg, encoding=T.unsafe(nil)); end
-
-  def line(); end
-
-  def match(pattern, cons=T.unsafe(nil)); end
-
-  def match_to(char, pattern); end
-
-  def match_to_consume(char, pattern); end
-
-  def position(); end
-
-  def read(); end
-
-  def scan(pattern, cons=T.unsafe(nil)); end
 end
 
-class REXML::Source
-end
-
-class REXML::SourceFactory
-end
-
-class REXML::SourceFactory
-  def self.create_from(arg); end
+class REXML::Text
+  def initialize(arg, respect_whitespace=T.unsafe(nil), parent=T.unsafe(nil), raw=T.unsafe(nil), entity_filter=T.unsafe(nil), illegal=T.unsafe(nil)); end
 end
 
 class REXML::UndefinedNamespaceException
   def initialize(prefix, source, parser); end
 end
 
-class REXML::UndefinedNamespaceException
+class REXML::Validation::ValidationException
+  def initialize(msg); end
 end
 
-module REXML
+class REXML::XMLDecl
+  def initialize(version=T.unsafe(nil), encoding=T.unsafe(nil), standalone=T.unsafe(nil)); end
+end
+
+class REXML::XPath
+  def self.match(element, path=T.unsafe(nil), namespaces=T.unsafe(nil), variables=T.unsafe(nil), options=T.unsafe(nil)); end
+end
+
+class REXML::XPathNode
+  def context(); end
+
+  def initialize(node, context=T.unsafe(nil)); end
+
+  def position(); end
+
+  def raw_node(); end
+end
+
+class REXML::XPathNode
+end
+
+class REXML::XPathParser
+  def initialize(strict: T.unsafe(nil)); end
+  DEBUG = ::T.let(nil, ::T.untyped)
 end
 
 module RSpec
@@ -20727,6 +22155,55 @@ class RSpec::Core::BacktraceFormatter
 end
 
 class RSpec::Core::BacktraceFormatter
+end
+
+module RSpec::Core::Bisect
+end
+
+class RSpec::Core::Bisect::BisectFailedError
+end
+
+class RSpec::Core::Bisect::BisectFailedError
+  def self.for_failed_spec_run(spec_output); end
+end
+
+class RSpec::Core::Bisect::Channel
+  def close(); end
+
+  def receive(); end
+
+  def send(message); end
+end
+
+class RSpec::Core::Bisect::Channel
+end
+
+class RSpec::Core::Bisect::ExampleSetDescriptor
+  def all_example_ids(); end
+
+  def all_example_ids=(_); end
+
+  def failed_example_ids(); end
+
+  def failed_example_ids=(_); end
+end
+
+class RSpec::Core::Bisect::ExampleSetDescriptor
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class RSpec::Core::Bisect::Notifier
+  def initialize(formatter); end
+
+  def publish(event, *args); end
+end
+
+class RSpec::Core::Bisect::Notifier
+end
+
+module RSpec::Core::Bisect
 end
 
 class RSpec::Core::Configuration
@@ -21331,7 +22808,11 @@ class RSpec::Core::Example::ExecutionResult
 end
 
 class RSpec::Core::Example::Procsy
+  def <<(*a, &b); end
+
   def ===(*a, &b); end
+
+  def >>(*a, &b); end
 
   def [](*a, &b); end
 
@@ -21396,6 +22877,8 @@ class RSpec::Core::Example::Procsy
   def reporter(*a, &b); end
 
   def rerun_argument(*a, &b); end
+
+  def ruby2_keywords(*a, &b); end
 
   def run(*args, &block); end
 
@@ -21580,6 +23063,36 @@ class RSpec::Core::ExampleGroup
   def self.xit(*all_args, &block); end
 
   def self.xspecify(*all_args, &block); end
+end
+
+class RSpec::Core::ExampleStatusDumper
+  def dump(); end
+
+  def initialize(examples); end
+end
+
+class RSpec::Core::ExampleStatusDumper
+  def self.dump(examples); end
+end
+
+class RSpec::Core::ExampleStatusMerger
+  def initialize(this_run, from_previous_runs); end
+
+  def merge(); end
+end
+
+class RSpec::Core::ExampleStatusMerger
+  def self.merge(this_run, from_previous_runs); end
+end
+
+class RSpec::Core::ExampleStatusParser
+  def initialize(string); end
+
+  def parse(); end
+end
+
+class RSpec::Core::ExampleStatusParser
+  def self.parse(string); end
 end
 
 class RSpec::Core::ExampleStatusPersister
@@ -22012,6 +23525,44 @@ end
 class RSpec::Core::Formatters::HtmlFormatter
 end
 
+class RSpec::Core::Formatters::HtmlPrinter
+  include ::ERB::Util
+  def flush(); end
+
+  def initialize(output); end
+
+  def make_example_group_header_red(group_id); end
+
+  def make_example_group_header_yellow(group_id); end
+
+  def make_header_red(); end
+
+  def make_header_yellow(); end
+
+  def move_progress(percent_done); end
+
+  def print_example_failed(pending_fixed, description, run_time, failure_id, exception, extra_content); end
+
+  def print_example_group_end(); end
+
+  def print_example_group_start(group_id, description, number_of_parents); end
+
+  def print_example_passed(description, run_time); end
+
+  def print_example_pending(description, pending_message); end
+
+  def print_html_start(); end
+
+  def print_summary(duration, example_count, failure_count, pending_count); end
+  GLOBAL_SCRIPTS = ::T.let(nil, ::T.untyped)
+  GLOBAL_STYLES = ::T.let(nil, ::T.untyped)
+  HTML_HEADER = ::T.let(nil, ::T.untyped)
+  REPORT_HEADER = ::T.let(nil, ::T.untyped)
+end
+
+class RSpec::Core::Formatters::HtmlPrinter
+end
+
 class RSpec::Core::Formatters::JsonFormatter
   def dump_profile(profile); end
 
@@ -22169,6 +23720,8 @@ module RSpec::Core::HashImitatable
 
   def assoc(*args, &block); end
 
+  def chain(*args, &block); end
+
   def chunk(*args, &block); end
 
   def chunk_while(*args, &block); end
@@ -22190,6 +23743,8 @@ module RSpec::Core::HashImitatable
   def count(*args, &block); end
 
   def cycle(*args, &block); end
+
+  def deconstruct_keys(*args, &block); end
 
   def default(*args, &block); end
 
@@ -22236,6 +23791,12 @@ module RSpec::Core::HashImitatable
   def fetch(*args, &block); end
 
   def fetch_values(*args, &block); end
+
+  def filter(*args, &block); end
+
+  def filter!(*args, &block); end
+
+  def filter_map(*args, &block); end
 
   def find(*args, &block); end
 
@@ -22346,6 +23907,8 @@ module RSpec::Core::HashImitatable
   def take(*args, &block); end
 
   def take_while(*args, &block); end
+
+  def tally(*args, &block); end
 
   def to_a(*args, &block); end
 
@@ -23226,6 +24789,8 @@ class RSpec::Core::OutputWrapper
 
   def set_encoding(*args, &block); end
 
+  def set_encoding_by_bom(*args, &block); end
+
   def stat(*args, &block); end
 
   def sync(*args, &block); end
@@ -23611,7 +25176,7 @@ class RSpec::Core::Time
 end
 
 class RSpec::Core::Time
-  def self.now(); end
+  def self.now(*_); end
 end
 
 module RSpec::Core::Version
@@ -23646,6 +25211,8 @@ class RSpec::Core::World
   def everything_filtered_message(); end
 
   def example_count(groups=T.unsafe(nil)); end
+
+  def example_group_counts_by_spec_file(); end
 
   def example_groups(); end
 
@@ -24455,6 +26022,27 @@ end
 class RSpec::Matchers::BuiltIn::BeWithin
 end
 
+module RSpec::Matchers::BuiltIn::CaptureStderr
+end
+
+module RSpec::Matchers::BuiltIn::CaptureStderr
+  def self.capture(block); end
+end
+
+module RSpec::Matchers::BuiltIn::CaptureStdout
+end
+
+module RSpec::Matchers::BuiltIn::CaptureStdout
+  def self.capture(block); end
+end
+
+class RSpec::Matchers::BuiltIn::CaptureStreamToTempfile
+  def capture(block); end
+end
+
+class RSpec::Matchers::BuiltIn::CaptureStreamToTempfile
+end
+
 class RSpec::Matchers::BuiltIn::Change
   def by(expected_delta); end
 
@@ -24474,6 +26062,56 @@ class RSpec::Matchers::BuiltIn::Change
 end
 
 class RSpec::Matchers::BuiltIn::Change
+end
+
+class RSpec::Matchers::BuiltIn::ChangeDetails
+  def actual_after(); end
+
+  def actual_delta(); end
+
+  def changed?(); end
+
+  def initialize(matcher_name, receiver=T.unsafe(nil), message=T.unsafe(nil), &block); end
+
+  def perform_change(event_proc); end
+
+  def value_representation(); end
+end
+
+class RSpec::Matchers::BuiltIn::ChangeDetails
+end
+
+class RSpec::Matchers::BuiltIn::ChangeFromValue
+  def does_not_match?(event_proc); end
+
+  def initialize(change_details, expected_before); end
+
+  def to(value); end
+end
+
+class RSpec::Matchers::BuiltIn::ChangeFromValue
+end
+
+class RSpec::Matchers::BuiltIn::ChangeRelatively
+  def does_not_match?(_event_proc); end
+
+  def initialize(change_details, expected_delta, relativity, &comparer); end
+
+  def matches?(event_proc); end
+end
+
+class RSpec::Matchers::BuiltIn::ChangeRelatively
+end
+
+class RSpec::Matchers::BuiltIn::ChangeToValue
+  def does_not_match?(_event_proc); end
+
+  def from(value); end
+
+  def initialize(change_details, expected_after); end
+end
+
+class RSpec::Matchers::BuiltIn::ChangeToValue
 end
 
 class RSpec::Matchers::BuiltIn::Compound
@@ -24691,6 +26329,13 @@ end
 class RSpec::Matchers::BuiltIn::NegativeOperatorMatcher
 end
 
+module RSpec::Matchers::BuiltIn::NullCapture
+end
+
+module RSpec::Matchers::BuiltIn::NullCapture
+  def self.capture(_block); end
+end
+
 class RSpec::Matchers::BuiltIn::OperatorMatcher
   def !=(_expected); end
 
@@ -24779,6 +26424,19 @@ end
 class RSpec::Matchers::BuiltIn::RaiseError
 end
 
+class RSpec::Matchers::BuiltIn::ReliableMatchData
+  def captures(); end
+
+  def initialize(match_data); end
+
+  def match_data(); end
+
+  def names(); end
+end
+
+class RSpec::Matchers::BuiltIn::ReliableMatchData
+end
+
 class RSpec::Matchers::BuiltIn::RespondTo
   def and_any_keywords(); end
 
@@ -24791,6 +26449,8 @@ class RSpec::Matchers::BuiltIn::RespondTo
   def arguments(); end
 
   def does_not_match?(actual); end
+
+  def ignoring_method_signature_failure!(); end
 
   def initialize(*names); end
 
@@ -24814,6 +26474,19 @@ end
 
 class RSpec::Matchers::BuiltIn::Satisfy
 end
+
+class RSpec::Matchers::BuiltIn::SpecificValuesChange
+  def initialize(change_details, from, to); end
+
+  def matches?(event_proc); end
+end
+
+RSpec::Matchers::BuiltIn::SpecificValuesChange::MATCH_ANYTHING = BasicObject
+
+class RSpec::Matchers::BuiltIn::SpecificValuesChange
+end
+
+RSpec::Matchers::BuiltIn::StartAndEndWith = RSpec::Matchers::BuiltIn::StartOrEndWith
 
 class RSpec::Matchers::BuiltIn::StartOrEndWith
   def initialize(*expected); end
@@ -24873,6 +26546,36 @@ class RSpec::Matchers::BuiltIn::YieldControl
 end
 
 class RSpec::Matchers::BuiltIn::YieldControl
+end
+
+class RSpec::Matchers::BuiltIn::YieldProbe
+  def assert_used!(); end
+
+  def assert_valid_expect_block!(); end
+
+  def has_block?(); end
+
+  def initialize(block, &callback); end
+
+  def num_yields(); end
+
+  def num_yields=(num_yields); end
+
+  def probe(); end
+
+  def single_yield_args(); end
+
+  def to_proc(); end
+
+  def yielded_args(); end
+
+  def yielded_args=(yielded_args); end
+
+  def yielded_once?(matcher_name); end
+end
+
+class RSpec::Matchers::BuiltIn::YieldProbe
+  def self.probe(block, &callback); end
 end
 
 class RSpec::Matchers::BuiltIn::YieldSuccessiveArgs
@@ -25840,6 +27543,19 @@ class RSpec::Mocks::MarshalExtension
 end
 
 module RSpec::Mocks::Matchers
+end
+
+class RSpec::Mocks::Matchers::ExpectationCustomization
+  def block(); end
+
+  def block=(block); end
+
+  def initialize(method_name, args, block); end
+
+  def playback_onto(expectation); end
+end
+
+class RSpec::Mocks::Matchers::ExpectationCustomization
 end
 
 class RSpec::Mocks::Matchers::HaveReceived
@@ -27048,7 +28764,13 @@ end
 class RSpec::Support::MethodSignatureVerifier
 end
 
-RSpec::Support::Mutex = Thread::Mutex
+class RSpec::Support::Mutex
+  NEW_MUTEX_METHOD = ::T.let(nil, ::T.untyped)
+end
+
+class RSpec::Support::Mutex
+  def self.new(); end
+end
 
 module RSpec::Support::OS
 end
@@ -27221,6 +28943,8 @@ module RSpec::Support::Ruby
   def self.non_mri?(); end
 
   def self.rbx?(); end
+
+  def self.truffleruby?(); end
 end
 
 module RSpec::Support::RubyFeatures
@@ -27270,6 +28994,13 @@ module RSpec::Support::Warnings
 end
 
 module RSpec::Support::Warnings
+end
+
+module RSpec::Support::WithKeywordsWhenNeeded
+end
+
+module RSpec::Support::WithKeywordsWhenNeeded
+  def self.class_exec(klass, *args, &block); end
 end
 
 module RSpec::Support
@@ -27366,7 +29097,10 @@ module RSpec
 end
 
 module Racc
-  Racc_No_Extensions = ::T.let(nil, ::T.untyped)
+  Copyright = ::T.let(nil, ::T.untyped)
+  Racc_No_Extentions = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+  Version = ::T.let(nil, ::T.untyped)
 end
 
 class Racc::CparseParams
@@ -27588,7 +29322,6 @@ end
 
 class Rake::EarlyTime
   extend ::Singleton::SingletonClassMethods
-  def self.instance(); end
 end
 
 class Rake::FileCreationTask
@@ -27631,6 +29364,8 @@ class Rake::FileList
 
   def bsearch_index(*args, &block); end
 
+  def chain(*args, &block); end
+
   def chunk(*args, &block); end
 
   def chunk_while(*args, &block); end
@@ -27657,6 +29392,8 @@ class Rake::FileList
 
   def cycle(*args, &block); end
 
+  def deconstruct(*args, &block); end
+
   def delete(*args, &block); end
 
   def delete_at(*args, &block); end
@@ -27664,6 +29401,8 @@ class Rake::FileList
   def delete_if(*args, &block); end
 
   def detect(*args, &block); end
+
+  def difference(*args, &block); end
 
   def dig(*args, &block); end
 
@@ -27705,6 +29444,12 @@ class Rake::FileList
 
   def fill(*args, &block); end
 
+  def filter(*args, &block); end
+
+  def filter!(*args, &block); end
+
+  def filter_map(*args, &block); end
+
   def find(*args, &block); end
 
   def find_all(*args, &block); end
@@ -27744,6 +29489,8 @@ class Rake::FileList
   def insert(*args, &block); end
 
   def inspect(*args, &block); end
+
+  def intersection(*args, &block); end
 
   def is_a?(klass); end
 
@@ -27869,6 +29616,8 @@ class Rake::FileList
 
   def take_while(*args, &block); end
 
+  def tally(*args, &block); end
+
   def to_a(); end
 
   def to_ary(); end
@@ -27882,6 +29631,8 @@ class Rake::FileList
   def to_set(*args, &block); end
 
   def transpose(*args, &block); end
+
+  def union(*args, &block); end
 
   def uniq(*args, &block); end
 
@@ -27934,6 +29685,8 @@ module Rake::FileUtilsExt
   def copy(*args, **options, &block); end
 
   def cp(*args, **options, &block); end
+
+  def cp_lr(*args, **options, &block); end
 
   def cp_r(*args, **options, &block); end
 
@@ -28040,7 +29793,6 @@ end
 
 class Rake::LateTime
   extend ::Singleton::SingletonClassMethods
-  def self.instance(); end
 end
 
 class Rake::LinkedList
@@ -28448,531 +30200,2076 @@ end
 
 RakeFileUtils = Rake::FileUtilsExt
 
-module Random::Formatter
-  def alphanumeric(n=T.unsafe(nil)); end
-
-  ALPHANUMERIC = ::T.let(nil, ::T.untyped)
-end
-
 class Random
-  def self.urandom(_); end
+  def self.bytes(_); end
 end
 
 class Range
+  def %(_); end
+
+  def entries(); end
+
+  def to_a(); end
+
   def to_liquid(); end
 end
 
 module RbConfig
   def self.expand(val, config=T.unsafe(nil)); end
 
+  def self.fire_update!(key, val, mkconf=T.unsafe(nil), conf=T.unsafe(nil)); end
+
   def self.ruby(); end
 end
 
+module Readline
+  def self.completion_quote_character(); end
+end
+
 class Regexp
-  def match?(*_); end
+  TOKEN_KEYS = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Expression
+end
+
+class Regexp::Expression::Alternation
+  def alternatives(); end
+end
+
+Regexp::Expression::Alternation::OPERAND = Regexp::Expression::Alternative
+
+class Regexp::Expression::Alternation
+end
+
+class Regexp::Expression::Alternative
+end
+
+class Regexp::Expression::Alternative
+end
+
+module Regexp::Expression::Anchor
+end
+
+Regexp::Expression::Anchor::BOL = Regexp::Expression::Anchor::BeginningOfLine
+
+Regexp::Expression::Anchor::BOS = Regexp::Expression::Anchor::BeginningOfString
+
+class Regexp::Expression::Anchor::Base
+  def match_length(); end
+end
+
+class Regexp::Expression::Anchor::Base
+end
+
+class Regexp::Expression::Anchor::BeginningOfLine
+end
+
+class Regexp::Expression::Anchor::BeginningOfLine
+end
+
+class Regexp::Expression::Anchor::BeginningOfString
+end
+
+class Regexp::Expression::Anchor::BeginningOfString
+end
+
+Regexp::Expression::Anchor::EOL = Regexp::Expression::Anchor::EndOfLine
+
+Regexp::Expression::Anchor::EOS = Regexp::Expression::Anchor::EndOfString
+
+Regexp::Expression::Anchor::EOSobEOL = Regexp::Expression::Anchor::EndOfStringOrBeforeEndOfLine
+
+class Regexp::Expression::Anchor::EndOfLine
+end
+
+class Regexp::Expression::Anchor::EndOfLine
+end
+
+class Regexp::Expression::Anchor::EndOfString
+end
+
+class Regexp::Expression::Anchor::EndOfString
+end
+
+class Regexp::Expression::Anchor::EndOfStringOrBeforeEndOfLine
+end
+
+class Regexp::Expression::Anchor::EndOfStringOrBeforeEndOfLine
+end
+
+class Regexp::Expression::Anchor::MatchStart
+end
+
+class Regexp::Expression::Anchor::MatchStart
+end
+
+class Regexp::Expression::Anchor::NonWordBoundary
+end
+
+class Regexp::Expression::Anchor::NonWordBoundary
+end
+
+class Regexp::Expression::Anchor::WordBoundary
+end
+
+class Regexp::Expression::Anchor::WordBoundary
+end
+
+module Regexp::Expression::Anchor
+end
+
+module Regexp::Expression::Assertion
+end
+
+class Regexp::Expression::Assertion::Base
+end
+
+class Regexp::Expression::Assertion::Base
+end
+
+class Regexp::Expression::Assertion::Lookahead
+end
+
+class Regexp::Expression::Assertion::Lookahead
+end
+
+class Regexp::Expression::Assertion::Lookbehind
+end
+
+class Regexp::Expression::Assertion::Lookbehind
+end
+
+class Regexp::Expression::Assertion::NegativeLookahead
+end
+
+class Regexp::Expression::Assertion::NegativeLookahead
+end
+
+class Regexp::Expression::Assertion::NegativeLookbehind
+end
+
+class Regexp::Expression::Assertion::NegativeLookbehind
+end
+
+module Regexp::Expression::Assertion
+end
+
+module Regexp::Expression::Backreference
+end
+
+class Regexp::Expression::Backreference::Base
+  def match_length(); end
+
+  def referenced_expression(); end
+
+  def referenced_expression=(referenced_expression); end
+end
+
+class Regexp::Expression::Backreference::Base
+end
+
+class Regexp::Expression::Backreference::Name
+  def name(); end
+
+  def reference(); end
+end
+
+class Regexp::Expression::Backreference::Name
+end
+
+class Regexp::Expression::Backreference::NameCall
+end
+
+class Regexp::Expression::Backreference::NameCall
+end
+
+class Regexp::Expression::Backreference::NameRecursionLevel
+  def recursion_level(); end
+end
+
+class Regexp::Expression::Backreference::NameRecursionLevel
+end
+
+class Regexp::Expression::Backreference::Number
+  def number(); end
+
+  def reference(); end
+end
+
+class Regexp::Expression::Backreference::Number
+end
+
+class Regexp::Expression::Backreference::NumberCall
+end
+
+class Regexp::Expression::Backreference::NumberCall
+end
+
+class Regexp::Expression::Backreference::NumberCallRelative
+end
+
+class Regexp::Expression::Backreference::NumberCallRelative
+end
+
+class Regexp::Expression::Backreference::NumberRecursionLevel
+  def recursion_level(); end
+end
+
+class Regexp::Expression::Backreference::NumberRecursionLevel
+end
+
+class Regexp::Expression::Backreference::NumberRelative
+  def effective_number(); end
+
+  def effective_number=(effective_number); end
+end
+
+class Regexp::Expression::Backreference::NumberRelative
+end
+
+module Regexp::Expression::Backreference
+end
+
+class Regexp::Expression::Base
+  def =~(string, offset=T.unsafe(nil)); end
+
+  def a?(); end
+
+  def ascii_classes?(); end
+
+  def attributes(); end
+
+  def case_insensitive?(); end
+
+  def coded_offset(); end
+
+  def conditional_level(); end
+
+  def conditional_level=(conditional_level); end
+
+  def d?(); end
+
+  def default_classes?(); end
+
+  def extended?(); end
+
+  def free_spacing?(); end
+
+  def full_length(); end
+
+  def greedy?(); end
+
+  def i?(); end
+
+  def ignore_case?(); end
+
+  def initialize(token, options=T.unsafe(nil)); end
+
+  def is?(test_token, test_type=T.unsafe(nil)); end
+
+  def lazy?(); end
+
+  def level(); end
+
+  def level=(level); end
+
+  def m?(); end
+
+  def match(string, offset=T.unsafe(nil)); end
+
+  def match?(string); end
+
+  def matches?(string); end
+
+  def multiline?(); end
+
+  def nesting_level(); end
+
+  def nesting_level=(nesting_level); end
+
+  def offset(); end
+
+  def one_of?(scope, top=T.unsafe(nil)); end
+
+  def options(); end
+
+  def options=(options); end
+
+  def possessive?(); end
+
+  def quantified?(); end
+
+  def quantifier(); end
+
+  def quantifier=(quantifier); end
+
+  def quantifier_affix(expression_format); end
+
+  def quantify(token, text, min=T.unsafe(nil), max=T.unsafe(nil), mode=T.unsafe(nil)); end
+
+  def quantity(); end
+
+  def reluctant?(); end
+
+  def repetitions(); end
+
+  def set_level(); end
+
+  def set_level=(set_level); end
+
+  def starts_at(); end
+
+  def strfre(format=T.unsafe(nil), indent_offset=T.unsafe(nil), index=T.unsafe(nil)); end
+
+  def strfregexp(format=T.unsafe(nil), indent_offset=T.unsafe(nil), index=T.unsafe(nil)); end
+
+  def terminal?(); end
+
+  def text(); end
+
+  def text=(text); end
+
+  def to_h(); end
+
+  def to_re(format=T.unsafe(nil)); end
+
+  def to_s(format=T.unsafe(nil)); end
+
+  def token(); end
+
+  def token=(token); end
+
+  def ts(); end
+
+  def ts=(ts); end
+
+  def type(); end
+
+  def type=(type); end
+
+  def type?(test_type); end
+
+  def u?(); end
+
+  def unicode_classes?(); end
+
+  def unquantified_clone(); end
+
+  def x?(); end
+end
+
+class Regexp::Expression::Base
+end
+
+class Regexp::Expression::CharacterSet
+  def close(); end
+
+  def closed(); end
+
+  def closed=(closed); end
+
+  def closed?(); end
+
+  def negate(); end
+
+  def negated?(); end
+
+  def negative(); end
+
+  def negative=(negative); end
+
+  def negative?(); end
+end
+
+class Regexp::Expression::CharacterSet::IntersectedSequence
+end
+
+class Regexp::Expression::CharacterSet::IntersectedSequence
+end
+
+class Regexp::Expression::CharacterSet::Intersection
+end
+
+Regexp::Expression::CharacterSet::Intersection::OPERAND = Regexp::Expression::CharacterSet::IntersectedSequence
+
+class Regexp::Expression::CharacterSet::Intersection
+end
+
+class Regexp::Expression::CharacterSet::Range
+  def complete?(); end
+
+  def to_s(_format=T.unsafe(nil)); end
+end
+
+class Regexp::Expression::CharacterSet::Range
+end
+
+class Regexp::Expression::CharacterSet
+end
+
+module Regexp::Expression::CharacterType
+end
+
+class Regexp::Expression::CharacterType::Any
+end
+
+class Regexp::Expression::CharacterType::Any
+end
+
+class Regexp::Expression::CharacterType::Base
+  def match_length(); end
+end
+
+class Regexp::Expression::CharacterType::Base
+end
+
+class Regexp::Expression::CharacterType::Digit
+end
+
+class Regexp::Expression::CharacterType::Digit
+end
+
+class Regexp::Expression::CharacterType::ExtendedGrapheme
+end
+
+class Regexp::Expression::CharacterType::ExtendedGrapheme
+end
+
+class Regexp::Expression::CharacterType::Hex
+end
+
+class Regexp::Expression::CharacterType::Hex
+end
+
+class Regexp::Expression::CharacterType::Linebreak
+end
+
+class Regexp::Expression::CharacterType::Linebreak
+end
+
+class Regexp::Expression::CharacterType::NonDigit
+end
+
+class Regexp::Expression::CharacterType::NonDigit
+end
+
+class Regexp::Expression::CharacterType::NonHex
+end
+
+class Regexp::Expression::CharacterType::NonHex
+end
+
+class Regexp::Expression::CharacterType::NonSpace
+end
+
+class Regexp::Expression::CharacterType::NonSpace
+end
+
+class Regexp::Expression::CharacterType::NonWord
+end
+
+class Regexp::Expression::CharacterType::NonWord
+end
+
+class Regexp::Expression::CharacterType::Space
+end
+
+class Regexp::Expression::CharacterType::Space
+end
+
+class Regexp::Expression::CharacterType::Word
+end
+
+class Regexp::Expression::CharacterType::Word
+end
+
+module Regexp::Expression::CharacterType
+end
+
+class Regexp::Expression::Comment
+end
+
+class Regexp::Expression::Comment
+end
+
+module Regexp::Expression::Conditional
+end
+
+class Regexp::Expression::Conditional::Branch
+end
+
+class Regexp::Expression::Conditional::Branch
+end
+
+class Regexp::Expression::Conditional::Condition
+  def match_length(); end
+
+  def reference(); end
+
+  def referenced_expression(); end
+
+  def referenced_expression=(referenced_expression); end
+end
+
+class Regexp::Expression::Conditional::Condition
+end
+
+class Regexp::Expression::Conditional::Expression
+  def add_sequence(active_opts=T.unsafe(nil)); end
+
+  def branch(active_opts=T.unsafe(nil)); end
+
+  def branches(); end
+
+  def condition(); end
+
+  def condition=(exp); end
+
+  def reference(); end
+
+  def referenced_expression(); end
+
+  def referenced_expression=(referenced_expression); end
+end
+
+class Regexp::Expression::Conditional::Expression
+end
+
+class Regexp::Expression::Conditional::TooManyBranches
+  def initialize(); end
+end
+
+class Regexp::Expression::Conditional::TooManyBranches
+end
+
+module Regexp::Expression::Conditional
+end
+
+module Regexp::Expression::EscapeSequence
+end
+
+class Regexp::Expression::EscapeSequence::AbstractMetaControlSequence
+end
+
+class Regexp::Expression::EscapeSequence::AbstractMetaControlSequence
+end
+
+class Regexp::Expression::EscapeSequence::AsciiEscape
+end
+
+class Regexp::Expression::EscapeSequence::AsciiEscape
+end
+
+class Regexp::Expression::EscapeSequence::Backspace
+end
+
+class Regexp::Expression::EscapeSequence::Backspace
+end
+
+class Regexp::Expression::EscapeSequence::Base
+  def char(); end
+
+  def codepoint(); end
+
+  def match_length(); end
+end
+
+class Regexp::Expression::EscapeSequence::Base
+end
+
+class Regexp::Expression::EscapeSequence::Bell
+end
+
+class Regexp::Expression::EscapeSequence::Bell
+end
+
+class Regexp::Expression::EscapeSequence::Codepoint
+end
+
+class Regexp::Expression::EscapeSequence::Codepoint
+end
+
+class Regexp::Expression::EscapeSequence::CodepointList
+  def chars(); end
+
+  def codepoints(); end
+end
+
+class Regexp::Expression::EscapeSequence::CodepointList
+end
+
+class Regexp::Expression::EscapeSequence::Control
+end
+
+class Regexp::Expression::EscapeSequence::Control
+end
+
+class Regexp::Expression::EscapeSequence::FormFeed
+end
+
+class Regexp::Expression::EscapeSequence::FormFeed
+end
+
+class Regexp::Expression::EscapeSequence::Hex
+end
+
+class Regexp::Expression::EscapeSequence::Hex
+end
+
+class Regexp::Expression::EscapeSequence::Literal
+end
+
+class Regexp::Expression::EscapeSequence::Literal
+end
+
+class Regexp::Expression::EscapeSequence::Meta
+end
+
+class Regexp::Expression::EscapeSequence::Meta
+end
+
+class Regexp::Expression::EscapeSequence::MetaControl
+end
+
+class Regexp::Expression::EscapeSequence::MetaControl
+end
+
+class Regexp::Expression::EscapeSequence::Newline
+end
+
+class Regexp::Expression::EscapeSequence::Newline
+end
+
+class Regexp::Expression::EscapeSequence::Octal
+end
+
+class Regexp::Expression::EscapeSequence::Octal
+end
+
+class Regexp::Expression::EscapeSequence::Return
+end
+
+class Regexp::Expression::EscapeSequence::Return
+end
+
+class Regexp::Expression::EscapeSequence::Tab
+end
+
+class Regexp::Expression::EscapeSequence::Tab
+end
+
+class Regexp::Expression::EscapeSequence::VerticalTab
+end
+
+class Regexp::Expression::EscapeSequence::VerticalTab
+end
+
+module Regexp::Expression::EscapeSequence
+end
+
+class Regexp::Expression::FreeSpace
+  def match_length(); end
+end
+
+class Regexp::Expression::FreeSpace
+end
+
+module Regexp::Expression::Group
+end
+
+class Regexp::Expression::Group::Absence
+end
+
+class Regexp::Expression::Group::Absence
+end
+
+class Regexp::Expression::Group::Atomic
+end
+
+class Regexp::Expression::Group::Atomic
+end
+
+class Regexp::Expression::Group::Base
+  def capturing?(); end
+
+  def comment?(); end
+end
+
+class Regexp::Expression::Group::Base
+end
+
+class Regexp::Expression::Group::Capture
+  def identifier(); end
+
+  def number(); end
+
+  def number=(number); end
+
+  def number_at_level(); end
+
+  def number_at_level=(number_at_level); end
+end
+
+class Regexp::Expression::Group::Capture
+end
+
+class Regexp::Expression::Group::Comment
+  def to_s(_format=T.unsafe(nil)); end
+end
+
+class Regexp::Expression::Group::Comment
+end
+
+class Regexp::Expression::Group::Named
+  def name(); end
+end
+
+class Regexp::Expression::Group::Named
+end
+
+class Regexp::Expression::Group::Options
+  def option_changes(); end
+
+  def option_changes=(option_changes); end
+end
+
+class Regexp::Expression::Group::Options
+end
+
+class Regexp::Expression::Group::Passive
+end
+
+class Regexp::Expression::Group::Passive
+end
+
+module Regexp::Expression::Group
+end
+
+module Regexp::Expression::Keep
+end
+
+class Regexp::Expression::Keep::Mark
+  def match_length(); end
+end
+
+class Regexp::Expression::Keep::Mark
+end
+
+module Regexp::Expression::Keep
+end
+
+class Regexp::Expression::Literal
+  def match_length(); end
+end
+
+class Regexp::Expression::Literal
+end
+
+Regexp::Expression::MatchLength = Regexp::MatchLength
+
+class Regexp::Expression::PosixClass
+  def match_length(); end
+
+  def name(); end
+
+  def negative?(); end
+end
+
+class Regexp::Expression::PosixClass
+end
+
+class Regexp::Expression::Quantifier
+  def greedy?(); end
+
+  def initialize(token, text, min, max, mode); end
+
+  def lazy?(); end
+
+  def max(); end
+
+  def min(); end
+
+  def mode(); end
+
+  def possessive?(); end
+
+  def reluctant?(); end
+
+  def text(); end
+
+  def to_h(); end
+
+  def to_str(); end
+
+  def token(); end
+  MODES = ::T.let(nil, ::T.untyped)
+end
+
+class Regexp::Expression::Quantifier
+end
+
+class Regexp::Expression::Root
+  def initialize(*args); end
+end
+
+class Regexp::Expression::Root
+  def self.build(options=T.unsafe(nil)); end
+
+  def self.build_token(); end
+end
+
+class Regexp::Expression::Sequence
+  def initialize(*args); end
+end
+
+class Regexp::Expression::Sequence
+  def self.add_to(subexpression, params=T.unsafe(nil), active_opts=T.unsafe(nil)); end
+
+  def self.at_levels(level, set_level, conditional_level); end
+end
+
+class Regexp::Expression::SequenceOperation
+  def add_sequence(active_opts=T.unsafe(nil)); end
+
+  def operands(); end
+
+  def operator(); end
+
+  def sequences(); end
+end
+
+class Regexp::Expression::SequenceOperation
+end
+
+class Regexp::Expression::Subexpression
+  include ::Enumerable
+  def <<(exp); end
+
+  def [](*args, &block); end
+
+  def at(*args, &block); end
+
+  def dig(*indices); end
+
+  def each(*args, &block); end
+
+  def each_expression(include_self=T.unsafe(nil), &block); end
+
+  def empty?(*args, &block); end
+
+  def expressions(); end
+
+  def expressions=(expressions); end
+
+  def fetch(*args, &block); end
+
+  def flat_map(include_self=T.unsafe(nil), &block); end
+
+  def index(*args, &block); end
+
+  def inner_match_length(); end
+
+  def join(*args, &block); end
+
+  def last(*args, &block); end
+
+  def length(*args, &block); end
+
+  def match_length(); end
+
+  def strfre_tree(format=T.unsafe(nil), include_self=T.unsafe(nil), separator=T.unsafe(nil)); end
+
+  def strfregexp_tree(format=T.unsafe(nil), include_self=T.unsafe(nil), separator=T.unsafe(nil)); end
+
+  def te(); end
+
+  def to_h(); end
+
+  def traverse(include_self=T.unsafe(nil), &block); end
+
+  def values_at(*args, &block); end
+
+  def walk(include_self=T.unsafe(nil), &block); end
+end
+
+class Regexp::Expression::Subexpression
+end
+
+module Regexp::Expression::UnicodeProperty
+end
+
+class Regexp::Expression::UnicodeProperty::Age
+end
+
+class Regexp::Expression::UnicodeProperty::Age
+end
+
+class Regexp::Expression::UnicodeProperty::Alnum
+end
+
+class Regexp::Expression::UnicodeProperty::Alnum
+end
+
+class Regexp::Expression::UnicodeProperty::Alpha
+end
+
+class Regexp::Expression::UnicodeProperty::Alpha
+end
+
+class Regexp::Expression::UnicodeProperty::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Ascii
+end
+
+class Regexp::Expression::UnicodeProperty::Ascii
+end
+
+class Regexp::Expression::UnicodeProperty::Assigned
+end
+
+class Regexp::Expression::UnicodeProperty::Assigned
+end
+
+class Regexp::Expression::UnicodeProperty::Base
+  def match_length(); end
+
+  def name(); end
+
+  def negative?(); end
+
+  def shortcut(); end
+end
+
+class Regexp::Expression::UnicodeProperty::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Blank
+end
+
+class Regexp::Expression::UnicodeProperty::Blank
+end
+
+class Regexp::Expression::UnicodeProperty::Block
+end
+
+class Regexp::Expression::UnicodeProperty::Block
+end
+
+class Regexp::Expression::UnicodeProperty::Cntrl
+end
+
+class Regexp::Expression::UnicodeProperty::Cntrl
+end
+
+module Regexp::Expression::UnicodeProperty::Codepoint
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Control
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Control
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Format
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Format
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::PrivateUse
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::PrivateUse
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Surrogate
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Surrogate
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Unassigned
+end
+
+class Regexp::Expression::UnicodeProperty::Codepoint::Unassigned
+end
+
+module Regexp::Expression::UnicodeProperty::Codepoint
+end
+
+class Regexp::Expression::UnicodeProperty::Derived
+end
+
+class Regexp::Expression::UnicodeProperty::Derived
+end
+
+class Regexp::Expression::UnicodeProperty::Digit
+end
+
+class Regexp::Expression::UnicodeProperty::Digit
+end
+
+class Regexp::Expression::UnicodeProperty::Emoji
+end
+
+class Regexp::Expression::UnicodeProperty::Emoji
+end
+
+class Regexp::Expression::UnicodeProperty::Graph
+end
+
+class Regexp::Expression::UnicodeProperty::Graph
+end
+
+module Regexp::Expression::UnicodeProperty::Letter
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Cased
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Cased
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Lowercase
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Lowercase
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Modifier
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Modifier
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Other
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Other
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Titlecase
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Titlecase
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Uppercase
+end
+
+class Regexp::Expression::UnicodeProperty::Letter::Uppercase
+end
+
+module Regexp::Expression::UnicodeProperty::Letter
+end
+
+class Regexp::Expression::UnicodeProperty::Lower
+end
+
+class Regexp::Expression::UnicodeProperty::Lower
+end
+
+module Regexp::Expression::UnicodeProperty::Mark
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Combining
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Combining
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Enclosing
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Enclosing
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Nonspacing
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Nonspacing
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Spacing
+end
+
+class Regexp::Expression::UnicodeProperty::Mark::Spacing
+end
+
+module Regexp::Expression::UnicodeProperty::Mark
+end
+
+class Regexp::Expression::UnicodeProperty::Newline
+end
+
+class Regexp::Expression::UnicodeProperty::Newline
+end
+
+module Regexp::Expression::UnicodeProperty::Number
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Decimal
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Decimal
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Letter
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Letter
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Other
+end
+
+class Regexp::Expression::UnicodeProperty::Number::Other
+end
+
+module Regexp::Expression::UnicodeProperty::Number
+end
+
+class Regexp::Expression::UnicodeProperty::Print
+end
+
+class Regexp::Expression::UnicodeProperty::Print
+end
+
+class Regexp::Expression::UnicodeProperty::Punct
+end
+
+class Regexp::Expression::UnicodeProperty::Punct
+end
+
+module Regexp::Expression::UnicodeProperty::Punctuation
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Close
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Close
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Connector
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Connector
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Dash
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Dash
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Final
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Final
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Initial
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Initial
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Open
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Open
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Other
+end
+
+class Regexp::Expression::UnicodeProperty::Punctuation::Other
+end
+
+module Regexp::Expression::UnicodeProperty::Punctuation
+end
+
+class Regexp::Expression::UnicodeProperty::Script
+end
+
+class Regexp::Expression::UnicodeProperty::Script
+end
+
+module Regexp::Expression::UnicodeProperty::Separator
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Line
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Line
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Paragraph
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Paragraph
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Space
+end
+
+class Regexp::Expression::UnicodeProperty::Separator::Space
+end
+
+module Regexp::Expression::UnicodeProperty::Separator
+end
+
+class Regexp::Expression::UnicodeProperty::Space
+end
+
+class Regexp::Expression::UnicodeProperty::Space
+end
+
+module Regexp::Expression::UnicodeProperty::Symbol
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Any
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Base
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Currency
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Currency
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Math
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Math
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Modifier
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Modifier
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Other
+end
+
+class Regexp::Expression::UnicodeProperty::Symbol::Other
+end
+
+module Regexp::Expression::UnicodeProperty::Symbol
+end
+
+class Regexp::Expression::UnicodeProperty::Upper
+end
+
+class Regexp::Expression::UnicodeProperty::Upper
+end
+
+class Regexp::Expression::UnicodeProperty::Word
+end
+
+class Regexp::Expression::UnicodeProperty::Word
+end
+
+class Regexp::Expression::UnicodeProperty::XPosixPunct
+end
+
+class Regexp::Expression::UnicodeProperty::XPosixPunct
+end
+
+class Regexp::Expression::UnicodeProperty::Xdigit
+end
+
+class Regexp::Expression::UnicodeProperty::Xdigit
+end
+
+module Regexp::Expression::UnicodeProperty
+end
+
+class Regexp::Expression::WhiteSpace
+  def merge(exp); end
+end
+
+class Regexp::Expression::WhiteSpace
+end
+
+module Regexp::Expression
+  def self.parsed(exp); end
+end
+
+class Regexp::Lexer
+  def lex(input, syntax=T.unsafe(nil), &block); end
+  CLOSING_TOKENS = ::T.let(nil, ::T.untyped)
+  OPENING_TOKENS = ::T.let(nil, ::T.untyped)
+end
+
+class Regexp::Lexer
+  def self.lex(input, syntax=T.unsafe(nil), &block); end
+
+  def self.scan(input, syntax=T.unsafe(nil), &block); end
+end
+
+class Regexp::MatchLength
+  include ::Enumerable
+  def each(opts=T.unsafe(nil), &blk); end
+
+  def endless_each(&block); end
+
+  def fixed?(); end
+
+  def include?(length); end
+
+  def initialize(exp, opts=T.unsafe(nil)); end
+
+  def max(); end
+
+  def min(); end
+
+  def to_re(); end
+end
+
+class Regexp::MatchLength
+  def self.of(obj); end
+end
+
+class Regexp::Parser
+  include ::Regexp::Expression
+  include ::Regexp::Syntax
+  include ::Regexp::Expression::UnicodeProperty
+  def parse(input, syntax=T.unsafe(nil), &block); end
+  ENC_FLAGS = ::T.let(nil, ::T.untyped)
+  MOD_FLAGS = ::T.let(nil, ::T.untyped)
+  VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class Regexp::Parser::ParserError
+end
+
+class Regexp::Parser::ParserError
+end
+
+class Regexp::Parser::UnknownTokenError
+  def initialize(type, token); end
+end
+
+class Regexp::Parser::UnknownTokenError
+end
+
+class Regexp::Parser::UnknownTokenTypeError
+  def initialize(type, token); end
+end
+
+class Regexp::Parser::UnknownTokenTypeError
+end
+
+class Regexp::Parser
+  def self.parse(input, syntax=T.unsafe(nil), &block); end
+end
+
+class Regexp::Scanner
+  def emit(type, token, text, ts, te); end
+
+  def scan(input_object, &block); end
+  PROP_MAPS_DIR = ::T.let(nil, ::T.untyped)
+end
+
+class Regexp::Scanner::InvalidBackrefError
+  def initialize(what, reason); end
+end
+
+class Regexp::Scanner::InvalidBackrefError
+end
+
+class Regexp::Scanner::InvalidGroupError
+  def initialize(what, reason); end
+end
+
+class Regexp::Scanner::InvalidGroupError
+end
+
+class Regexp::Scanner::InvalidGroupOption
+  def initialize(option, text); end
+end
+
+class Regexp::Scanner::InvalidGroupOption
+end
+
+class Regexp::Scanner::InvalidSequenceError
+  def initialize(what=T.unsafe(nil), where=T.unsafe(nil)); end
+end
+
+class Regexp::Scanner::InvalidSequenceError
+end
+
+class Regexp::Scanner::PrematureEndError
+  def initialize(where=T.unsafe(nil)); end
+end
+
+class Regexp::Scanner::PrematureEndError
+end
+
+class Regexp::Scanner::ScannerError
+end
+
+class Regexp::Scanner::ScannerError
+end
+
+class Regexp::Scanner::UnknownUnicodePropertyError
+  def initialize(name); end
+end
+
+class Regexp::Scanner::UnknownUnicodePropertyError
+end
+
+class Regexp::Scanner::ValidationError
+  def initialize(reason); end
+end
+
+class Regexp::Scanner::ValidationError
+end
+
+class Regexp::Scanner
+  def self.long_prop_map(); end
+
+  def self.scan(input_object, &block); end
+
+  def self.short_prop_map(); end
+end
+
+module Regexp::Syntax
+  VERSION_CONST_REGEXP = ::T.let(nil, ::T.untyped)
+  VERSION_FORMAT = ::T.let(nil, ::T.untyped)
+  VERSION_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class Regexp::Syntax::Any
+end
+
+class Regexp::Syntax::Any
+end
+
+class Regexp::Syntax::Base
+  include ::Regexp::Syntax::Token
+  def check!(type, token); end
+
+  def check?(type, token); end
+
+  def excludes(type, tokens); end
+
+  def features(); end
+
+  def implementations(type); end
+
+  def implements(type, tokens); end
+
+  def implements!(type, token); end
+
+  def implements?(type, token); end
+
+  def normalize(type, token); end
+
+  def normalize_backref(type, token); end
+
+  def normalize_group(type, token); end
+end
+
+class Regexp::Syntax::Base
+end
+
+class Regexp::Syntax::InvalidVersionNameError
+  def initialize(name); end
+end
+
+class Regexp::Syntax::InvalidVersionNameError
+end
+
+class Regexp::Syntax::NotImplementedError
+  def initialize(syntax, type, token); end
+end
+
+class Regexp::Syntax::NotImplementedError
+end
+
+class Regexp::Syntax::SyntaxError
+end
+
+class Regexp::Syntax::SyntaxError
+end
+
+module Regexp::Syntax::Token
+  All = ::T.let(nil, ::T.untyped)
+  Map = ::T.let(nil, ::T.untyped)
+  Types = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Anchor
+  All = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Extended = ::T.let(nil, ::T.untyped)
+  MatchStart = ::T.let(nil, ::T.untyped)
+  String = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Anchor
+end
+
+module Regexp::Syntax::Token::Assertion
+  All = ::T.let(nil, ::T.untyped)
+  Lookahead = ::T.let(nil, ::T.untyped)
+  Lookbehind = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Assertion
+end
+
+module Regexp::Syntax::Token::Backreference
+  All = ::T.let(nil, ::T.untyped)
+  Name = ::T.let(nil, ::T.untyped)
+  Number = ::T.let(nil, ::T.untyped)
+  RecursionLevel = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Backreference
+end
+
+module Regexp::Syntax::Token::CharacterSet
+  All = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Extended = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::CharacterSet
+end
+
+module Regexp::Syntax::Token::CharacterType
+  All = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Clustered = ::T.let(nil, ::T.untyped)
+  Extended = ::T.let(nil, ::T.untyped)
+  Hex = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::CharacterType
+end
+
+module Regexp::Syntax::Token::Conditional
+  All = ::T.let(nil, ::T.untyped)
+  Condition = ::T.let(nil, ::T.untyped)
+  Delimiters = ::T.let(nil, ::T.untyped)
+  Separator = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Conditional
+end
+
+module Regexp::Syntax::Token::Escape
+  ASCII = ::T.let(nil, ::T.untyped)
+  All = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Control = ::T.let(nil, ::T.untyped)
+  Hex = ::T.let(nil, ::T.untyped)
+  Meta = ::T.let(nil, ::T.untyped)
+  Octal = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+  Unicode = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Escape
+end
+
+module Regexp::Syntax::Token::FreeSpace
+  All = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::FreeSpace
+end
+
+module Regexp::Syntax::Token::Group
+  All = ::T.let(nil, ::T.untyped)
+  Atomic = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Comment = ::T.let(nil, ::T.untyped)
+  Extended = ::T.let(nil, ::T.untyped)
+  Named = ::T.let(nil, ::T.untyped)
+  Passive = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+  V1_8_6 = ::T.let(nil, ::T.untyped)
+  V2_4_1 = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Group
+end
+
+module Regexp::Syntax::Token::Keep
+  All = ::T.let(nil, ::T.untyped)
+  Mark = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Keep
+end
+
+module Regexp::Syntax::Token::Literal
+  All = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Literal
+end
+
+module Regexp::Syntax::Token::Meta
+  All = ::T.let(nil, ::T.untyped)
+  Basic = ::T.let(nil, ::T.untyped)
+  Extended = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Meta
+end
+
+module Regexp::Syntax::Token::PosixClass
+  All = ::T.let(nil, ::T.untyped)
+  Extensions = ::T.let(nil, ::T.untyped)
+  NonType = ::T.let(nil, ::T.untyped)
+  Standard = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::PosixClass
+end
+
+module Regexp::Syntax::Token::Quantifier
+  All = ::T.let(nil, ::T.untyped)
+  Greedy = ::T.let(nil, ::T.untyped)
+  Interval = ::T.let(nil, ::T.untyped)
+  IntervalAll = ::T.let(nil, ::T.untyped)
+  IntervalPossessive = ::T.let(nil, ::T.untyped)
+  IntervalReluctant = ::T.let(nil, ::T.untyped)
+  Possessive = ::T.let(nil, ::T.untyped)
+  Reluctant = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::Quantifier
+end
+
+module Regexp::Syntax::Token::SubexpressionCall
+  All = ::T.let(nil, ::T.untyped)
+  Name = ::T.let(nil, ::T.untyped)
+  Number = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::SubexpressionCall
+end
+
+module Regexp::Syntax::Token::UnicodeProperty
+  Age = ::T.let(nil, ::T.untyped)
+  Age_V1_9_3 = ::T.let(nil, ::T.untyped)
+  Age_V2_0_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_2_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_3_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_4_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_5_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_6_0 = ::T.let(nil, ::T.untyped)
+  Age_V2_6_2 = ::T.let(nil, ::T.untyped)
+  Age_V2_6_3 = ::T.let(nil, ::T.untyped)
+  All = ::T.let(nil, ::T.untyped)
+  CharType_V1_9_0 = ::T.let(nil, ::T.untyped)
+  CharType_V2_5_0 = ::T.let(nil, ::T.untyped)
+  Derived = ::T.let(nil, ::T.untyped)
+  Derived_V1_9_0 = ::T.let(nil, ::T.untyped)
+  Derived_V2_0_0 = ::T.let(nil, ::T.untyped)
+  Derived_V2_4_0 = ::T.let(nil, ::T.untyped)
+  Derived_V2_5_0 = ::T.let(nil, ::T.untyped)
+  Emoji = ::T.let(nil, ::T.untyped)
+  Emoji_V2_5_0 = ::T.let(nil, ::T.untyped)
+  NonType = ::T.let(nil, ::T.untyped)
+  POSIX = ::T.let(nil, ::T.untyped)
+  Script = ::T.let(nil, ::T.untyped)
+  Script_V1_9_0 = ::T.let(nil, ::T.untyped)
+  Script_V1_9_3 = ::T.let(nil, ::T.untyped)
+  Script_V2_0_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_2_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_3_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_4_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_5_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_6_0 = ::T.let(nil, ::T.untyped)
+  Script_V2_6_2 = ::T.let(nil, ::T.untyped)
+  Type = ::T.let(nil, ::T.untyped)
+  UnicodeBlock = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V1_9_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_0_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_2_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_3_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_4_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_5_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_6_0 = ::T.let(nil, ::T.untyped)
+  UnicodeBlock_V2_6_2 = ::T.let(nil, ::T.untyped)
+  V1_9_0 = ::T.let(nil, ::T.untyped)
+  V1_9_3 = ::T.let(nil, ::T.untyped)
+  V2_0_0 = ::T.let(nil, ::T.untyped)
+  V2_2_0 = ::T.let(nil, ::T.untyped)
+  V2_3_0 = ::T.let(nil, ::T.untyped)
+  V2_4_0 = ::T.let(nil, ::T.untyped)
+  V2_5_0 = ::T.let(nil, ::T.untyped)
+  V2_6_0 = ::T.let(nil, ::T.untyped)
+  V2_6_2 = ::T.let(nil, ::T.untyped)
+  V2_6_3 = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::UnicodeProperty::Category
+  All = ::T.let(nil, ::T.untyped)
+  Codepoint = ::T.let(nil, ::T.untyped)
+  Letter = ::T.let(nil, ::T.untyped)
+  Mark = ::T.let(nil, ::T.untyped)
+  Number = ::T.let(nil, ::T.untyped)
+  Punctuation = ::T.let(nil, ::T.untyped)
+  Separator = ::T.let(nil, ::T.untyped)
+  Symbol = ::T.let(nil, ::T.untyped)
+end
+
+module Regexp::Syntax::Token::UnicodeProperty::Category
+end
+
+module Regexp::Syntax::Token::UnicodeProperty
+end
+
+module Regexp::Syntax::Token
+end
+
+class Regexp::Syntax::UnknownSyntaxNameError
+  def initialize(name); end
+end
+
+class Regexp::Syntax::UnknownSyntaxNameError
+end
+
+class Regexp::Syntax::V1_8_6
+end
+
+class Regexp::Syntax::V1_8_6
+end
+
+class Regexp::Syntax::V1_9
+end
+
+class Regexp::Syntax::V1_9
+end
+
+class Regexp::Syntax::V1_9_1
+end
+
+class Regexp::Syntax::V1_9_1
+end
+
+class Regexp::Syntax::V1_9_3
+end
+
+class Regexp::Syntax::V1_9_3
+end
+
+class Regexp::Syntax::V2_0_0
+end
+
+class Regexp::Syntax::V2_0_0
+end
+
+class Regexp::Syntax::V2_1
+end
+
+class Regexp::Syntax::V2_1
+end
+
+class Regexp::Syntax::V2_2
+end
+
+class Regexp::Syntax::V2_2
+end
+
+class Regexp::Syntax::V2_2_0
+end
+
+class Regexp::Syntax::V2_2_0
+end
+
+class Regexp::Syntax::V2_3
+end
+
+class Regexp::Syntax::V2_3
+end
+
+class Regexp::Syntax::V2_3_0
+end
+
+class Regexp::Syntax::V2_3_0
+end
+
+class Regexp::Syntax::V2_4
+end
+
+class Regexp::Syntax::V2_4
+end
+
+class Regexp::Syntax::V2_4_0
+end
+
+class Regexp::Syntax::V2_4_0
+end
+
+class Regexp::Syntax::V2_4_1
+end
+
+class Regexp::Syntax::V2_4_1
+end
+
+class Regexp::Syntax::V2_5
+end
+
+class Regexp::Syntax::V2_5
+end
+
+class Regexp::Syntax::V2_5_0
+end
+
+class Regexp::Syntax::V2_5_0
+end
+
+class Regexp::Syntax::V2_6_0
+end
+
+class Regexp::Syntax::V2_6_0
+end
+
+class Regexp::Syntax::V2_6_2
+end
+
+class Regexp::Syntax::V2_6_2
+end
+
+class Regexp::Syntax::V2_6_3
+end
+
+class Regexp::Syntax::V2_6_3
+end
+
+module Regexp::Syntax
+  def self.comparable_version(name); end
+
+  def self.const_missing(const_name); end
+
+  def self.fallback_version_class(version); end
+
+  def self.inherit_from_version(parent_version, new_version); end
+
+  def self.new(name); end
+
+  def self.specified_versions(); end
+
+  def self.supported?(name); end
+
+  def self.version_class(version); end
+
+  def self.version_const_name(version_string); end
+
+  def self.warn_if_future_version(const_name); end
+end
+
+class Regexp::Token
+  def conditional_level(); end
+
+  def conditional_level=(_); end
+
+  def level(); end
+
+  def level=(_); end
+
+  def next(); end
+
+  def next=(_); end
+
+  def offset(); end
+
+  def previous(); end
+
+  def previous=(previous); end
+
+  def set_level(); end
+
+  def set_level=(_); end
+
+  def te(); end
+
+  def te=(_); end
+
+  def text(); end
+
+  def text=(_); end
+
+  def token(); end
+
+  def token=(_); end
+
+  def ts(); end
+
+  def ts=(_); end
+
+  def type(); end
+
+  def type=(_); end
+end
+
+class Regexp::Token
+  def self.[](*_); end
+
+  def self.members(); end
 end
 
 class Resolv::DNS
   def extract_resources(msg, name, typeclass); end
 
-  def fetch_resource(name, typeclass); end
-
-  def lazy_initialize(); end
-
-  def make_tcp_requester(host, port); end
-
-  def make_udp_requester(); end
+  def getname(address); end
   RequestID = ::T.let(nil, ::T.untyped)
   RequestIDMutex = ::T.let(nil, ::T.untyped)
 end
 
 class Resolv::DNS::Config
-  def generate_candidates(name); end
-
-  def generate_timeouts(); end
-
   def initialize(config_info=T.unsafe(nil)); end
-
-  def lazy_initialize(); end
-
-  def nameserver_port(); end
-
-  def resolv(name); end
-
-  def single?(); end
-
-  def timeouts=(values); end
-  InitialTimeout = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Config::NXDomain
-end
-
-class Resolv::DNS::Config::NXDomain
-end
-
-class Resolv::DNS::Config::OtherResolvError
-end
-
-class Resolv::DNS::Config::OtherResolvError
-end
-
-class Resolv::DNS::Config
-  def self.default_config_hash(filename=T.unsafe(nil)); end
-
-  def self.parse_resolv_conf(filename); end
-end
-
-module Resolv::DNS::Label
 end
 
 class Resolv::DNS::Label::Str
-  def ==(other); end
-
-  def downcase(); end
-
-  def eql?(other); end
-
   def initialize(string); end
-
-  def string(); end
-end
-
-class Resolv::DNS::Label::Str
-end
-
-module Resolv::DNS::Label
-  def self.split(arg); end
 end
 
 class Resolv::DNS::Message
-  def ==(other); end
-
-  def aa(); end
-
-  def aa=(aa); end
-
-  def add_additional(name, ttl, data); end
-
-  def add_answer(name, ttl, data); end
-
-  def add_authority(name, ttl, data); end
-
-  def add_question(name, typeclass); end
-
-  def additional(); end
-
-  def answer(); end
-
-  def authority(); end
-
-  def each_additional(); end
-
-  def each_answer(); end
-
-  def each_authority(); end
-
-  def each_question(); end
-
-  def each_resource(); end
-
-  def encode(); end
-
-  def id(); end
-
-  def id=(id); end
-
   def initialize(id=T.unsafe(nil)); end
-
-  def opcode(); end
-
-  def opcode=(opcode); end
-
-  def qr(); end
-
-  def qr=(qr); end
-
-  def question(); end
-
-  def ra(); end
-
-  def ra=(ra); end
-
-  def rcode(); end
-
-  def rcode=(rcode); end
-
-  def rd(); end
-
-  def rd=(rd); end
-
-  def tc(); end
-
-  def tc=(tc); end
 end
 
 class Resolv::DNS::Message::MessageDecoder
-  def get_bytes(len=T.unsafe(nil)); end
-
-  def get_label(); end
-
-  def get_labels(); end
-
-  def get_length16(); end
-
-  def get_name(); end
-
-  def get_question(); end
-
-  def get_rr(); end
-
-  def get_string(); end
-
-  def get_string_list(); end
-
-  def get_unpack(template); end
-
   def initialize(data); end
-end
-
-class Resolv::DNS::Message::MessageDecoder
-end
-
-class Resolv::DNS::Message::MessageEncoder
-  def put_bytes(d); end
-
-  def put_label(d); end
-
-  def put_labels(d); end
-
-  def put_length16(); end
-
-  def put_name(d); end
-
-  def put_pack(template, *d); end
-
-  def put_string(d); end
-
-  def put_string_list(ds); end
-end
-
-class Resolv::DNS::Message::MessageEncoder
-end
-
-class Resolv::DNS::Message
-  def self.decode(m); end
-end
-
-class Resolv::DNS::Name
-  def ==(other); end
-
-  def [](i); end
-
-  def eql?(other); end
-
-  def length(); end
-
-  def to_a(); end
-end
-
-module Resolv::DNS::OpCode
-  IQuery = ::T.let(nil, ::T.untyped)
-  Notify = ::T.let(nil, ::T.untyped)
-  Query = ::T.let(nil, ::T.untyped)
-  Status = ::T.let(nil, ::T.untyped)
-  Update = ::T.let(nil, ::T.untyped)
-end
-
-module Resolv::DNS::OpCode
-end
-
-class Resolv::DNS::Query
-  def encode_rdata(msg); end
-end
-
-class Resolv::DNS::Query
-  def self.decode_rdata(msg); end
-end
-
-module Resolv::DNS::RCode
-  BADALG = ::T.let(nil, ::T.untyped)
-  BADKEY = ::T.let(nil, ::T.untyped)
-  BADMODE = ::T.let(nil, ::T.untyped)
-  BADNAME = ::T.let(nil, ::T.untyped)
-  BADSIG = ::T.let(nil, ::T.untyped)
-  BADTIME = ::T.let(nil, ::T.untyped)
-  BADVERS = ::T.let(nil, ::T.untyped)
-  FormErr = ::T.let(nil, ::T.untyped)
-  NXDomain = ::T.let(nil, ::T.untyped)
-  NXRRSet = ::T.let(nil, ::T.untyped)
-  NoError = ::T.let(nil, ::T.untyped)
-  NotAuth = ::T.let(nil, ::T.untyped)
-  NotImp = ::T.let(nil, ::T.untyped)
-  NotZone = ::T.let(nil, ::T.untyped)
-  Refused = ::T.let(nil, ::T.untyped)
-  ServFail = ::T.let(nil, ::T.untyped)
-  YXDomain = ::T.let(nil, ::T.untyped)
-  YXRRSet = ::T.let(nil, ::T.untyped)
-end
-
-module Resolv::DNS::RCode
-end
-
-class Resolv::DNS::Requester
-  def close(); end
-
-  def request(sender, tout); end
-
-  def sender_for(addr, msg); end
 end
 
 class Resolv::DNS::Requester::ConnectedUDP
   def initialize(host, port=T.unsafe(nil)); end
 
   def lazy_initialize(); end
-
-  def recv_reply(readable_socks); end
-
-  def sender(msg, data, host=T.unsafe(nil), port=T.unsafe(nil)); end
-end
-
-class Resolv::DNS::Requester::ConnectedUDP::Sender
-  def data(); end
-
-  def send(); end
-end
-
-class Resolv::DNS::Requester::ConnectedUDP::Sender
-end
-
-class Resolv::DNS::Requester::ConnectedUDP
-end
-
-class Resolv::DNS::Requester::MDNSOneShot
-end
-
-class Resolv::DNS::Requester::MDNSOneShot
-end
-
-class Resolv::DNS::Requester::RequestError
-end
-
-class Resolv::DNS::Requester::RequestError
 end
 
 class Resolv::DNS::Requester::Sender
   def initialize(msg, data, sock); end
 end
 
-class Resolv::DNS::Requester::Sender
-end
-
 class Resolv::DNS::Requester::TCP
   def initialize(host, port=T.unsafe(nil)); end
-
-  def recv_reply(readable_socks); end
-
-  def sender(msg, data, host=T.unsafe(nil), port=T.unsafe(nil)); end
-end
-
-class Resolv::DNS::Requester::TCP::Sender
-  def data(); end
-
-  def send(); end
-end
-
-class Resolv::DNS::Requester::TCP::Sender
-end
-
-class Resolv::DNS::Requester::TCP
 end
 
 class Resolv::DNS::Requester::UnconnectedUDP
   def initialize(*nameserver_port); end
 
   def lazy_initialize(); end
-
-  def recv_reply(readable_socks); end
-
-  def sender(msg, data, host, port=T.unsafe(nil)); end
 end
 
 class Resolv::DNS::Requester::UnconnectedUDP::Sender
-  def data(); end
-
   def initialize(msg, data, sock, host, port); end
-
-  def send(); end
-end
-
-class Resolv::DNS::Requester::UnconnectedUDP::Sender
-end
-
-class Resolv::DNS::Requester::UnconnectedUDP
-end
-
-class Resolv::DNS::Requester
 end
 
 class Resolv::DNS::Resource
-  def ==(other); end
-
-  def eql?(other); end
-  ClassHash = ::T.let(nil, ::T.untyped)
-  ClassInsensitiveTypes = ::T.let(nil, ::T.untyped)
   ClassValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::ANY
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::CNAME
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::Generic
-  def self.create(type_value, class_value); end
-end
-
-class Resolv::DNS::Resource::HINFO
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-module Resolv::DNS::Resource::IN
-  ClassValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::A
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::AAAA
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::ANY
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::ANY
-end
-
-class Resolv::DNS::Resource::IN::CNAME
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::CNAME
-end
-
-class Resolv::DNS::Resource::IN::HINFO
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::HINFO
-end
-
-class Resolv::DNS::Resource::IN::LOC
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::LOC
-end
-
-class Resolv::DNS::Resource::IN::MINFO
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::MINFO
-end
-
-class Resolv::DNS::Resource::IN::MX
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::MX
-end
-
-class Resolv::DNS::Resource::IN::NS
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::NS
-end
-
-class Resolv::DNS::Resource::IN::PTR
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::PTR
-end
-
-class Resolv::DNS::Resource::IN::SOA
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::SOA
-end
-
-class Resolv::DNS::Resource::IN::SRV
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::TXT
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::IN::TXT
-end
-
-class Resolv::DNS::Resource::IN::WKS
-  ClassValue = ::T.let(nil, ::T.untyped)
-  TypeValue = ::T.let(nil, ::T.untyped)
 end
 
 class Resolv::DNS::Resource::LOC
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::MINFO
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::MX
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::NS
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::PTR
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::SOA
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource::TXT
-  TypeValue = ::T.let(nil, ::T.untyped)
-end
-
-class Resolv::DNS::Resource
-  def self.get_class(type_value, class_value); end
+  def initialize(version, ssize, hprecision, vprecision, latitude, longitude, altitude); end
 end
 
 class Resolv::DNS
@@ -28983,45 +32280,6 @@ class Resolv::DNS
   def self.free_request_id(host, port, id); end
 
   def self.random(arg); end
-
-  def self.rangerand(range); end
-end
-
-class Resolv::Hosts
-  def lazy_initialize(); end
-end
-
-class Resolv::IPv4
-  def ==(other); end
-
-  def eql?(other); end
-end
-
-class Resolv::IPv6
-  def ==(other); end
-
-  def eql?(other); end
-end
-
-class Resolv::LOC::Alt
-  def ==(other); end
-
-  def eql?(other); end
-end
-
-class Resolv::LOC::Coord
-  def ==(other); end
-
-  def eql?(other); end
-end
-
-class Resolv::LOC::Size
-  def ==(other); end
-
-  def eql?(other); end
-end
-
-module RuboCop
 end
 
 module RuboCop::AST
@@ -29057,6 +32315,8 @@ end
 
 class RuboCop::AST::ArrayNode
   def bracketed?(); end
+
+  def each_value(&block); end
 
   def percent_literal?(type=T.unsafe(nil)); end
 
@@ -29119,8 +32379,7 @@ class RuboCop::AST::BlockNode
 end
 
 class RuboCop::AST::BreakNode
-  include ::RuboCop::AST::MethodDispatchNode
-  include ::RuboCop::AST::MethodIdentifierPredicates
+  include ::RuboCop::AST::ParameterizedNode::WrappedArguments
   include ::RuboCop::AST::ParameterizedNode
 end
 
@@ -29134,9 +32393,27 @@ end
 class RuboCop::AST::Builder
 end
 
+class RuboCop::AST::CaseMatchNode
+  include ::RuboCop::AST::ConditionalNode
+  def each_in_pattern(&block); end
+
+  def else?(); end
+
+  def else_branch(); end
+
+  def in_pattern_branches(); end
+
+  def keyword(); end
+end
+
+class RuboCop::AST::CaseMatchNode
+end
+
 class RuboCop::AST::CaseNode
   include ::RuboCop::AST::ConditionalNode
-  def each_when(); end
+  def branches(); end
+
+  def each_when(&block); end
 
   def else?(); end
 
@@ -29190,6 +32467,8 @@ module RuboCop::AST::CollectionNode
 
   def bsearch_index(*args, &block); end
 
+  def chain(*args, &block); end
+
   def chunk(*args, &block); end
 
   def chunk_while(*args, &block); end
@@ -29214,6 +32493,8 @@ module RuboCop::AST::CollectionNode
 
   def cycle(*args, &block); end
 
+  def deconstruct(*args, &block); end
+
   def delete(*args, &block); end
 
   def delete_at(*args, &block); end
@@ -29221,6 +32502,8 @@ module RuboCop::AST::CollectionNode
   def delete_if(*args, &block); end
 
   def detect(*args, &block); end
+
+  def difference(*args, &block); end
 
   def dig(*args, &block); end
 
@@ -29250,6 +32533,12 @@ module RuboCop::AST::CollectionNode
 
   def fill(*args, &block); end
 
+  def filter(*args, &block); end
+
+  def filter!(*args, &block); end
+
+  def filter_map(*args, &block); end
+
   def find(*args, &block); end
 
   def find_all(*args, &block); end
@@ -29277,6 +32566,8 @@ module RuboCop::AST::CollectionNode
   def inject(*args, &block); end
 
   def insert(*args, &block); end
+
+  def intersection(*args, &block); end
 
   def join(*args, &block); end
 
@@ -29390,6 +32681,8 @@ module RuboCop::AST::CollectionNode
 
   def take_while(*args, &block); end
 
+  def tally(*args, &block); end
+
   def to_ary(*args, &block); end
 
   def to_csv(*args, &block); end
@@ -29401,6 +32694,8 @@ module RuboCop::AST::CollectionNode
   def to_set(*args, &block); end
 
   def transpose(*args, &block); end
+
+  def union(*args, &block); end
 
   def uniq(*args, &block); end
 
@@ -29456,6 +32751,7 @@ class RuboCop::AST::DefinedNode
   include ::RuboCop::AST::ParameterizedNode
   include ::RuboCop::AST::MethodDispatchNode
   include ::RuboCop::AST::MethodIdentifierPredicates
+  def arguments(); end
 end
 
 class RuboCop::AST::DefinedNode
@@ -29468,7 +32764,21 @@ end
 class RuboCop::AST::EnsureNode
 end
 
+module RuboCop::AST::Ext
+end
+
+module RuboCop::AST::Ext::Range
+  def line_span(exclude_end: T.unsafe(nil)); end
+end
+
+module RuboCop::AST::Ext::Range
+end
+
+module RuboCop::AST::Ext
+end
+
 class RuboCop::AST::FloatNode
+  include ::RuboCop::AST::BasicLiteralNode
   include ::RuboCop::AST::NumericNode
 end
 
@@ -29519,11 +32829,11 @@ end
 class RuboCop::AST::HashNode
   def braces?(); end
 
-  def each_key(); end
+  def each_key(&block); end
 
   def each_pair(); end
 
-  def each_value(); end
+  def each_value(&block); end
 
   def empty?(); end
 
@@ -29546,7 +32856,7 @@ class RuboCop::AST::IfNode
   include ::RuboCop::AST::ModifierNode
   def branches(); end
 
-  def each_branch(); end
+  def each_branch(&block); end
 
   def else?(); end
 
@@ -29574,7 +32884,30 @@ end
 class RuboCop::AST::IfNode
 end
 
+class RuboCop::AST::IndexNode
+  include ::RuboCop::AST::ParameterizedNode::RestArguments
+  include ::RuboCop::AST::ParameterizedNode
+  include ::RuboCop::AST::MethodDispatchNode
+  include ::RuboCop::AST::MethodIdentifierPredicates
+  def attribute_accessor?(); end
+end
+
+class RuboCop::AST::IndexNode
+end
+
+class RuboCop::AST::IndexasgnNode
+  include ::RuboCop::AST::ParameterizedNode::RestArguments
+  include ::RuboCop::AST::ParameterizedNode
+  include ::RuboCop::AST::MethodDispatchNode
+  include ::RuboCop::AST::MethodIdentifierPredicates
+  def attribute_accessor?(); end
+end
+
+class RuboCop::AST::IndexasgnNode
+end
+
 class RuboCop::AST::IntNode
+  include ::RuboCop::AST::BasicLiteralNode
   include ::RuboCop::AST::NumericNode
 end
 
@@ -29594,13 +32927,22 @@ end
 class RuboCop::AST::KeywordSplatNode
 end
 
+class RuboCop::AST::LambdaNode
+  include ::RuboCop::AST::ParameterizedNode::RestArguments
+  include ::RuboCop::AST::ParameterizedNode
+  include ::RuboCop::AST::MethodDispatchNode
+  include ::RuboCop::AST::MethodIdentifierPredicates
+  def attribute_accessor?(); end
+end
+
+class RuboCop::AST::LambdaNode
+end
+
 module RuboCop::AST::MethodDispatchNode
   include ::RuboCop::AST::MethodIdentifierPredicates
   def access_modifier?(); end
 
   def adjacent_def_modifier?(node=T.unsafe(nil)); end
-
-  def arguments(); end
 
   def arithmetic_operation?(); end
 
@@ -29644,6 +32986,8 @@ module RuboCop::AST::MethodDispatchNode
 
   def receiver(); end
 
+  def safe_navigation?(); end
+
   def self_receiver?(); end
 
   def setter_method?(); end
@@ -29656,7 +33000,7 @@ module RuboCop::AST::MethodDispatchNode
 end
 
 module RuboCop::AST::MethodDispatchNode
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::AST::MethodIdentifierPredicates
@@ -29670,11 +33014,25 @@ module RuboCop::AST::MethodIdentifierPredicates
 
   def const_receiver?(); end
 
+  def enumerable_method?(); end
+
   def enumerator_method?(); end
 
   def method?(name); end
 
   def negation_method?(); end
+
+  def nonmutating_array_method?(); end
+
+  def nonmutating_binary_operator_method?(); end
+
+  def nonmutating_hash_method?(); end
+
+  def nonmutating_operator_method?(); end
+
+  def nonmutating_string_method?(); end
+
+  def nonmutating_unary_operator_method?(); end
 
   def operator_method?(); end
 
@@ -29685,7 +33043,14 @@ module RuboCop::AST::MethodIdentifierPredicates
   def prefix_not?(); end
 
   def self_receiver?(); end
+  ENUMERABLE_METHODS = ::T.let(nil, ::T.untyped)
   ENUMERATOR_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_ARRAY_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_BINARY_OPERATOR_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_HASH_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_OPERATOR_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_STRING_METHODS = ::T.let(nil, ::T.untyped)
+  NONMUTATING_UNARY_OPERATOR_METHODS = ::T.let(nil, ::T.untyped)
   OPERATOR_METHODS = ::T.let(nil, ::T.untyped)
 end
 
@@ -29706,6 +33071,14 @@ class RuboCop::AST::ModuleNode
 end
 
 class RuboCop::AST::ModuleNode
+end
+
+class RuboCop::AST::NextNode
+  include ::RuboCop::AST::ParameterizedNode::WrappedArguments
+  include ::RuboCop::AST::ParameterizedNode
+end
+
+class RuboCop::AST::NextNode
 end
 
 class RuboCop::AST::Node
@@ -29731,6 +33104,8 @@ class RuboCop::AST::Node
   def args_type?(); end
 
   def argument?(); end
+
+  def argument_type?(); end
 
   def array_pattern_type?(); end
 
@@ -29778,6 +33153,8 @@ class RuboCop::AST::Node
 
   def class_constructor?(node=T.unsafe(nil)); end
 
+  def class_definition?(node=T.unsafe(nil)); end
+
   def class_type?(); end
 
   def complete!(); end
@@ -29800,6 +33177,8 @@ class RuboCop::AST::Node
 
   def cvasgn_type?(); end
 
+  def def_e_type?(); end
+
   def def_type?(); end
 
   def defined_module(); end
@@ -29807,6 +33186,8 @@ class RuboCop::AST::Node
   def defined_module_name(); end
 
   def defined_type?(); end
+
+  def defs_e_type?(); end
 
   def defs_type?(); end
 
@@ -29826,6 +33207,8 @@ class RuboCop::AST::Node
 
   def eflipflop_type?(); end
 
+  def empty_else_type?(); end
+
   def empty_source?(); end
 
   def ensure_type?(); end
@@ -29838,17 +33221,23 @@ class RuboCop::AST::Node
 
   def falsey_literal?(); end
 
+  def find_pattern_type?(); end
+
   def first_line(); end
 
   def float_type?(); end
 
   def for_type?(); end
 
+  def forward_arg_type?(); end
+
   def forward_args_type?(); end
 
   def forwarded_args_type?(); end
 
-  def guard_clause?(node=T.unsafe(nil)); end
+  def global_const?(node=T.unsafe(nil), param1); end
+
+  def guard_clause?(); end
 
   def gvar_type?(); end
 
@@ -29910,6 +33299,8 @@ class RuboCop::AST::Node
 
   def literal?(); end
 
+  def loop_keyword?(); end
+
   def lvar_type?(); end
 
   def lvasgn_type?(); end
@@ -29921,6 +33312,8 @@ class RuboCop::AST::Node
   def match_as_type?(); end
 
   def match_current_line_type?(); end
+
+  def match_guard_clause?(node=T.unsafe(nil)); end
 
   def match_nil_pattern_type?(); end
 
@@ -29934,7 +33327,11 @@ class RuboCop::AST::Node
 
   def mlhs_type?(); end
 
+  def module_definition?(node=T.unsafe(nil)); end
+
   def module_type?(); end
+
+  def mrasgn_type?(); end
 
   def multiline?(); end
 
@@ -29988,6 +33385,8 @@ class RuboCop::AST::Node
 
   def pin_type?(); end
 
+  def post_condition_loop?(); end
+
   def postexe_type?(); end
 
   def preexe_type?(); end
@@ -29999,6 +33398,8 @@ class RuboCop::AST::Node
   def pure?(); end
 
   def range_type?(); end
+
+  def rasgn_type?(); end
 
   def rational_type?(); end
 
@@ -30058,6 +33459,8 @@ class RuboCop::AST::Node
 
   def str_type?(); end
 
+  def struct_constructor?(node=T.unsafe(nil)); end
+
   def super_type?(); end
 
   def sym_type?(); end
@@ -30091,6 +33494,7 @@ class RuboCop::AST::Node
   def yield_type?(); end
 
   def zsuper_type?(); end
+  ARGUMENT_TYPES = ::T.let(nil, ::T.untyped)
   ASSIGNMENTS = ::T.let(nil, ::T.untyped)
   BASIC_CONDITIONALS = ::T.let(nil, ::T.untyped)
   BASIC_LITERALS = ::T.let(nil, ::T.untyped)
@@ -30102,8 +33506,10 @@ class RuboCop::AST::Node
   IMMUTABLE_LITERALS = ::T.let(nil, ::T.untyped)
   KEYWORDS = ::T.let(nil, ::T.untyped)
   LITERALS = ::T.let(nil, ::T.untyped)
+  LOOP_TYPES = ::T.let(nil, ::T.untyped)
   MUTABLE_LITERALS = ::T.let(nil, ::T.untyped)
   OPERATOR_KEYWORDS = ::T.let(nil, ::T.untyped)
+  POST_CONDITION_LOOP_TYPES = ::T.let(nil, ::T.untyped)
   REFERENCES = ::T.let(nil, ::T.untyped)
   SHORTHAND_ASSIGNMENTS = ::T.let(nil, ::T.untyped)
   SPECIAL_KEYWORDS = ::T.let(nil, ::T.untyped)
@@ -30112,7 +33518,51 @@ class RuboCop::AST::Node
 end
 
 class RuboCop::AST::Node
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
+end
+
+class RuboCop::AST::NodePattern
+  def ==(other); end
+
+  def eql?(other); end
+
+  def initialize(str); end
+
+  def marshal_dump(); end
+
+  def marshal_load(pattern); end
+
+  def match(*args, **rest); end
+
+  def pattern(); end
+end
+
+class RuboCop::AST::NodePattern::Invalid
+end
+
+class RuboCop::AST::NodePattern::Invalid
+end
+
+module RuboCop::AST::NodePattern::Macros
+  def def_node_matcher(method_name, pattern_str, **keyword_defaults); end
+
+  def def_node_search(method_name, pattern_str, **keyword_defaults); end
+end
+
+module RuboCop::AST::NodePattern::Macros
+end
+
+class RuboCop::AST::NodePattern::Matcher
+  def ===(compare); end
+
+  def initialize(&block); end
+end
+
+class RuboCop::AST::NodePattern::Matcher
+end
+
+class RuboCop::AST::NodePattern
+  def self.descend(element, &block); end
 end
 
 module RuboCop::AST::NumericNode
@@ -30138,11 +33588,11 @@ class RuboCop::AST::PairNode
   include ::RuboCop::AST::HashElementNode
   def colon?(); end
 
-  def delimiter(with_spacing=T.unsafe(nil)); end
+  def delimiter(*deprecated, with_spacing: T.unsafe(nil)); end
 
   def hash_rocket?(); end
 
-  def inverse_delimiter(with_spacing=T.unsafe(nil)); end
+  def inverse_delimiter(*deprecated, with_spacing: T.unsafe(nil)); end
 
   def value_on_new_line?(); end
   COLON = ::T.let(nil, ::T.untyped)
@@ -30170,6 +33620,28 @@ module RuboCop::AST::ParameterizedNode
   def splat_argument?(); end
 end
 
+module RuboCop::AST::ParameterizedNode::RestArguments
+  include ::RuboCop::AST::ParameterizedNode
+  def arguments(); end
+
+  def arguments?(); end
+
+  def first_argument(); end
+
+  def last_argument(); end
+end
+
+module RuboCop::AST::ParameterizedNode::RestArguments
+end
+
+module RuboCop::AST::ParameterizedNode::WrappedArguments
+  include ::RuboCop::AST::ParameterizedNode
+  def arguments(); end
+end
+
+module RuboCop::AST::ParameterizedNode::WrappedArguments
+end
+
 module RuboCop::AST::ParameterizedNode
 end
 
@@ -30188,6 +33660,78 @@ end
 module RuboCop::AST::PredicateOperatorNode
 end
 
+class RuboCop::AST::ProcessedSource
+  include ::RuboCop::Ext::ProcessedSource
+  def [](*args); end
+
+  def ast(); end
+
+  def ast_with_comments(); end
+
+  def blank?(); end
+
+  def buffer(); end
+
+  def checksum(); end
+
+  def comment_at_line(line); end
+
+  def commented?(source_range); end
+
+  def comments(); end
+
+  def comments_before_line(line); end
+
+  def contains_comment?(source_range); end
+
+  def current_line(token); end
+
+  def diagnostics(); end
+
+  def each_comment(&block); end
+
+  def each_comment_in_lines(line_range); end
+
+  def each_token(&block); end
+
+  def file_path(); end
+
+  def find_comment(&block); end
+
+  def find_token(&block); end
+
+  def following_line(token); end
+
+  def initialize(source, ruby_version, path=T.unsafe(nil)); end
+
+  def line_indentation(line_number); end
+
+  def line_with_comment?(line); end
+
+  def lines(); end
+
+  def parser_error(); end
+
+  def path(); end
+
+  def preceding_line(token); end
+
+  def raw_source(); end
+
+  def ruby_version(); end
+
+  def start_with?(string); end
+
+  def tokens(); end
+
+  def valid_syntax?(); end
+  STRING_SOURCE_NAME = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::AST::ProcessedSource
+  def self.from_file(path, ruby_version); end
+end
+
 class RuboCop::AST::RangeNode
   def begin(); end
 
@@ -30200,7 +33744,27 @@ end
 class RuboCop::AST::RegexpNode
   def content(); end
 
+  def delimiter?(char); end
+
+  def delimiters(); end
+
+  def extended?(); end
+
+  def ignore_case?(); end
+
+  def interpolation?(); end
+
+  def multiline_mode?(); end
+
+  def no_encoding?(); end
+
+  def percent_r_literal?(); end
+
   def regopt(); end
+
+  def single_interpolation?(); end
+
+  def slash_literal?(); end
 
   def to_regexp(); end
   OPTIONS = ::T.let(nil, ::T.untyped)
@@ -30218,18 +33782,8 @@ end
 class RuboCop::AST::ResbodyNode
 end
 
-class RuboCop::AST::RetryNode
-  include ::RuboCop::AST::MethodDispatchNode
-  include ::RuboCop::AST::MethodIdentifierPredicates
-  include ::RuboCop::AST::ParameterizedNode
-end
-
-class RuboCop::AST::RetryNode
-end
-
 class RuboCop::AST::ReturnNode
-  include ::RuboCop::AST::MethodDispatchNode
-  include ::RuboCop::AST::MethodIdentifierPredicates
+  include ::RuboCop::AST::ParameterizedNode::WrappedArguments
   include ::RuboCop::AST::ParameterizedNode
 end
 
@@ -30246,9 +33800,11 @@ class RuboCop::AST::SelfClassNode
 end
 
 class RuboCop::AST::SendNode
+  include ::RuboCop::AST::ParameterizedNode::RestArguments
   include ::RuboCop::AST::ParameterizedNode
   include ::RuboCop::AST::MethodDispatchNode
   include ::RuboCop::AST::MethodIdentifierPredicates
+  def attribute_accessor?(node=T.unsafe(nil)); end
 end
 
 class RuboCop::AST::SendNode
@@ -30273,6 +33829,7 @@ class RuboCop::AST::SuperNode
   include ::RuboCop::AST::ParameterizedNode
   include ::RuboCop::AST::MethodDispatchNode
   include ::RuboCop::AST::MethodIdentifierPredicates
+  def arguments(); end
 end
 
 class RuboCop::AST::SuperNode
@@ -30285,7 +33842,65 @@ end
 class RuboCop::AST::SymbolNode
 end
 
+class RuboCop::AST::Token
+  def begin_pos(); end
+
+  def column(); end
+
+  def comma?(); end
+
+  def comment?(); end
+
+  def end?(); end
+
+  def end_pos(); end
+
+  def equal_sign?(); end
+
+  def initialize(pos, type, text); end
+
+  def left_array_bracket?(); end
+
+  def left_brace?(); end
+
+  def left_bracket?(); end
+
+  def left_curly_brace?(); end
+
+  def left_parens?(); end
+
+  def left_ref_bracket?(); end
+
+  def line(); end
+
+  def pos(); end
+
+  def rescue_modifier?(); end
+
+  def right_bracket?(); end
+
+  def right_curly_brace?(); end
+
+  def right_parens?(); end
+
+  def semicolon?(); end
+
+  def space_after?(); end
+
+  def space_before?(); end
+
+  def text(); end
+
+  def type(); end
+end
+
+class RuboCop::AST::Token
+  def self.from_parser_token(parser_token); end
+end
+
 module RuboCop::AST::Traversal
+  def on___ENCODING__(node); end
+
   def on_alias(node); end
 
   def on_and(node); end
@@ -30350,15 +33965,21 @@ module RuboCop::AST::Traversal
 
   def on_eflipflop(node); end
 
+  def on_empty_else(node); end
+
   def on_ensure(node); end
 
   def on_erange(node); end
 
   def on_false(node); end
 
+  def on_find_pattern(node); end
+
   def on_float(node); end
 
   def on_for(node); end
+
+  def on_forward_arg(node); end
 
   def on_forward_args(node); end
 
@@ -30381,6 +34002,10 @@ module RuboCop::AST::Traversal
   def on_in_match(node); end
 
   def on_in_pattern(node); end
+
+  def on_index(node); end
+
+  def on_indexasgn(node); end
 
   def on_int(node); end
 
@@ -30436,6 +34061,8 @@ module RuboCop::AST::Traversal
 
   def on_nth_ref(node); end
 
+  def on_numblock(node); end
+
   def on_op_asgn(node); end
 
   def on_optarg(node); end
@@ -30451,6 +34078,8 @@ module RuboCop::AST::Traversal
   def on_postexe(node); end
 
   def on_preexe(node); end
+
+  def on_procarg0(node); end
 
   def on_rational(node); end
 
@@ -30531,6 +34160,13 @@ end
 class RuboCop::AST::UntilNode
 end
 
+module RuboCop::AST::Version
+  STRING = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::AST::Version
+end
+
 class RuboCop::AST::WhenNode
   def body(); end
 
@@ -30538,7 +34174,7 @@ class RuboCop::AST::WhenNode
 
   def conditions(); end
 
-  def each_condition(); end
+  def each_condition(&block); end
 
   def then?(); end
 end
@@ -30563,6 +34199,7 @@ class RuboCop::AST::YieldNode
   include ::RuboCop::AST::ParameterizedNode
   include ::RuboCop::AST::MethodDispatchNode
   include ::RuboCop::AST::MethodIdentifierPredicates
+  def arguments(); end
 end
 
 class RuboCop::AST::YieldNode
@@ -30577,24 +34214,11 @@ class RuboCop::CLI
   def options(); end
 
   def run(args=T.unsafe(nil)); end
-  STATUS_ERROR = ::T.let(nil, ::T.untyped)
-  STATUS_INTERRUPTED = ::T.let(nil, ::T.untyped)
-  STATUS_OFFENSES = ::T.let(nil, ::T.untyped)
-  STATUS_SUCCESS = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::CLI::Command
 end
 
 class RuboCop::CLI::Command::AutoGenerateConfig
   def run(); end
-  PHASE_1 = ::T.let(nil, ::T.untyped)
-  PHASE_1_DISABLED = ::T.let(nil, ::T.untyped)
-  PHASE_1_OVERRIDDEN = ::T.let(nil, ::T.untyped)
-  PHASE_2 = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::CLI::Command::AutoGenerateConfig
+  AUTO_GENERATED_FILE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::CLI::Command::Base
@@ -30623,10 +34247,6 @@ end
 
 class RuboCop::CLI::Command::InitDotfile
   def run(); end
-  DOTFILE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::CLI::Command::InitDotfile
 end
 
 class RuboCop::CLI::Command::ShowCops
@@ -30668,9 +34288,6 @@ end
 class RuboCop::CLI::Finished
 end
 
-class RuboCop::CLI
-end
-
 class RuboCop::CachedData
   def from_json(text); end
 
@@ -30692,11 +34309,6 @@ class RuboCop::CommentConfig
   def initialize(processed_source); end
 
   def processed_source(); end
-  COMMENT_DIRECTIVE_REGEXP = ::T.let(nil, ::T.untyped)
-  COPS_PATTERN = ::T.let(nil, ::T.untyped)
-  COP_NAMES_PATTERN = ::T.let(nil, ::T.untyped)
-  COP_NAME_PATTERN = ::T.let(nil, ::T.untyped)
-  REDUNDANT_DISABLE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::CommentConfig::CopAnalysis
@@ -30713,9 +34325,6 @@ class RuboCop::CommentConfig::CopAnalysis
   def self.[](*_); end
 
   def self.members(); end
-end
-
-class RuboCop::CommentConfig
 end
 
 class RuboCop::Config
@@ -30739,15 +34348,23 @@ class RuboCop::Config
 
   def deprecation_check(); end
 
+  def disabled_new_cops?(); end
+
   def each(*args, &block); end
 
   def each_key(*args, &block); end
+
+  def enabled_new_cops?(); end
+
+  def fetch(*args, &block); end
 
   def file_to_exclude?(file); end
 
   def file_to_include?(file); end
 
   def for_all_cops(); end
+
+  def for_badge(badge); end
 
   def for_cop(cop); end
 
@@ -30775,6 +34392,8 @@ class RuboCop::Config
 
   def patterns_to_include(); end
 
+  def pending_cops(); end
+
   def possibly_include_hidden?(); end
 
   def signature(); end
@@ -30789,8 +34408,26 @@ class RuboCop::Config
 
   def to_hash(*args, &block); end
 
+  def transform_values(*args, &block); end
+
   def validate(*args, &block); end
   DEFAULT_RAILS_VERSION = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Config::CopConfig
+  def metadata(); end
+
+  def metadata=(_); end
+
+  def name(); end
+
+  def name=(_); end
+end
+
+class RuboCop::Config::CopConfig
+  def self.[](*_); end
+
+  def self.members(); end
 end
 
 class RuboCop::Config
@@ -30799,26 +34436,10 @@ class RuboCop::Config
 end
 
 class RuboCop::ConfigLoader
-  AUTO_GENERATED_FILE = ::T.let(nil, ::T.untyped)
-  DEFAULT_FILE = ::T.let(nil, ::T.untyped)
-  DOTFILE = ::T.let(nil, ::T.untyped)
-  RUBOCOP_HOME = ::T.let(nil, ::T.untyped)
-  XDG_CONFIG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::ConfigLoader
   extend ::RuboCop::FileFinder
   def self.add_excludes_from_files(config, config_file); end
 
-  def self.add_inheritance_from_auto_generated_file(); end
-
   def self.add_missing_namespaces(path, hash); end
-
-  def self.auto_gen_config(); end
-
-  def self.auto_gen_config=(auto_gen_config); end
-
-  def self.auto_gen_config?(); end
 
   def self.clear_options(); end
 
@@ -30836,6 +34457,14 @@ class RuboCop::ConfigLoader
 
   def self.default_configuration=(default_configuration); end
 
+  def self.disable_pending_cops(); end
+
+  def self.disable_pending_cops=(disable_pending_cops); end
+
+  def self.enable_pending_cops(); end
+
+  def self.enable_pending_cops=(enable_pending_cops); end
+
   def self.ignore_parent_exclusion(); end
 
   def self.ignore_parent_exclusion=(ignore_parent_exclusion); end
@@ -30844,21 +34473,27 @@ class RuboCop::ConfigLoader
 
   def self.load_file(file); end
 
+  def self.load_yaml_configuration(absolute_path); end
+
   def self.merge(base_hash, derived_hash); end
 
   def self.merge_with_default(config, config_file, unset_nil: T.unsafe(nil)); end
 
-  def self.options_config(); end
+  def self.possible_new_cops?(config); end
 
-  def self.options_config=(options_config); end
+  def self.project_root(); end
 
-  def self.warn_on_pending_cops(config); end
+  def self.project_root=(project_root); end
+
+  def self.warn_on_pending_cops(pending_cops); end
 end
 
 class RuboCop::ConfigLoaderResolver
   def merge(base_hash, derived_hash, **opts); end
 
   def merge_with_default(config, config_file, unset_nil:); end
+
+  def override_department_setting_for_cops(base_hash, derived_hash); end
 
   def resolve_inheritance(path, hash, file, debug); end
 
@@ -30880,21 +34515,16 @@ class RuboCop::ConfigObsoletion
   def initialize(config); end
 
   def reject_obsolete_cops_and_parameters(); end
-  MOVED_COPS = ::T.let(nil, ::T.untyped)
-  OBSOLETE_COPS = ::T.let(nil, ::T.untyped)
-  OBSOLETE_ENFORCED_STYLES = ::T.let(nil, ::T.untyped)
-  OBSOLETE_PARAMETERS = ::T.let(nil, ::T.untyped)
-  REMOVED_COPS = ::T.let(nil, ::T.untyped)
-  REMOVED_COPS_WITH_REASON = ::T.let(nil, ::T.untyped)
-  RENAMED_COPS = ::T.let(nil, ::T.untyped)
-  SPLIT_COPS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::ConfigObsoletion
 end
 
 class RuboCop::ConfigStore
   def for(file_or_dir); end
+
+  def for_dir(dir); end
+
+  def for_file(file); end
+
+  def for_pwd(); end
 
   def force_default_config!(); end
 
@@ -30916,22 +34546,10 @@ class RuboCop::ConfigValidator
   def validate(); end
 
   def validate_section_presence(name); end
-  COMMON_PARAMS = ::T.let(nil, ::T.untyped)
-  INTERNAL_PARAMS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::ConfigValidator
   extend ::Forwardable
-end
-
-module RuboCop::Cop
-end
-
-module RuboCop::Cop::Alignment
-  SPACE = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::Alignment
 end
 
 class RuboCop::Cop::AlignmentCorrector
@@ -30947,12 +34565,14 @@ class RuboCop::Cop::AlignmentCorrector
   def self.processed_source(); end
 end
 
+module RuboCop::Cop::AllowedMethods
+end
+
+module RuboCop::Cop::AllowedMethods
+end
+
 class RuboCop::Cop::AmbiguousCopName
   def initialize(name, origin, badges); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::AmbiguousCopName
 end
 
 module RuboCop::Cop::ArrayMinSize
@@ -30965,6 +34585,13 @@ module RuboCop::Cop::ArraySyntax
 end
 
 module RuboCop::Cop::ArraySyntax
+end
+
+module RuboCop::Cop::AutoCorrector
+  def support_autocorrect?(); end
+end
+
+module RuboCop::Cop::AutoCorrector
 end
 
 module RuboCop::Cop::AutocorrectLogic
@@ -30976,13 +34603,9 @@ module RuboCop::Cop::AutocorrectLogic
 
   def correctable?(); end
 
-  def disable_offense(node); end
-
   def disable_uncorrectable?(); end
 
   def safe_autocorrect?(); end
-
-  def support_autocorrect?(); end
 end
 
 module RuboCop::Cop::AutocorrectLogic
@@ -31008,10 +34631,6 @@ end
 
 class RuboCop::Cop::Badge::InvalidBadge
   def initialize(token); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Badge::InvalidBadge
 end
 
 class RuboCop::Cop::Badge
@@ -31020,7 +34639,104 @@ class RuboCop::Cop::Badge
   def self.parse(identifier); end
 end
 
-module RuboCop::Cop::Bundler
+class RuboCop::Cop::Base
+  include ::RuboCop::AST::Sexp
+  include ::RuboCop::Cop::Util
+  include ::RuboCop::PathUtil
+  include ::RuboCop::TokensUtil
+  include ::RuboCop::Cop::IgnoredNode
+  include ::RuboCop::Cop::AutocorrectLogic
+  def add_global_offense(message=T.unsafe(nil), severity: T.unsafe(nil)); end
+
+  def add_offense(node_or_range, message: T.unsafe(nil), severity: T.unsafe(nil), &block); end
+
+  def config(); end
+
+  def config_to_allow_offenses(); end
+
+  def config_to_allow_offenses=(hash); end
+
+  def cop_config(); end
+
+  def cop_name(); end
+
+  def excluded_file?(file); end
+
+  def external_dependency_checksum(); end
+
+  def initialize(config=T.unsafe(nil), options=T.unsafe(nil)); end
+
+  def message(_range=T.unsafe(nil)); end
+
+  def name(); end
+
+  def offenses(); end
+
+  def on_investigation_end(); end
+
+  def on_new_investigation(); end
+
+  def on_other_file(); end
+
+  def processed_source(); end
+
+  def ready(); end
+
+  def relevant_file?(file); end
+
+  def target_rails_version(); end
+
+  def target_ruby_version(); end
+end
+
+class RuboCop::Cop::Base::InvestigationReport
+  def cop(); end
+
+  def cop=(_); end
+
+  def corrector(); end
+
+  def corrector=(_); end
+
+  def offenses(); end
+
+  def offenses=(_); end
+
+  def processed_source(); end
+
+  def processed_source=(_); end
+end
+
+class RuboCop::Cop::Base::InvestigationReport
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+class RuboCop::Cop::Base
+  extend ::RuboCop::AST::Sexp
+  extend ::RuboCop::AST::NodePattern::Macros
+  def self.autocorrect_incompatible_with(); end
+
+  def self.badge(); end
+
+  def self.cop_name(); end
+
+  def self.department(); end
+
+  def self.exclude_from_registry(); end
+
+  def self.inherited(subclass); end
+
+  def self.joining_forces(); end
+
+  def self.lint?(); end
+
+  def self.match?(given_names); end
+
+  def self.support_autocorrect?(); end
+
+  def self.support_multiple_source?(); end
 end
 
 class RuboCop::Cop::Bundler::DuplicatedGem
@@ -31028,10 +34744,6 @@ class RuboCop::Cop::Bundler::DuplicatedGem
   def gem_declarations(node0); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Bundler::DuplicatedGem
 end
 
 class RuboCop::Cop::Bundler::GemComment
@@ -31039,23 +34751,17 @@ class RuboCop::Cop::Bundler::GemComment
   def gem_declaration?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Bundler::GemComment
 end
 
 class RuboCop::Cop::Bundler::InsecureProtocolSource
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def insecure_protocol_source?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Bundler::InsecureProtocolSource
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Bundler::OrderedGems
@@ -31066,13 +34772,6 @@ class RuboCop::Cop::Bundler::OrderedGems
   def gem_declarations(node0); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Bundler::OrderedGems
-end
-
-module RuboCop::Cop::Bundler
 end
 
 module RuboCop::Cop::CheckAssignment
@@ -31108,16 +34807,9 @@ end
 module RuboCop::Cop::CheckLineBreakable
 end
 
-module RuboCop::Cop::ClassishLength
-  include ::RuboCop::Cop::CodeLength
-  include ::RuboCop::Cop::ConfigurableMax
-end
-
-module RuboCop::Cop::ClassishLength
-end
-
 module RuboCop::Cop::CodeLength
   include ::RuboCop::Cop::ConfigurableMax
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::CodeLength
@@ -31130,6 +34822,36 @@ class RuboCop::Cop::Commissioner
   def initialize(cops, forces=T.unsafe(nil), options=T.unsafe(nil)); end
 
   def investigate(processed_source); end
+end
+
+class RuboCop::Cop::Commissioner::InvestigationReport
+  def cop_reports(); end
+
+  def cop_reports=(_); end
+
+  def cops(); end
+
+  def correctors(); end
+
+  def errors(); end
+
+  def errors=(_); end
+
+  def merge(investigation); end
+
+  def offenses(); end
+
+  def offenses_per_cop(); end
+
+  def processed_source(); end
+
+  def processed_source=(_); end
+end
+
+class RuboCop::Cop::Commissioner::InvestigationReport
+  def self.[](*_); end
+
+  def self.members(); end
 end
 
 class RuboCop::Cop::Commissioner
@@ -31164,6 +34886,8 @@ module RuboCop::Cop::ConfigurableEnforcedStyle
   def opposite_style_detected(); end
 
   def style(); end
+
+  def style_configured?(); end
 
   def style_detected(detected); end
 
@@ -31202,76 +34926,23 @@ end
 module RuboCop::Cop::ConfigurableNaming
   include ::RuboCop::Cop::ConfigurableFormatting
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  FORMATS = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::ConfigurableNaming
 end
 
 module RuboCop::Cop::ConfigurableNumbering
   include ::RuboCop::Cop::ConfigurableFormatting
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  FORMATS = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::ConfigurableNumbering
 end
 
 class RuboCop::Cop::Cop
-  include ::RuboCop::AST::Sexp
-  include ::RuboCop::Cop::Util
-  include ::RuboCop::PathUtil
-  include ::RuboCop::Cop::IgnoredNode
-  include ::RuboCop::Cop::AutocorrectLogic
-  def add_offense(node, location: T.unsafe(nil), message: T.unsafe(nil), severity: T.unsafe(nil)); end
-
-  def config(); end
-
-  def config_to_allow_offenses(); end
-
-  def config_to_allow_offenses=(hash); end
-
-  def cop_config(); end
-
-  def cop_name(); end
-
-  def correct(node); end
+  def add_offense(node_or_range, location: T.unsafe(nil), message: T.unsafe(nil), severity: T.unsafe(nil), &block); end
 
   def corrections(); end
 
-  def disable_uncorrectable(node); end
-
-  def duplicate_location?(location); end
-
-  def excluded_file?(file); end
-
-  def external_dependency_checksum(); end
-
   def find_location(node, loc); end
-
-  def initialize(config=T.unsafe(nil), options=T.unsafe(nil)); end
-
-  def join_force?(_force_class); end
-
-  def message(_node=T.unsafe(nil)); end
-
-  def name(); end
-
-  def offenses(); end
 
   def parse(source, path=T.unsafe(nil)); end
 
-  def processed_source(); end
-
-  def processed_source=(processed_source); end
-
-  def reason_to_not_correct(node); end
-
-  def relevant_file?(file); end
-
-  def target_rails_version(); end
-
-  def target_ruby_version(); end
+  def support_autocorrect?(); end
 end
 
 class RuboCop::Cop::Cop::Correction
@@ -31295,23 +34966,7 @@ class RuboCop::Cop::Cop::Correction
 end
 
 class RuboCop::Cop::Cop
-  extend ::RuboCop::AST::Sexp
-  extend ::RuboCop::NodePattern::Macros
   def self.all(); end
-
-  def self.autocorrect_incompatible_with(); end
-
-  def self.badge(); end
-
-  def self.cop_name(); end
-
-  def self.department(); end
-
-  def self.inherited(subclass); end
-
-  def self.lint?(); end
-
-  def self.match?(given_names); end
 
   def self.qualified_cop_name(name, origin); end
 
@@ -31319,39 +34974,27 @@ class RuboCop::Cop::Cop
 end
 
 class RuboCop::Cop::Corrector
-  def corrections(); end
+  def initialize(source); end
 
-  def diagnostics(); end
+  def remove_leading(node_or_range, size); end
 
-  def initialize(source_buffer, corrections=T.unsafe(nil)); end
+  def remove_preceding(node_or_range, size); end
 
-  def insert_after(range, content); end
-
-  def insert_before(range, content); end
-
-  def remove(range); end
-
-  def remove_leading(range, size); end
-
-  def remove_preceding(range, size); end
-
-  def remove_trailing(range, size); end
-
-  def replace(range, content); end
+  def remove_trailing(node_or_range, size); end
 
   def rewrite(); end
 end
 
 class RuboCop::Cop::Corrector
+  def self.source_buffer(source); end
 end
 
 module RuboCop::Cop::DefNode
   def non_public_modifier?(node=T.unsafe(nil)); end
-  NON_PUBLIC_MODIFIERS = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::DefNode
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::DocumentationComment
@@ -31359,7 +35002,7 @@ module RuboCop::Cop::DocumentationComment
 end
 
 module RuboCop::Cop::DocumentationComment
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::Duplication
@@ -31372,12 +35015,10 @@ class RuboCop::Cop::EachToForCorrector
   def call(corrector); end
 
   def initialize(block_node); end
-  CORRECTION_WITHOUT_ARGUMENTS = ::T.let(nil, ::T.untyped)
-  CORRECTION_WITH_ARGUMENTS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::EachToForCorrector
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::EmptyLineCorrector
@@ -31394,16 +35035,12 @@ module RuboCop::Cop::EmptyParameter
 end
 
 module RuboCop::Cop::EmptyParameter
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::EndKeywordAlignment
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::EndKeywordAlignment
 end
 
 module RuboCop::Cop::EnforceSuperclass
@@ -31426,11 +35063,10 @@ class RuboCop::Cop::ForToEachCorrector
   def call(corrector); end
 
   def initialize(for_node); end
-  CORRECTION = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::ForToEachCorrector
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::Force
@@ -31454,16 +35090,7 @@ class RuboCop::Cop::Force
 end
 
 module RuboCop::Cop::FrozenStringLiteral
-  FROZEN_STRING_LITERAL = ::T.let(nil, ::T.untyped)
-  FROZEN_STRING_LITERAL_ENABLED = ::T.let(nil, ::T.untyped)
-  FROZEN_STRING_LITERAL_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::FrozenStringLiteral
   def self.frozen_string_literal_comment_exists?(); end
-end
-
-module RuboCop::Cop::Gemspec
 end
 
 class RuboCop::Cop::Gemspec::DuplicatedAssignment
@@ -31473,10 +35100,6 @@ class RuboCop::Cop::Gemspec::DuplicatedAssignment
   def gem_specification(node0); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Gemspec::DuplicatedAssignment
 end
 
 class RuboCop::Cop::Gemspec::OrderedDependencies
@@ -31487,20 +35110,17 @@ class RuboCop::Cop::Gemspec::OrderedDependencies
   def dependency_declarations(node0); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Gemspec::OrderedDependencies
 end
 
 class RuboCop::Cop::Gemspec::RequiredRubyVersion
+  include ::RuboCop::Cop::RangeHelp
   def investigate(processed_source); end
 
   def required_ruby_version(node0); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
 
-class RuboCop::Cop::Gemspec::RequiredRubyVersion
+  def string_version?(node=T.unsafe(nil)); end
+  MISSING_MSG = ::T.let(nil, ::T.untyped)
+  NOT_EQUAL_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Gemspec::RubyVersionGlobalsUsage
@@ -31509,19 +35129,12 @@ class RuboCop::Cop::Gemspec::RubyVersionGlobalsUsage
   def on_const(node); end
 
   def ruby_version?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Gemspec::RubyVersionGlobalsUsage
-end
-
-module RuboCop::Cop::Gemspec
 end
 
 class RuboCop::Cop::Generator
   def initialize(name, github_user, output: T.unsafe(nil)); end
 
-  def inject_config(config_file_path: T.unsafe(nil)); end
+  def inject_config(config_file_path: T.unsafe(nil), version_added: T.unsafe(nil)); end
 
   def inject_require(root_file_path: T.unsafe(nil)); end
 
@@ -31530,32 +35143,18 @@ class RuboCop::Cop::Generator
   def write_source(); end
 
   def write_spec(); end
-  CONFIGURATION_ADDED_MESSAGE = ::T.let(nil, ::T.untyped)
-  SOURCE_TEMPLATE = ::T.let(nil, ::T.untyped)
-  SPEC_TEMPLATE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Generator::ConfigurationInjector
   def initialize(configuration_file_path:, badge:, version_added:); end
 
   def inject(); end
-  TEMPLATE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Generator::ConfigurationInjector
 end
 
 class RuboCop::Cop::Generator::RequireFileInjector
   def initialize(source_path:, root_file_path:, output: T.unsafe(nil)); end
 
   def inject(); end
-  REQUIRE_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Generator::RequireFileInjector
-end
-
-class RuboCop::Cop::Generator
 end
 
 module RuboCop::Cop::HashAlignmentStyles
@@ -31600,6 +35199,79 @@ end
 module RuboCop::Cop::HashAlignmentStyles
 end
 
+module RuboCop::Cop::HashTransformMethod
+  def on_block(node); end
+
+  def on_csend(node); end
+
+  def on_send(node); end
+end
+
+class RuboCop::Cop::HashTransformMethod::Autocorrection
+  def block_node(); end
+
+  def block_node=(_); end
+
+  def leading(); end
+
+  def leading=(_); end
+
+  def match(); end
+
+  def match=(_); end
+
+  def set_new_arg_name(transformed_argname, corrector); end
+
+  def set_new_body_expression(transforming_body_expr, corrector); end
+
+  def set_new_method_name(new_method_name, corrector); end
+
+  def strip_prefix_and_suffix(node, corrector); end
+
+  def trailing(); end
+
+  def trailing=(_); end
+end
+
+class RuboCop::Cop::HashTransformMethod::Autocorrection
+  def self.[](*_); end
+
+  def self.from_each_with_object(node, match); end
+
+  def self.from_hash_brackets_map(node, match); end
+
+  def self.from_map_to_h(node, match); end
+
+  def self.members(); end
+end
+
+class RuboCop::Cop::HashTransformMethod::Captures
+  def noop_transformation?(); end
+
+  def transformation_uses_both_args?(); end
+
+  def transformed_argname(); end
+
+  def transformed_argname=(_); end
+
+  def transforming_body_expr(); end
+
+  def transforming_body_expr=(_); end
+
+  def unchanged_body_expr(); end
+
+  def unchanged_body_expr=(_); end
+end
+
+class RuboCop::Cop::HashTransformMethod::Captures
+  def self.[](*_); end
+
+  def self.members(); end
+end
+
+module RuboCop::Cop::HashTransformMethod
+end
+
 module RuboCop::Cop::Heredoc
   def on_dstr(node); end
 
@@ -31608,10 +35280,6 @@ module RuboCop::Cop::Heredoc
   def on_str(node); end
 
   def on_xstr(node); end
-  OPENING_DELIMITER = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::Heredoc
 end
 
 module RuboCop::Cop::IgnoredMethods
@@ -31667,9 +35335,6 @@ end
 class RuboCop::Cop::LambdaLiteralToMethodCorrector
 end
 
-module RuboCop::Cop::Layout
-end
-
 class RuboCop::Cop::Layout::AccessModifierIndentation
   include ::RuboCop::Cop::Alignment
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
@@ -31683,10 +35348,6 @@ class RuboCop::Cop::Layout::AccessModifierIndentation
   def on_module(node); end
 
   def on_sclass(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::AccessModifierIndentation
 end
 
 class RuboCop::Cop::Layout::ArgumentAlignment
@@ -31696,11 +35357,6 @@ class RuboCop::Cop::Layout::ArgumentAlignment
   def on_csend(node); end
 
   def on_send(node); end
-  ALIGN_PARAMS_MSG = ::T.let(nil, ::T.untyped)
-  FIXED_INDENT_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ArgumentAlignment
 end
 
 class RuboCop::Cop::Layout::ArrayAlignment
@@ -31708,10 +35364,6 @@ class RuboCop::Cop::Layout::ArrayAlignment
   def autocorrect(node); end
 
   def on_array(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ArrayAlignment
 end
 
 class RuboCop::Cop::Layout::AssignmentIndentation
@@ -31722,10 +35374,6 @@ class RuboCop::Cop::Layout::AssignmentIndentation
   def check_assignment(node, rhs); end
 
   def leftmost_multiple_assignment(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::AssignmentIndentation
 end
 
 class RuboCop::Cop::Layout::BlockAlignment
@@ -31736,10 +35384,6 @@ class RuboCop::Cop::Layout::BlockAlignment
   def block_end_align_target?(node=T.unsafe(nil), param1); end
 
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::BlockAlignment
 end
 
 class RuboCop::Cop::Layout::BlockEndNewline
@@ -31747,37 +35391,24 @@ class RuboCop::Cop::Layout::BlockEndNewline
   def autocorrect(node); end
 
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::BlockEndNewline
 end
 
 class RuboCop::Cop::Layout::CaseIndentation
   include ::RuboCop::Cop::Alignment
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_case(case_node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Layout::CaseIndentation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Layout::ClassStructure
+  include ::RuboCop::Cop::VisibilityHelp
   def autocorrect(node); end
 
   def on_class(class_node); end
-
-  def visibility_block?(node=T.unsafe(nil)); end
-  HUMANIZED_NODE_TYPE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  VISIBILITY_SCOPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ClassStructure
 end
 
 class RuboCop::Cop::Layout::ClosingHeredocIndentation
@@ -31785,12 +35416,6 @@ class RuboCop::Cop::Layout::ClosingHeredocIndentation
   def autocorrect(node); end
 
   def on_heredoc(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_ARG = ::T.let(nil, ::T.untyped)
-  SIMPLE_HEREDOC = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ClosingHeredocIndentation
 end
 
 class RuboCop::Cop::Layout::ClosingParenthesisIndentation
@@ -31806,11 +35431,6 @@ class RuboCop::Cop::Layout::ClosingParenthesisIndentation
   def on_defs(node); end
 
   def on_send(node); end
-  MSG_ALIGN = ::T.let(nil, ::T.untyped)
-  MSG_INDENT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ClosingParenthesisIndentation
 end
 
 class RuboCop::Cop::Layout::CommentIndentation
@@ -31818,22 +35438,17 @@ class RuboCop::Cop::Layout::CommentIndentation
   def autocorrect(comment); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::CommentIndentation
 end
 
 class RuboCop::Cop::Layout::ConditionPosition
+  include ::RuboCop::Cop::RangeHelp
+  def autocorrect(node); end
+
   def on_if(node); end
 
   def on_until(node); end
 
   def on_while(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ConditionPosition
 end
 
 class RuboCop::Cop::Layout::DefEndAlignment
@@ -31847,10 +35462,6 @@ class RuboCop::Cop::Layout::DefEndAlignment
   def on_defs(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::DefEndAlignment
 end
 
 class RuboCop::Cop::Layout::DotPosition
@@ -31875,13 +35486,11 @@ class RuboCop::Cop::Layout::ElseAlignment
 
   def on_case(node); end
 
+  def on_case_match(node); end
+
   def on_if(node, base=T.unsafe(nil)); end
 
   def on_rescue(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ElseAlignment
 end
 
 class RuboCop::Cop::Layout::EmptyComment
@@ -31889,10 +35498,6 @@ class RuboCop::Cop::Layout::EmptyComment
   def autocorrect(node); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyComment
 end
 
 class RuboCop::Cop::Layout::EmptyLineAfterGuardClause
@@ -31900,11 +35505,6 @@ class RuboCop::Cop::Layout::EmptyLineAfterGuardClause
   def autocorrect(node); end
 
   def on_if(node); end
-  END_OF_HEREDOC_LINE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLineAfterGuardClause
 end
 
 class RuboCop::Cop::Layout::EmptyLineAfterMagicComment
@@ -31912,10 +35512,6 @@ class RuboCop::Cop::Layout::EmptyLineAfterMagicComment
   def autocorrect(token); end
 
   def investigate(source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLineAfterMagicComment
 end
 
 class RuboCop::Cop::Layout::EmptyLineBetweenDefs
@@ -31925,10 +35521,6 @@ class RuboCop::Cop::Layout::EmptyLineBetweenDefs
   def check_defs(nodes); end
 
   def on_begin(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLineBetweenDefs
 end
 
 class RuboCop::Cop::Layout::EmptyLines
@@ -31936,11 +35528,6 @@ class RuboCop::Cop::Layout::EmptyLines
   def autocorrect(range); end
 
   def investigate(processed_source); end
-  LINE_OFFSET = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLines
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundAccessModifier
@@ -31957,13 +35544,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundAccessModifier
   def on_sclass(node); end
 
   def on_send(node); end
-  MSG_AFTER = ::T.let(nil, ::T.untyped)
-  MSG_AFTER_FOR_ONLY_BEFORE = ::T.let(nil, ::T.untyped)
-  MSG_BEFORE_AND_AFTER = ::T.let(nil, ::T.untyped)
-  MSG_BEFORE_FOR_ONLY_BEFORE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundAccessModifier
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundArguments
@@ -31973,10 +35553,14 @@ class RuboCop::Cop::Layout::EmptyLinesAroundArguments
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Layout::EmptyLinesAroundArguments
+class RuboCop::Cop::Layout::EmptyLinesAroundAttributeAccessor
+  include ::RuboCop::Cop::RangeHelp
+  include ::RuboCop::Cop::AllowedMethods
+  def autocorrect(node); end
+
+  def on_send(node); end
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundBeginBody
@@ -31986,10 +35570,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundBeginBody
   def autocorrect(node); end
 
   def on_kwbegin(node); end
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundBeginBody
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundBlockBody
@@ -31999,10 +35579,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundBlockBody
   def autocorrect(node); end
 
   def on_block(node); end
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundBlockBody
 end
 
 module RuboCop::Cop::Layout::EmptyLinesAroundBody
@@ -32011,13 +35587,10 @@ module RuboCop::Cop::Layout::EmptyLinesAroundBody
   def constant_definition?(node=T.unsafe(nil)); end
 
   def empty_line_required?(node=T.unsafe(nil)); end
-  MSG_DEFERRED = ::T.let(nil, ::T.untyped)
-  MSG_EXTRA = ::T.let(nil, ::T.untyped)
-  MSG_MISSING = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::Layout::EmptyLinesAroundBody
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundClassBody
@@ -32029,10 +35602,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundClassBody
   def on_class(node); end
 
   def on_sclass(node); end
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundClassBody
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundExceptionHandlingKeywords
@@ -32046,10 +35615,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundExceptionHandlingKeywords
   def on_defs(node); end
 
   def on_kwbegin(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundExceptionHandlingKeywords
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundMethodBody
@@ -32061,10 +35626,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundMethodBody
   def on_def(node); end
 
   def on_defs(node); end
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundMethodBody
 end
 
 class RuboCop::Cop::Layout::EmptyLinesAroundModuleBody
@@ -32074,10 +35635,6 @@ class RuboCop::Cop::Layout::EmptyLinesAroundModuleBody
   def autocorrect(node); end
 
   def on_module(node); end
-  KIND = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EmptyLinesAroundModuleBody
 end
 
 class RuboCop::Cop::Layout::EndAlignment
@@ -32111,24 +35668,15 @@ class RuboCop::Cop::Layout::EndOfLine
   def offense_message(line); end
 
   def unimportant_missing_cr?(index, last_line, line); end
-  MSG_DETECTED = ::T.let(nil, ::T.untyped)
-  MSG_MISSING = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::EndOfLine
 end
 
 class RuboCop::Cop::Layout::ExtraSpacing
   include ::RuboCop::Cop::PrecedingFollowingAlignment
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(range); end
-
-  def investigate(processed_source); end
-  MSG_UNALIGNED_ASGN = ::T.let(nil, ::T.untyped)
-  MSG_UNNECESSARY = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Layout::ExtraSpacing
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Layout::FirstArgumentIndentation
@@ -32142,10 +35690,6 @@ class RuboCop::Cop::Layout::FirstArgumentIndentation
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstArgumentIndentation
 end
 
 class RuboCop::Cop::Layout::FirstArrayElementIndentation
@@ -32159,10 +35703,6 @@ class RuboCop::Cop::Layout::FirstArrayElementIndentation
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstArrayElementIndentation
 end
 
 class RuboCop::Cop::Layout::FirstArrayElementLineBreak
@@ -32170,10 +35710,6 @@ class RuboCop::Cop::Layout::FirstArrayElementLineBreak
   def autocorrect(node); end
 
   def on_array(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstArrayElementLineBreak
 end
 
 class RuboCop::Cop::Layout::FirstHashElementIndentation
@@ -32187,10 +35723,6 @@ class RuboCop::Cop::Layout::FirstHashElementIndentation
   def on_hash(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstHashElementIndentation
 end
 
 class RuboCop::Cop::Layout::FirstHashElementLineBreak
@@ -32198,10 +35730,6 @@ class RuboCop::Cop::Layout::FirstHashElementLineBreak
   def autocorrect(node); end
 
   def on_hash(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstHashElementLineBreak
 end
 
 class RuboCop::Cop::Layout::FirstMethodArgumentLineBreak
@@ -32213,10 +35741,6 @@ class RuboCop::Cop::Layout::FirstMethodArgumentLineBreak
   def on_send(node); end
 
   def on_super(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstMethodArgumentLineBreak
 end
 
 class RuboCop::Cop::Layout::FirstMethodParameterLineBreak
@@ -32226,10 +35750,6 @@ class RuboCop::Cop::Layout::FirstMethodParameterLineBreak
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstMethodParameterLineBreak
 end
 
 class RuboCop::Cop::Layout::FirstParameterIndentation
@@ -32241,10 +35761,6 @@ class RuboCop::Cop::Layout::FirstParameterIndentation
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::FirstParameterIndentation
 end
 
 class RuboCop::Cop::Layout::HashAlignment
@@ -32267,10 +35783,6 @@ class RuboCop::Cop::Layout::HashAlignment
   def on_super(node); end
 
   def on_yield(node); end
-  MESSAGES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::HashAlignment
 end
 
 class RuboCop::Cop::Layout::HeredocArgumentClosingParenthesis
@@ -32278,25 +35790,13 @@ class RuboCop::Cop::Layout::HeredocArgumentClosingParenthesis
   def autocorrect(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::HeredocArgumentClosingParenthesis
 end
 
 class RuboCop::Cop::Layout::HeredocIndentation
   include ::RuboCop::Cop::Heredoc
-  include ::RuboCop::Cop::ConfigurableEnforcedStyle
   def autocorrect(node); end
 
   def on_heredoc(node); end
-  LIBRARY_MSG = ::T.let(nil, ::T.untyped)
-  RUBY23_TYPE_MSG = ::T.let(nil, ::T.untyped)
-  RUBY23_WIDTH_MSG = ::T.let(nil, ::T.untyped)
-  STRIP_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::HeredocIndentation
 end
 
 class RuboCop::Cop::Layout::IndentationConsistency
@@ -32307,10 +35807,15 @@ class RuboCop::Cop::Layout::IndentationConsistency
   def on_begin(node); end
 
   def on_kwbegin(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Layout::IndentationConsistency
+class RuboCop::Cop::Layout::IndentationStyle
+  include ::RuboCop::Cop::Alignment
+  include ::RuboCop::Cop::ConfigurableEnforcedStyle
+  include ::RuboCop::Cop::RangeHelp
+  def autocorrect(range); end
+
+  def investigate(processed_source); end
 end
 
 class RuboCop::Cop::Layout::IndentationWidth
@@ -32355,10 +35860,6 @@ class RuboCop::Cop::Layout::IndentationWidth
   def on_until(node, base=T.unsafe(nil)); end
 
   def on_while(node, base=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::IndentationWidth
 end
 
 class RuboCop::Cop::Layout::InitialIndentation
@@ -32366,10 +35867,6 @@ class RuboCop::Cop::Layout::InitialIndentation
   def autocorrect(range); end
 
   def investigate(_processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::InitialIndentation
 end
 
 class RuboCop::Cop::Layout::LeadingCommentSpace
@@ -32377,20 +35874,12 @@ class RuboCop::Cop::Layout::LeadingCommentSpace
   def autocorrect(comment); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::LeadingCommentSpace
 end
 
 class RuboCop::Cop::Layout::LeadingEmptyLines
   def autocorrect(node); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::LeadingEmptyLines
 end
 
 class RuboCop::Cop::Layout::LineLength
@@ -32407,15 +35896,13 @@ class RuboCop::Cop::Layout::LineLength
 
   def on_array(node); end
 
+  def on_block(node); end
+
   def on_hash(node); end
 
   def on_potential_breakable_node(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::LineLength
 end
 
 class RuboCop::Cop::Layout::MultilineArrayBraceLayout
@@ -32424,13 +35911,6 @@ class RuboCop::Cop::Layout::MultilineArrayBraceLayout
   def autocorrect(node); end
 
   def on_array(node); end
-  ALWAYS_NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  ALWAYS_SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineArrayBraceLayout
 end
 
 class RuboCop::Cop::Layout::MultilineArrayLineBreaks
@@ -32438,10 +35918,6 @@ class RuboCop::Cop::Layout::MultilineArrayLineBreaks
   def autocorrect(node); end
 
   def on_array(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineArrayLineBreaks
 end
 
 class RuboCop::Cop::Layout::MultilineAssignmentLayout
@@ -32457,11 +35933,6 @@ class RuboCop::Cop::Layout::MultilineAssignmentLayout
   def check_new_line_offense(node, rhs); end
 
   def check_same_line_offense(node, rhs); end
-  NEW_LINE_OFFENSE = ::T.let(nil, ::T.untyped)
-  SAME_LINE_OFFENSE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineAssignmentLayout
 end
 
 class RuboCop::Cop::Layout::MultilineBlockLayout
@@ -32469,12 +35940,6 @@ class RuboCop::Cop::Layout::MultilineBlockLayout
   def autocorrect(node); end
 
   def on_block(node); end
-  ARG_MSG = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  PIPE_SIZE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineBlockLayout
 end
 
 class RuboCop::Cop::Layout::MultilineHashBraceLayout
@@ -32483,13 +35948,6 @@ class RuboCop::Cop::Layout::MultilineHashBraceLayout
   def autocorrect(node); end
 
   def on_hash(node); end
-  ALWAYS_NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  ALWAYS_SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineHashBraceLayout
 end
 
 class RuboCop::Cop::Layout::MultilineHashKeyLineBreaks
@@ -32497,10 +35955,6 @@ class RuboCop::Cop::Layout::MultilineHashKeyLineBreaks
   def autocorrect(node); end
 
   def on_hash(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineHashKeyLineBreaks
 end
 
 class RuboCop::Cop::Layout::MultilineMethodArgumentLineBreaks
@@ -32508,10 +35962,6 @@ class RuboCop::Cop::Layout::MultilineMethodArgumentLineBreaks
   def autocorrect(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineMethodArgumentLineBreaks
 end
 
 class RuboCop::Cop::Layout::MultilineMethodCallBraceLayout
@@ -32520,13 +35970,6 @@ class RuboCop::Cop::Layout::MultilineMethodCallBraceLayout
   def autocorrect(node); end
 
   def on_send(node); end
-  ALWAYS_NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  ALWAYS_SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineMethodCallBraceLayout
 end
 
 class RuboCop::Cop::Layout::MultilineMethodCallIndentation
@@ -32549,13 +35992,6 @@ class RuboCop::Cop::Layout::MultilineMethodDefinitionBraceLayout
   def on_def(node); end
 
   def on_defs(node); end
-  ALWAYS_NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  ALWAYS_SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  NEW_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-  SAME_LINE_MESSAGE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::MultilineMethodDefinitionBraceLayout
 end
 
 class RuboCop::Cop::Layout::MultilineOperationIndentation
@@ -32581,11 +36017,6 @@ class RuboCop::Cop::Layout::ParameterAlignment
   def on_def(node); end
 
   def on_defs(node); end
-  ALIGN_PARAMS_MSG = ::T.let(nil, ::T.untyped)
-  FIXED_INDENT_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::ParameterAlignment
 end
 
 class RuboCop::Cop::Layout::RescueEnsureAlignment
@@ -32597,14 +36028,6 @@ class RuboCop::Cop::Layout::RescueEnsureAlignment
   def on_ensure(node); end
 
   def on_resbody(node); end
-  ALTERNATIVE_ACCESS_MODIFIERS = ::T.let(nil, ::T.untyped)
-  ANCESTOR_TYPES = ::T.let(nil, ::T.untyped)
-  ANCESTOR_TYPES_WITH_ACCESS_MODIFIERS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  RUBY_2_5_ANCESTOR_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::RescueEnsureAlignment
 end
 
 class RuboCop::Cop::Layout::SpaceAfterColon
@@ -32613,10 +36036,6 @@ class RuboCop::Cop::Layout::SpaceAfterColon
   def on_kwoptarg(node); end
 
   def on_pair(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceAfterColon
 end
 
 class RuboCop::Cop::Layout::SpaceAfterComma
@@ -32638,10 +36057,6 @@ class RuboCop::Cop::Layout::SpaceAfterMethodName
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceAfterMethodName
 end
 
 class RuboCop::Cop::Layout::SpaceAfterNot
@@ -32651,10 +36066,6 @@ class RuboCop::Cop::Layout::SpaceAfterNot
   def on_send(node); end
 
   def whitespace_after_operator?(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceAfterNot
 end
 
 class RuboCop::Cop::Layout::SpaceAfterSemicolon
@@ -32672,12 +36083,11 @@ end
 class RuboCop::Cop::Layout::SpaceAroundBlockParameters
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(target); end
-
   def on_block(node); end
 end
 
 class RuboCop::Cop::Layout::SpaceAroundBlockParameters
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Layout::SpaceAroundEqualsInParameterDefault
@@ -32687,10 +36097,6 @@ class RuboCop::Cop::Layout::SpaceAroundEqualsInParameterDefault
   def autocorrect(range); end
 
   def on_optarg(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceAroundEqualsInParameterDefault
 end
 
 class RuboCop::Cop::Layout::SpaceAroundKeyword
@@ -32741,17 +36147,20 @@ class RuboCop::Cop::Layout::SpaceAroundKeyword
   def on_yield(node); end
 
   def on_zsuper(node); end
-  ACCEPT_LEFT_PAREN = ::T.let(nil, ::T.untyped)
-  ACCEPT_LEFT_SQUARE_BRACKET = ::T.let(nil, ::T.untyped)
-  ACCEPT_NAMESPACE_OPERATOR = ::T.let(nil, ::T.untyped)
-  DO = ::T.let(nil, ::T.untyped)
-  MSG_AFTER = ::T.let(nil, ::T.untyped)
-  MSG_BEFORE = ::T.let(nil, ::T.untyped)
-  NAMESPACE_OPERATOR = ::T.let(nil, ::T.untyped)
-  SAFE_NAVIGATION = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Layout::SpaceAroundKeyword
+class RuboCop::Cop::Layout::SpaceAroundMethodCallOperator
+  include ::RuboCop::Cop::RangeHelp
+  def on_const(node); end
+
+  def on_csend(node); end
+
+  def on_send(node); end
+  SPACES_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Layout::SpaceAroundMethodCallOperator
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Layout::SpaceAroundOperators
@@ -32797,11 +36206,6 @@ class RuboCop::Cop::Layout::SpaceAroundOperators
   def on_send(node); end
 
   def on_special_asgn(node); end
-  EXCESSIVE_SPACE = ::T.let(nil, ::T.untyped)
-  IRREGULAR_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceAroundOperators
 end
 
 class RuboCop::Cop::Layout::SpaceBeforeBlockBraces
@@ -32810,11 +36214,6 @@ class RuboCop::Cop::Layout::SpaceBeforeBlockBraces
   def autocorrect(range); end
 
   def on_block(node); end
-  DETECTED_MSG = ::T.let(nil, ::T.untyped)
-  MISSING_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceBeforeBlockBraces
 end
 
 class RuboCop::Cop::Layout::SpaceBeforeComma
@@ -32832,10 +36231,6 @@ class RuboCop::Cop::Layout::SpaceBeforeComment
   def autocorrect(range); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceBeforeComment
 end
 
 class RuboCop::Cop::Layout::SpaceBeforeFirstArg
@@ -32846,10 +36241,6 @@ class RuboCop::Cop::Layout::SpaceBeforeFirstArg
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceBeforeFirstArg
 end
 
 class RuboCop::Cop::Layout::SpaceBeforeSemicolon
@@ -32869,11 +36260,6 @@ class RuboCop::Cop::Layout::SpaceInLambdaLiteral
   def autocorrect(lambda_node); end
 
   def on_send(node); end
-  MSG_REQUIRE_NO_SPACE = ::T.let(nil, ::T.untyped)
-  MSG_REQUIRE_SPACE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInLambdaLiteral
 end
 
 class RuboCop::Cop::Layout::SpaceInsideArrayLiteralBrackets
@@ -32883,11 +36269,6 @@ class RuboCop::Cop::Layout::SpaceInsideArrayLiteralBrackets
   def autocorrect(node); end
 
   def on_array(node); end
-  EMPTY_MSG = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideArrayLiteralBrackets
 end
 
 class RuboCop::Cop::Layout::SpaceInsideArrayPercentLiteral
@@ -32899,11 +36280,6 @@ class RuboCop::Cop::Layout::SpaceInsideArrayPercentLiteral
   def on_array(node); end
 
   def on_percent_literal(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MULTIPLE_SPACES_BETWEEN_ITEMS_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideArrayPercentLiteral
 end
 
 class RuboCop::Cop::Layout::SpaceInsideBlockBraces
@@ -32925,10 +36301,6 @@ class RuboCop::Cop::Layout::SpaceInsideHashLiteralBraces
   def autocorrect(range); end
 
   def on_hash(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideHashLiteralBraces
 end
 
 class RuboCop::Cop::Layout::SpaceInsideParens
@@ -32938,11 +36310,6 @@ class RuboCop::Cop::Layout::SpaceInsideParens
   def autocorrect(range); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_SPACE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideParens
 end
 
 class RuboCop::Cop::Layout::SpaceInsidePercentLiteralDelimiters
@@ -32956,12 +36323,6 @@ class RuboCop::Cop::Layout::SpaceInsidePercentLiteralDelimiters
   def on_percent_literal(node); end
 
   def on_xstr(node); end
-  BEGIN_REGEX = ::T.let(nil, ::T.untyped)
-  END_REGEX = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsidePercentLiteralDelimiters
 end
 
 class RuboCop::Cop::Layout::SpaceInsideRangeLiteral
@@ -32970,10 +36331,6 @@ class RuboCop::Cop::Layout::SpaceInsideRangeLiteral
   def on_erange(node); end
 
   def on_irange(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideRangeLiteral
 end
 
 class RuboCop::Cop::Layout::SpaceInsideReferenceBrackets
@@ -32983,12 +36340,6 @@ class RuboCop::Cop::Layout::SpaceInsideReferenceBrackets
   def autocorrect(node); end
 
   def on_send(node); end
-  BRACKET_METHODS = ::T.let(nil, ::T.untyped)
-  EMPTY_MSG = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideReferenceBrackets
 end
 
 class RuboCop::Cop::Layout::SpaceInsideStringInterpolation
@@ -32999,23 +36350,6 @@ class RuboCop::Cop::Layout::SpaceInsideStringInterpolation
   def autocorrect(begin_node); end
 
   def on_interpolation(begin_node); end
-  NO_SPACE_MSG = ::T.let(nil, ::T.untyped)
-  SPACE_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::SpaceInsideStringInterpolation
-end
-
-class RuboCop::Cop::Layout::Tab
-  include ::RuboCop::Cop::Alignment
-  include ::RuboCop::Cop::RangeHelp
-  def autocorrect(range); end
-
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Layout::Tab
 end
 
 class RuboCop::Cop::Layout::TrailingEmptyLines
@@ -33034,13 +36368,27 @@ class RuboCop::Cop::Layout::TrailingWhitespace
   def autocorrect(range); end
 
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Layout::TrailingWhitespace
+module RuboCop::Cop::Legacy
 end
 
-module RuboCop::Cop::Layout
+class RuboCop::Cop::Legacy::CorrectionsProxy
+  def <<(callable); end
+
+  def concat(corrections); end
+
+  def corrector(); end
+
+  def empty?(); end
+
+  def initialize(corrector); end
+end
+
+class RuboCop::Cop::Legacy::CorrectionsProxy
+end
+
+module RuboCop::Cop::Legacy
 end
 
 class RuboCop::Cop::LineBreakCorrector
@@ -33051,6 +36399,7 @@ class RuboCop::Cop::LineBreakCorrector
   extend ::RuboCop::Cop::TrailingBody
   extend ::RuboCop::Cop::Util
   extend ::RuboCop::PathUtil
+  extend ::RuboCop::TokensUtil
   def self.break_line_before(range:, node:, corrector:, configured_width:, indent_steps: T.unsafe(nil)); end
 
   def self.correct_trailing_body(configured_width:, corrector:, node:, processed_source:); end
@@ -33066,34 +36415,18 @@ end
 module RuboCop::Cop::LineLengthHelp
 end
 
-module RuboCop::Cop::Lint
-end
-
 class RuboCop::Cop::Lint::AmbiguousBlockAssociation
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::AmbiguousBlockAssociation
 end
 
 class RuboCop::Cop::Lint::AmbiguousOperator
-  include ::RuboCop::Cop::ParserDiagnostic
-  AMBIGUITIES = ::T.let(nil, ::T.untyped)
-  MSG_FORMAT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::AmbiguousOperator
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::AmbiguousRegexpLiteral
-  include ::RuboCop::Cop::ParserDiagnostic
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::AmbiguousRegexpLiteral
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::AssignmentInCondition
@@ -33103,44 +36436,55 @@ class RuboCop::Cop::Lint::AssignmentInCondition
   def on_until(node); end
 
   def on_while(node); end
-  ASGN_TYPES = ::T.let(nil, ::T.untyped)
-  MSG_WITHOUT_SAFE_ASSIGNMENT_ALLOWED = ::T.let(nil, ::T.untyped)
-  MSG_WITH_SAFE_ASSIGNMENT_ALLOWED = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::AssignmentInCondition
 end
 
 class RuboCop::Cop::Lint::BigDecimalNew
-  def autocorrect(node); end
-
   def big_decimal_new(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::BigDecimalNew
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Lint::BinaryOperatorWithIdenticalOperands
+  def on_and(node); end
+
+  def on_or(node); end
+
+  def on_send(node); end
+  MATH_OPERATORS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::BinaryOperatorWithIdenticalOperands
 end
 
 class RuboCop::Cop::Lint::BooleanSymbol
   def boolean_symbol?(node=T.unsafe(nil)); end
 
   def on_sym(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::BooleanSymbol
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::CircularArgumentReference
   def on_kwoptarg(node); end
 
   def on_optarg(node); end
+end
+
+class RuboCop::Cop::Lint::ConstantResolution
+  def on_const(node); end
+
+  def unqualified_const?(node=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::CircularArgumentReference
+class RuboCop::Cop::Lint::ConstantResolution
 end
 
 class RuboCop::Cop::Lint::Debugger
@@ -33151,18 +36495,12 @@ class RuboCop::Cop::Lint::Debugger
   def kernel?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::Debugger
+  DEBUGGER_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::DeprecatedClassMethods
-  def autocorrect(node); end
-
   def on_send(node); end
-  DEPRECATED_METHODS_OBJECT = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
+  DEPRECATED_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::DeprecatedClassMethods::DeprecatedClassMethod
@@ -33182,37 +36520,47 @@ class RuboCop::Cop::Lint::DeprecatedClassMethods::DeprecatedClassMethod
 end
 
 class RuboCop::Cop::Lint::DeprecatedClassMethods
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Lint::DeprecatedOpenSSLConstant
+  include ::RuboCop::Cop::RangeHelp
+  def algorithm_const(node=T.unsafe(nil)); end
+
+  def on_send(node); end
+end
+
+class RuboCop::Cop::Lint::DeprecatedOpenSSLConstant
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::DisjunctiveAssignmentInConstructor
   def on_def(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::DisjunctiveAssignmentInConstructor
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::DuplicateCaseCondition
   def on_case(case_node); end
+end
+
+class RuboCop::Cop::Lint::DuplicateElsifCondition
+  def on_if(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::DuplicateCaseCondition
+class RuboCop::Cop::Lint::DuplicateElsifCondition
 end
 
 class RuboCop::Cop::Lint::DuplicateHashKey
   include ::RuboCop::Cop::Duplication
   def on_hash(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::DuplicateHashKey
 end
 
 class RuboCop::Cop::Lint::DuplicateMethods
   def alias_method?(node=T.unsafe(nil)); end
-
-  def attr?(node=T.unsafe(nil)); end
 
   def method_alias?(node=T.unsafe(nil)); end
 
@@ -33225,10 +36573,16 @@ class RuboCop::Cop::Lint::DuplicateMethods
   def on_send(node); end
 
   def sym_name(node=T.unsafe(nil)); end
+  METHOD_DEF_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::DuplicateRescueException
+  include ::RuboCop::Cop::RescueNode
+  def on_rescue(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::DuplicateMethods
+class RuboCop::Cop::Lint::DuplicateRescueException
 end
 
 class RuboCop::Cop::Lint::EachWithObjectArgument
@@ -33237,139 +36591,108 @@ class RuboCop::Cop::Lint::EachWithObjectArgument
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::EachWithObjectArgument
 end
 
 class RuboCop::Cop::Lint::ElseLayout
   def on_if(node); end
+end
+
+class RuboCop::Cop::Lint::EmptyConditionalBody
+  def on_if(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::ElseLayout
+class RuboCop::Cop::Lint::EmptyConditionalBody
 end
 
 class RuboCop::Cop::Lint::EmptyEnsure
-  def autocorrect(node); end
-
   def on_ensure(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::EmptyEnsure
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::EmptyExpression
   def on_begin(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::EmptyExpression
 end
 
 class RuboCop::Cop::Lint::EmptyInterpolation
   include ::RuboCop::Cop::Interpolation
-  def autocorrect(node); end
-
   def on_interpolation(begin_node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::EmptyInterpolation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::EmptyWhen
   def on_case(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::EmptyWhen
-end
-
-class RuboCop::Cop::Lint::EndInMethod
-  def on_postexe(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::EndInMethod
 end
 
 class RuboCop::Cop::Lint::EnsureReturn
+  include ::RuboCop::Cop::RangeHelp
   def on_ensure(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::EnsureReturn
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::ErbNewArguments
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def erb_new_with_non_keyword_arguments(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MESSAGES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::ErbNewArguments
   extend ::RuboCop::Cop::TargetRubyVersion
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::FlipFlop
   def on_eflipflop(node); end
 
   def on_iflipflop(node); end
+end
+
+class RuboCop::Cop::Lint::FloatComparison
+  def on_send(node); end
+  EQUALITY_METHODS = ::T.let(nil, ::T.untyped)
+  FLOAT_INSTANCE_METHODS = ::T.let(nil, ::T.untyped)
+  FLOAT_RETURNING_METHODS = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::FlipFlop
+class RuboCop::Cop::Lint::FloatComparison
 end
 
 class RuboCop::Cop::Lint::FloatOutOfRange
   def on_float(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::FloatOutOfRange
 end
 
 class RuboCop::Cop::Lint::FormatParameterMismatch
   def called_on_string?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  KERNEL = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  SHOVEL = ::T.let(nil, ::T.untyped)
-  STRING_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::FormatParameterMismatch
+  FORMAT_METHODS = ::T.let(nil, ::T.untyped)
+  MSG_INVALID = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::HeredocMethodCallPosition
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::HeredocMethodCallPosition
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::ImplicitStringConcatenation
   def on_dstr(node); end
-  FOR_ARRAY = ::T.let(nil, ::T.untyped)
-  FOR_METHOD = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::ImplicitStringConcatenation
 end
 
 class RuboCop::Cop::Lint::IneffectiveAccessModifier
@@ -33378,42 +36701,31 @@ class RuboCop::Cop::Lint::IneffectiveAccessModifier
   def on_module(node); end
 
   def private_class_methods(node0); end
-  ALTERNATIVE_PRIVATE = ::T.let(nil, ::T.untyped)
-  ALTERNATIVE_PROTECTED = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::IneffectiveAccessModifier
 end
 
 class RuboCop::Cop::Lint::InheritException
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def class_new_call?(node=T.unsafe(nil)); end
 
   def on_class(node); end
 
   def on_send(node); end
-  ILLEGAL_CLASSES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  PREFERRED_BASE_CLASS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::InheritException
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::InterpolationCheck
-  def heredoc?(node); end
-
   def on_str(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::InterpolationCheck
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::LiteralAsCondition
+  include ::RuboCop::Cop::RangeHelp
   def message(node); end
 
   def on_case(case_node); end
@@ -33429,56 +36741,61 @@ class RuboCop::Cop::Lint::LiteralAsCondition
   def on_while(node); end
 
   def on_while_post(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::LiteralAsCondition
 end
 
 class RuboCop::Cop::Lint::LiteralInInterpolation
   include ::RuboCop::Cop::Interpolation
   include ::RuboCop::Cop::PercentLiteral
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_interpolation(begin_node); end
-  COMPOSITE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::LiteralInInterpolation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::Loop
   def on_until_post(node); end
 
   def on_while_post(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::Loop
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::MissingCopEnableDirective
   include ::RuboCop::Cop::RangeHelp
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_BOUND = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::MissingCopEnableDirective
+class RuboCop::Cop::Lint::MissingSuper
+  def on_def(node); end
+
+  def on_defs(node); end
+  CALLBACKS = ::T.let(nil, ::T.untyped)
+  CALLBACK_MSG = ::T.let(nil, ::T.untyped)
+  CLASS_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
+  CONSTRUCTOR_MSG = ::T.let(nil, ::T.untyped)
+  METHOD_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
+  OBJECT_LIFECYCLE_CALLBACKS = ::T.let(nil, ::T.untyped)
+  STATELESS_CLASSES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::MissingSuper
+end
+
+class RuboCop::Cop::Lint::MixedRegexpCaptureTypes
+  def on_regexp(node); end
 end
 
 class RuboCop::Cop::Lint::MultipleComparison
-  def autocorrect(node); end
-
   def multiple_compare?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::MultipleComparison
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::NestedMethodDefinition
@@ -33491,10 +36808,6 @@ class RuboCop::Cop::Lint::NestedMethodDefinition
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::NestedMethodDefinition
 end
 
 class RuboCop::Cop::Lint::NestedPercentLiteral
@@ -33503,40 +36816,36 @@ class RuboCop::Cop::Lint::NestedPercentLiteral
   def on_array(node); end
 
   def on_percent_literal(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  PERCENT_LITERAL_TYPES = ::T.let(nil, ::T.untyped)
-  REGEXES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::NestedPercentLiteral
 end
 
 class RuboCop::Cop::Lint::NextWithoutAccumulator
   def on_block(node); end
 
   def on_body_of_reduce(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::NextWithoutAccumulator
 end
 
 class RuboCop::Cop::Lint::NonDeterministicRequireOrder
-  def autocorrect(node); end
-
   def loop_variable(node=T.unsafe(nil)); end
 
+  def method_require?(node=T.unsafe(nil)); end
+
   def on_block(node); end
+
+  def on_block_pass(node); end
 
   def unsorted_dir_block?(node=T.unsafe(nil)); end
 
   def unsorted_dir_each?(node=T.unsafe(nil)); end
 
+  def unsorted_dir_each_pass?(node=T.unsafe(nil)); end
+
+  def unsorted_dir_glob_pass?(node=T.unsafe(nil)); end
+
   def var_is_required?(node0, param1); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::NonDeterministicRequireOrder
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::NonLocalExitFromIterator
@@ -33545,36 +36854,43 @@ class RuboCop::Cop::Lint::NonLocalExitFromIterator
   def define_method?(node=T.unsafe(nil)); end
 
   def on_return(return_node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::NonLocalExitFromIterator
 end
 
 class RuboCop::Cop::Lint::NumberConversion
-  def autocorrect(node); end
-
   def datetime?(node=T.unsafe(nil)); end
 
   def on_send(node); end
 
   def to_method(node=T.unsafe(nil)); end
-  CONVERSION_METHOD_CLASS_MAPPING = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::NumberConversion
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::OrderedMagicComments
   include ::RuboCop::Cop::FrozenStringLiteral
-  def autocorrect(_node); end
-
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::OrderedMagicComments
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Lint::OutOfRangeRegexpRef
+  def on_match_with_lvasgn(node); end
+
+  def on_nth_ref(node); end
+
+  def on_send(node); end
+
+  def on_when(node); end
+  MSG = ::T.let(nil, ::T.untyped)
+  REGEXP_ARGUMENT_METHODS = ::T.let(nil, ::T.untyped)
+  REGEXP_CAPTURE_METHODS = ::T.let(nil, ::T.untyped)
+  REGEXP_RECEIVER_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::OutOfRangeRegexpRef
 end
 
 class RuboCop::Cop::Lint::ParenthesesAsGroupedExpression
@@ -33582,158 +36898,138 @@ class RuboCop::Cop::Lint::ParenthesesAsGroupedExpression
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::ParenthesesAsGroupedExpression
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::PercentStringArray
   include ::RuboCop::Cop::PercentLiteral
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_array(node); end
 
   def on_percent_literal(node); end
-  LEADING_QUOTE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  QUOTES_AND_COMMAS = ::T.let(nil, ::T.untyped)
-  TRAILING_QUOTE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::PercentStringArray
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::PercentSymbolArray
   include ::RuboCop::Cop::PercentLiteral
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_array(node); end
 
   def on_percent_literal(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::PercentSymbolArray
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Lint::RaiseException
+  def exception?(node=T.unsafe(nil)); end
+
+  def exception_new_with_message?(node=T.unsafe(nil)); end
+
+  def on_send(node); end
+end
+
+class RuboCop::Cop::Lint::RaiseException
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RandOne
   def on_send(node); end
 
   def rand_one?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::RandOne
 end
 
 class RuboCop::Cop::Lint::RedundantCopDisableDirective
-  include ::RuboCop::NameSimilarity
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(args); end
+  def initialize(config=T.unsafe(nil), options=T.unsafe(nil), offenses=T.unsafe(nil)); end
 
-  def check(offenses, cop_disabled_line_ranges, comments); end
-  COP_NAME = ::T.let(nil, ::T.untyped)
+  def offenses_to_check(); end
+
+  def offenses_to_check=(offenses_to_check); end
 end
 
 class RuboCop::Cop::Lint::RedundantCopDisableDirective
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantCopEnableDirective
   include ::RuboCop::Cop::SurroundingSpace
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(comment_and_name); end
-
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantCopEnableDirective
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantRequireStatement
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_send(node); end
 
   def unnecessary_require_statement?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantRequireStatement
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantSplatExpansion
   def array_new?(node=T.unsafe(nil)); end
 
-  def autocorrect(node); end
-
   def literal_expansion(node=T.unsafe(nil)); end
 
   def on_splat(node); end
-  ARRAY_PARAM_MSG = ::T.let(nil, ::T.untyped)
-  ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  PERCENT_CAPITAL_I = ::T.let(nil, ::T.untyped)
-  PERCENT_CAPITAL_W = ::T.let(nil, ::T.untyped)
-  PERCENT_I = ::T.let(nil, ::T.untyped)
-  PERCENT_W = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantSplatExpansion
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantStringCoercion
   include ::RuboCop::Cop::Interpolation
-  def autocorrect(node); end
-
   def on_interpolation(begin_node); end
 
   def to_s_without_args?(node=T.unsafe(nil)); end
-  MSG_DEFAULT = ::T.let(nil, ::T.untyped)
-  MSG_SELF = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantStringCoercion
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantWithIndex
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_block(node); end
 
   def redundant_with_index?(node=T.unsafe(nil)); end
-  MSG_EACH_WITH_INDEX = ::T.let(nil, ::T.untyped)
-  MSG_WITH_INDEX = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantWithIndex
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RedundantWithObject
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_block(node); end
 
   def redundant_with_object?(node=T.unsafe(nil)); end
-  MSG_EACH_WITH_OBJECT = ::T.let(nil, ::T.untyped)
-  MSG_WITH_OBJECT = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RedundantWithObject
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RegexpAsCondition
   def on_match_current_line(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RegexpAsCondition
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::RequireParentheses
@@ -33741,212 +37037,153 @@ class RuboCop::Cop::Lint::RequireParentheses
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::RequireParentheses
 end
 
 class RuboCop::Cop::Lint::RescueException
   def on_resbody(node); end
 
   def targets_exception?(rescue_arg_node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::RescueException
 end
 
 class RuboCop::Cop::Lint::RescueType
   include ::RuboCop::Cop::RescueNode
-  def autocorrect(node); end
+  def autocorrect(corrector, node); end
 
   def on_resbody(node); end
-  INVALID_TYPES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::RescueType
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::ReturnInVoidContext
   def on_return(return_node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::ReturnInVoidContext
 end
 
 class RuboCop::Cop::Lint::SafeNavigationChain
   include ::RuboCop::Cop::NilMethods
+  include ::RuboCop::Cop::AllowedMethods
   def bad_method?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::SafeNavigationChain
 end
 
 class RuboCop::Cop::Lint::SafeNavigationConsistency
   include ::RuboCop::Cop::NilMethods
-  def autocorrect(node); end
-
+  include ::RuboCop::Cop::AllowedMethods
   def check(node); end
 
   def on_csend(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::SafeNavigationConsistency
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::SafeNavigationWithEmpty
   def on_if(node); end
 
   def safe_navigation_empty_in_conditional?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::SafeNavigationWithEmpty
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::ScriptPermission
-  def autocorrect(node); end
+  extend ::RuboCop::Cop::AutoCorrector
+end
 
-  def investigate(processed_source); end
+class RuboCop::Cop::Lint::SelfAssignment
+  def on_and_asgn(node); end
+
+  def on_casgn(node); end
+
+  def on_cvasgn(node); end
+
+  def on_gvasgn(node); end
+
+  def on_ivasgn(node); end
+
+  def on_lvasgn(node); end
+
+  def on_masgn(node); end
+
+  def on_or_asgn(node); end
+  ASSIGNMENT_TYPE_TO_RHS_TYPE = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
-  SHEBANG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::ScriptPermission
+class RuboCop::Cop::Lint::SelfAssignment
 end
 
 class RuboCop::Cop::Lint::SendWithMixinArgument
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_send(node); end
 
   def send_with_mixin_argument?(node=T.unsafe(nil)); end
-  MIXIN_METHODS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::SendWithMixinArgument
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::ShadowedArgument
   def after_leaving_scope(scope, _variable_table); end
 
-  def join_force?(force_class); end
-
   def uses_var?(node0, param1); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::ShadowedArgument
 end
 
 class RuboCop::Cop::Lint::ShadowedException
   include ::RuboCop::Cop::RescueNode
   include ::RuboCop::Cop::RangeHelp
   def on_rescue(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::ShadowedException
 end
 
 class RuboCop::Cop::Lint::ShadowingOuterLocalVariable
   def before_declaring_variable(variable, variable_table); end
-
-  def join_force?(force_class); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::ShadowingOuterLocalVariable
+class RuboCop::Cop::Lint::StructNewOverride
+  def on_send(node); end
+
+  def struct_new(node=T.unsafe(nil)); end
 end
 
 class RuboCop::Cop::Lint::SuppressedException
   def on_resbody(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::SuppressedException
-end
-
-class RuboCop::Cop::Lint::Syntax
-  def add_offense_from_diagnostic(diagnostic, ruby_version); end
-
-  def add_offense_from_error(error); end
-  ERROR_SOURCE_RANGE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::Syntax::PseudoSourceRange
-  def begin_pos(); end
-
-  def begin_pos=(_); end
-
-  def column(); end
-
-  def column=(_); end
-
-  def end_pos(); end
-
-  def end_pos=(_); end
-
-  def line(); end
-
-  def line=(_); end
-
-  def source_line(); end
-
-  def source_line=(_); end
-end
-
-class RuboCop::Cop::Lint::Syntax::PseudoSourceRange
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class RuboCop::Cop::Lint::Syntax
-  def self.offenses_from_processed_source(processed_source, config, options); end
 end
 
 class RuboCop::Cop::Lint::ToJSON
-  def autocorrect(node); end
-
   def on_def(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::ToJSON
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Lint::TopLevelReturnWithArgument
+  def on_return(return_node); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Lint::TopLevelReturnWithArgument
 end
 
 class RuboCop::Cop::Lint::UnderscorePrefixedVariableName
   def after_leaving_scope(scope, _variable_table); end
 
   def check_variable(variable); end
-
-  def join_force?(force_class); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UnderscorePrefixedVariableName
 end
 
 class RuboCop::Cop::Lint::UnifiedInteger
-  def autocorrect(node); end
-
   def fixnum_or_bignum_const(node=T.unsafe(nil)); end
 
   def on_const(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::UnifiedInteger
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::UnreachableCode
@@ -33955,65 +37192,70 @@ class RuboCop::Cop::Lint::UnreachableCode
   def on_begin(node); end
 
   def on_kwbegin(node); end
+end
+
+class RuboCop::Cop::Lint::UnreachableLoop
+  def break_command?(node=T.unsafe(nil)); end
+
+  def on_block(node); end
+
+  def on_for(node); end
+
+  def on_until(node); end
+
+  def on_until_post(node); end
+
+  def on_while(node); end
+
+  def on_while_post(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Lint::UnreachableCode
+class RuboCop::Cop::Lint::UnreachableLoop
 end
 
 module RuboCop::Cop::Lint::UnusedArgument
   def after_leaving_scope(scope, _variable_table); end
-
-  def join_force?(force_class); end
 end
 
 module RuboCop::Cop::Lint::UnusedArgument
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::Lint::UnusedBlockArgument
   include ::RuboCop::Cop::Lint::UnusedArgument
-  def autocorrect(node); end
 end
 
 class RuboCop::Cop::Lint::UnusedBlockArgument
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::UnusedMethodArgument
   include ::RuboCop::Cop::Lint::UnusedArgument
-  def autocorrect(node); end
+  def not_implemented?(node=T.unsafe(nil)); end
 end
 
 class RuboCop::Cop::Lint::UnusedMethodArgument
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::UriEscapeUnescape
   def on_send(node); end
 
   def uri_escape_unescape?(node=T.unsafe(nil)); end
-  ALTERNATE_METHODS_OF_URI_ESCAPE = ::T.let(nil, ::T.untyped)
-  ALTERNATE_METHODS_OF_URI_UNESCAPE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UriEscapeUnescape
 end
 
 class RuboCop::Cop::Lint::UriRegexp
-  def autocorrect(node); end
-
   def on_send(node); end
-
-  def uri_regexp_with_argument?(node=T.unsafe(nil)); end
-
-  def uri_regexp_without_argument?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
+  URI_CONSTANTS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::UriRegexp
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::UselessAccessModifier
+  include ::RuboCop::Cop::RangeHelp
   def class_or_instance_eval?(node=T.unsafe(nil)); end
 
   def class_or_module_or_struct_new_call?(node=T.unsafe(nil)); end
@@ -34029,21 +37271,18 @@ class RuboCop::Cop::Lint::UselessAccessModifier
   def on_sclass(node); end
 
   def static_method_definition?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::UselessAccessModifier
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Lint::UselessAssignment
-  include ::RuboCop::NameSimilarity
   def after_leaving_scope(scope, _variable_table); end
 
   def check_for_unused_assignments(variable); end
 
   def collect_variable_like_names(scope); end
-
-  def join_force?(force_class); end
 
   def message_for_useless_assignment(assignment); end
 
@@ -34058,29 +37297,6 @@ class RuboCop::Cop::Lint::UselessAssignment
   def similar_name_message(variable); end
 
   def variable_like_method_invocation?(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UselessAssignment
-end
-
-class RuboCop::Cop::Lint::UselessComparison
-  def on_send(node); end
-
-  def useless_comparison?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-  OPS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UselessComparison
-end
-
-class RuboCop::Cop::Lint::UselessElseWithoutRescue
-  include ::RuboCop::Cop::ParserDiagnostic
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::UselessElseWithoutRescue
 end
 
 class RuboCop::Cop::Lint::UselessSetterCall
@@ -34089,8 +37305,6 @@ class RuboCop::Cop::Lint::UselessSetterCall
   def on_defs(node); end
 
   def setter_call_to_local_variable?(node=T.unsafe(nil)); end
-  ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Lint::UselessSetterCall::MethodVariableTracker
@@ -34116,32 +37330,12 @@ end
 class RuboCop::Cop::Lint::UselessSetterCall::MethodVariableTracker
 end
 
-class RuboCop::Cop::Lint::UselessSetterCall
-end
-
 class RuboCop::Cop::Lint::Void
   def on_begin(node); end
 
   def on_block(node); end
 
   def on_kwbegin(node); end
-  BINARY_OPERATORS = ::T.let(nil, ::T.untyped)
-  DEFINED_MSG = ::T.let(nil, ::T.untyped)
-  LIT_MSG = ::T.let(nil, ::T.untyped)
-  NONMUTATING_METHODS = ::T.let(nil, ::T.untyped)
-  NONMUTATING_MSG = ::T.let(nil, ::T.untyped)
-  OPERATORS = ::T.let(nil, ::T.untyped)
-  OP_MSG = ::T.let(nil, ::T.untyped)
-  SELF_MSG = ::T.let(nil, ::T.untyped)
-  UNARY_OPERATORS = ::T.let(nil, ::T.untyped)
-  VAR_MSG = ::T.let(nil, ::T.untyped)
-  VOID_CONTEXT_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Lint::Void
-end
-
-module RuboCop::Cop::Lint
 end
 
 module RuboCop::Cop::MatchRange
@@ -34173,6 +37367,8 @@ end
 
 module RuboCop::Cop::MethodComplexity
   include ::RuboCop::Cop::ConfigurableMax
+  include ::RuboCop::Cop::IgnoredMethods
+  include ::RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
   def define_method?(node=T.unsafe(nil)); end
 
   def on_block(node); end
@@ -34183,49 +37379,33 @@ module RuboCop::Cop::MethodComplexity
 end
 
 module RuboCop::Cop::MethodComplexity
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::MethodPreference
 end
 
 module RuboCop::Cop::MethodPreference
-end
-
-module RuboCop::Cop::Metrics
 end
 
 class RuboCop::Cop::Metrics::AbcSize
   include ::RuboCop::Cop::MethodComplexity
   include ::RuboCop::Cop::ConfigurableMax
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::AbcSize
+  include ::RuboCop::Cop::IgnoredMethods
+  include ::RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
 end
 
 class RuboCop::Cop::Metrics::BlockLength
-  include ::RuboCop::Cop::TooManyLines
   include ::RuboCop::Cop::CodeLength
   include ::RuboCop::Cop::ConfigurableMax
   def on_block(node); end
-  LABEL = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::BlockLength
 end
 
 class RuboCop::Cop::Metrics::BlockNesting
   include ::RuboCop::Cop::ConfigurableMax
-  def investigate(processed_source); end
-  NESTING_BLOCKS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::BlockNesting
 end
 
 class RuboCop::Cop::Metrics::ClassLength
-  include ::RuboCop::Cop::ClassishLength
   include ::RuboCop::Cop::CodeLength
   include ::RuboCop::Cop::ConfigurableMax
   def class_definition?(node=T.unsafe(nil)); end
@@ -34241,15 +37421,12 @@ end
 class RuboCop::Cop::Metrics::CyclomaticComplexity
   include ::RuboCop::Cop::MethodComplexity
   include ::RuboCop::Cop::ConfigurableMax
-  COUNTED_NODES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::CyclomaticComplexity
+  include ::RuboCop::Cop::IgnoredMethods
+  include ::RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
+  include ::RuboCop::Cop::Metrics::Utils::IteratingBlock
 end
 
 class RuboCop::Cop::Metrics::MethodLength
-  include ::RuboCop::Cop::TooManyLines
   include ::RuboCop::Cop::CodeLength
   include ::RuboCop::Cop::ConfigurableMax
   def on_block(node); end
@@ -34257,14 +37434,9 @@ class RuboCop::Cop::Metrics::MethodLength
   def on_def(node); end
 
   def on_defs(node); end
-  LABEL = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::MethodLength
 end
 
 class RuboCop::Cop::Metrics::ModuleLength
-  include ::RuboCop::Cop::ClassishLength
   include ::RuboCop::Cop::CodeLength
   include ::RuboCop::Cop::ConfigurableMax
   def module_definition?(node=T.unsafe(nil)); end
@@ -34282,26 +37454,11 @@ class RuboCop::Cop::Metrics::ParameterLists
   def argument_to_lambda_or_proc?(node=T.unsafe(nil)); end
 
   def on_args(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::ParameterLists
-end
-
-class RuboCop::Cop::Metrics::PerceivedComplexity
-  include ::RuboCop::Cop::MethodComplexity
-  include ::RuboCop::Cop::ConfigurableMax
-  COUNTED_NODES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Metrics::PerceivedComplexity
-end
-
-module RuboCop::Cop::Metrics::Utils
 end
 
 class RuboCop::Cop::Metrics::Utils::AbcSizeCalculator
+  include ::RuboCop::Cop::Metrics::Utils::IteratingBlock
+  include ::RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
   def calculate(); end
 
   def else_branch?(node); end
@@ -34311,37 +37468,57 @@ class RuboCop::Cop::Metrics::Utils::AbcSizeCalculator
   def evaluate_condition_node(node); end
 
   def initialize(node); end
-  BRANCH_NODES = ::T.let(nil, ::T.untyped)
-  CONDITION_NODES = ::T.let(nil, ::T.untyped)
+  ARGUMENT_TYPES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Metrics::Utils::AbcSizeCalculator
   def self.calculate(node); end
 end
 
-module RuboCop::Cop::Metrics::Utils
+class RuboCop::Cop::Metrics::Utils::CodeLengthCalculator
+  include ::RuboCop::Cop::Util
+  include ::RuboCop::PathUtil
+  include ::RuboCop::TokensUtil
+  def calculate(); end
+
+  def initialize(node, processed_source, count_comments: T.unsafe(nil), foldable_types: T.unsafe(nil)); end
+  CLASSLIKE_TYPES = ::T.let(nil, ::T.untyped)
+  FOLDABLE_TYPES = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop::Metrics
+class RuboCop::Cop::Metrics::Utils::CodeLengthCalculator
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
-module RuboCop::Cop::Migration
+module RuboCop::Cop::Metrics::Utils::IteratingBlock
+  def block_method_name(node); end
+
+  def iterating_block?(node); end
+
+  def iterating_method?(name); end
+  KNOWN_ITERATING_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+module RuboCop::Cop::Metrics::Utils::IteratingBlock
+end
+
+module RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
+  def discount_for_repeated_csend?(csend_node); end
+
+  def reset_on_lvasgn(node); end
+
+  def reset_repeated_csend(); end
+end
+
+module RuboCop::Cop::Metrics::Utils::RepeatedCsendDiscount
 end
 
 class RuboCop::Cop::Migration::DepartmentName
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(range); end
-
-  def investigate(processed_source); end
-  DISABLE_COMMENT_FORMAT = ::T.let(nil, ::T.untyped)
-  DISABLING_COPS_CONTENT_TOKEN = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Migration::DepartmentName
-end
-
-module RuboCop::Cop::Migration
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 module RuboCop::Cop::MinBodyLength
@@ -34364,14 +37541,6 @@ end
 
 module RuboCop::Cop::MultilineExpressionIndentation
   def on_send(node); end
-  ASSIGNMENT_MESSAGE_TAIL = ::T.let(nil, ::T.untyped)
-  DEFAULT_MESSAGE_TAIL = ::T.let(nil, ::T.untyped)
-  KEYWORD_ANCESTOR_TYPES = ::T.let(nil, ::T.untyped)
-  KEYWORD_MESSAGE_TAIL = ::T.let(nil, ::T.untyped)
-  UNALIGNED_RHS_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::MultilineExpressionIndentation
 end
 
 class RuboCop::Cop::MultilineLiteralBraceCorrector
@@ -34393,39 +37562,23 @@ end
 module RuboCop::Cop::MultilineLiteralBraceLayout
 end
 
-module RuboCop::Cop::Naming
-end
-
 class RuboCop::Cop::Naming::AccessorMethodName
   def on_def(node); end
 
   def on_defs(node); end
-  MSG_READER = ::T.let(nil, ::T.untyped)
-  MSG_WRITER = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::AccessorMethodName
 end
 
 class RuboCop::Cop::Naming::AsciiIdentifiers
   include ::RuboCop::Cop::RangeHelp
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::AsciiIdentifiers
+  CONSTANT_MSG = ::T.let(nil, ::T.untyped)
+  IDENTIFIER_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Naming::BinaryOperatorParameterName
   def on_def(node); end
 
   def op_method_candidate?(node=T.unsafe(nil)); end
-  BLACKLISTED = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  OP_LIKE_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::BinaryOperatorParameterName
+  EXCLUDED = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Naming::BlockParameterName
@@ -34440,10 +37593,6 @@ class RuboCop::Cop::Naming::ClassAndModuleCamelCase
   def on_class(node); end
 
   def on_module(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::ClassAndModuleCamelCase
 end
 
 class RuboCop::Cop::Naming::ConstantName
@@ -34452,42 +37601,21 @@ class RuboCop::Cop::Naming::ConstantName
   def literal_receiver?(node=T.unsafe(nil)); end
 
   def on_casgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  SNAKE_CASE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::ConstantName
 end
 
 class RuboCop::Cop::Naming::FileName
   include ::RuboCop::Cop::RangeHelp
-  def investigate(processed_source); end
-  MSG_NO_DEFINITION = ::T.let(nil, ::T.untyped)
-  MSG_REGEX = ::T.let(nil, ::T.untyped)
-  MSG_SNAKE_CASE = ::T.let(nil, ::T.untyped)
-  SNAKE_CASE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::FileName
 end
 
 class RuboCop::Cop::Naming::HeredocDelimiterCase
   include ::RuboCop::Cop::Heredoc
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   def on_heredoc(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::HeredocDelimiterCase
 end
 
 class RuboCop::Cop::Naming::HeredocDelimiterNaming
   include ::RuboCop::Cop::Heredoc
   def on_heredoc(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::HeredocDelimiterNaming
 end
 
 class RuboCop::Cop::Naming::MemoizedInstanceVariableName
@@ -34497,11 +37625,6 @@ class RuboCop::Cop::Naming::MemoizedInstanceVariableName
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  UNDERSCORE_REQUIRED = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::MemoizedInstanceVariableName
 end
 
 class RuboCop::Cop::Naming::MethodName
@@ -34509,13 +37632,16 @@ class RuboCop::Cop::Naming::MethodName
   include ::RuboCop::Cop::ConfigurableFormatting
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::IgnoredPattern
+  include ::RuboCop::Cop::RangeHelp
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
 
-class RuboCop::Cop::Naming::MethodName
+  def on_send(node); end
+
+  def str_name(node=T.unsafe(nil)); end
+
+  def sym_name(node=T.unsafe(nil)); end
 end
 
 class RuboCop::Cop::Naming::MethodParameterName
@@ -34529,6 +37655,7 @@ class RuboCop::Cop::Naming::MethodParameterName
 end
 
 class RuboCop::Cop::Naming::PredicateName
+  include ::RuboCop::Cop::AllowedMethods
   def dynamic_method_define(node=T.unsafe(nil)); end
 
   def on_def(node); end
@@ -34542,13 +37669,11 @@ class RuboCop::Cop::Naming::PredicateName
 end
 
 class RuboCop::Cop::Naming::RescuedExceptionsVariableName
-  def autocorrect(node); end
-
   def on_resbody(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Naming::RescuedExceptionsVariableName
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Naming::VariableName
@@ -34576,10 +37701,6 @@ class RuboCop::Cop::Naming::VariableName
   def on_optarg(node); end
 
   def on_restarg(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::VariableName
 end
 
 class RuboCop::Cop::Naming::VariableNumber
@@ -34593,27 +37714,20 @@ class RuboCop::Cop::Naming::VariableNumber
   def on_ivasgn(node); end
 
   def on_lvasgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Naming::VariableNumber
-end
-
-module RuboCop::Cop::Naming
 end
 
 module RuboCop::Cop::NegativeConditional
   def empty_condition?(node=T.unsafe(nil)); end
 
   def single_negative?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::NegativeConditional
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::NilMethods
+  include ::RuboCop::Cop::AllowedMethods
 end
 
 module RuboCop::Cop::NilMethods
@@ -34637,6 +37751,8 @@ class RuboCop::Cop::Offense
 
   def corrected_with_todo?(); end
 
+  def corrector(); end
+
   def disabled?(); end
 
   def eql?(other); end
@@ -34645,7 +37761,7 @@ class RuboCop::Cop::Offense
 
   def highlighted_area(); end
 
-  def initialize(severity, location, message, cop_name, status=T.unsafe(nil)); end
+  def initialize(severity, location, message, cop_name, status=T.unsafe(nil), corrector=T.unsafe(nil)); end
 
   def last_column(); end
 
@@ -34664,10 +37780,35 @@ class RuboCop::Cop::Offense
   def source_line(); end
 
   def status(); end
-  COMPARISON_ATTRIBUTES = ::T.let(nil, ::T.untyped)
+  NO_LOCATION = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Offense
+class RuboCop::Cop::Offense::PseudoSourceRange
+  def begin_pos(); end
+
+  def begin_pos=(_); end
+
+  def column(); end
+
+  def column=(_); end
+
+  def end_pos(); end
+
+  def end_pos=(_); end
+
+  def line(); end
+
+  def line=(_); end
+
+  def source_line(); end
+
+  def source_line=(_); end
+end
+
+class RuboCop::Cop::Offense::PseudoSourceRange
+  def self.[](*_); end
+
+  def self.members(); end
 end
 
 module RuboCop::Cop::OnNormalIfUnless
@@ -34708,13 +37849,6 @@ class RuboCop::Cop::ParenthesesCorrector
   def self.correct(node); end
 end
 
-module RuboCop::Cop::ParserDiagnostic
-  def investigate(processed_source); end
-end
-
-module RuboCop::Cop::ParserDiagnostic
-end
-
 module RuboCop::Cop::PercentArray
 end
 
@@ -34731,6 +37865,7 @@ end
 class RuboCop::Cop::PercentLiteralCorrector
   include ::RuboCop::Cop::Util
   include ::RuboCop::PathUtil
+  include ::RuboCop::TokensUtil
   def config(); end
 
   def correct(node, char); end
@@ -34757,10 +37892,6 @@ class RuboCop::Cop::PreferredDelimiters
   def initialize(type, config, preferred_delimiters); end
 
   def type(); end
-  PERCENT_LITERAL_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::PreferredDelimiters
 end
 
 class RuboCop::Cop::PunctuationCorrector
@@ -34774,22 +37905,22 @@ class RuboCop::Cop::PunctuationCorrector
   def self.swap_comma(range); end
 end
 
-module RuboCop::Cop::RangeHelp
-  BYTE_ORDER_MARK = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::RangeHelp
-end
-
 module RuboCop::Cop::RationalLiteral
   def rational_literal?(node=T.unsafe(nil)); end
 end
 
 module RuboCop::Cop::RationalLiteral
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
+end
+
+module RuboCop::Cop::RegexpLiteralHelp
+end
+
+module RuboCop::Cop::RegexpLiteralHelp
 end
 
 class RuboCop::Cop::Registry
+  include ::Enumerable
   def ==(other); end
 
   def contains_cop_matching?(names); end
@@ -34800,25 +37931,31 @@ class RuboCop::Cop::Registry
 
   def departments(); end
 
+  def dismiss(cop); end
+
   def each(&block); end
 
-  def enabled(config, only, only_safe=T.unsafe(nil)); end
+  def enabled(config, only=T.unsafe(nil), only_safe: T.unsafe(nil)); end
 
   def enabled?(cop, config, only_safe); end
+
+  def enabled_pending_cop?(cop_cfg, config); end
 
   def enlist(cop); end
 
   def find_by_cop_name(cop_name); end
 
-  def initialize(cops=T.unsafe(nil)); end
+  def initialize(cops=T.unsafe(nil), options=T.unsafe(nil)); end
 
   def length(); end
 
   def names(); end
 
+  def options(); end
+
   def print_warning(name, path); end
 
-  def qualified_cop_name(name, path, shall_warn=T.unsafe(nil)); end
+  def qualified_cop_name(name, path, warn: T.unsafe(nil)); end
 
   def select(&block); end
 
@@ -34834,6 +37971,13 @@ class RuboCop::Cop::Registry
 end
 
 class RuboCop::Cop::Registry
+  def self.all(); end
+
+  def self.global(); end
+
+  def self.qualified_cop_name(name, origin); end
+
+  def self.with_temporary_global(temp_global=T.unsafe(nil)); end
 end
 
 module RuboCop::Cop::RescueNode
@@ -34852,67 +37996,45 @@ module RuboCop::Cop::SafeAssignment
 end
 
 module RuboCop::Cop::SafeAssignment
-  extend ::RuboCop::NodePattern::Macros
-end
-
-module RuboCop::Cop::Security
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::Security::Eval
   def eval?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Security::Eval
 end
 
 class RuboCop::Cop::Security::JSONLoad
-  def autocorrect(node); end
-
   def json_load(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Security::JSONLoad
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Security::MarshalLoad
   def marshal_load(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Security::MarshalLoad
 end
 
 class RuboCop::Cop::Security::Open
   def on_send(node); end
 
   def open?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Security::Open
 end
 
 class RuboCop::Cop::Security::YAMLLoad
-  def autocorrect(node); end
-
   def on_send(node); end
 
   def yaml_load(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Security::YAMLLoad
-end
-
-module RuboCop::Cop::Security
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Severity
@@ -34926,8 +38048,6 @@ class RuboCop::Cop::Severity
   def level(); end
 
   def name(); end
-  CODE_TABLE = ::T.let(nil, ::T.untyped)
-  NAMES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Severity
@@ -34936,19 +38056,11 @@ end
 
 module RuboCop::Cop::SpaceAfterPunctuation
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::SpaceAfterPunctuation
 end
 
 module RuboCop::Cop::SpaceBeforePunctuation
   include ::RuboCop::Cop::RangeHelp
   def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::SpaceBeforePunctuation
 end
 
 class RuboCop::Cop::SpaceCorrector
@@ -34967,6 +38079,7 @@ class RuboCop::Cop::SpaceCorrector
 end
 
 module RuboCop::Cop::StatementModifier
+  include ::RuboCop::Cop::LineLengthHelp
 end
 
 module RuboCop::Cop::StatementModifier
@@ -34987,6 +38100,7 @@ end
 class RuboCop::Cop::StringLiteralCorrector
   extend ::RuboCop::Cop::Util
   extend ::RuboCop::PathUtil
+  extend ::RuboCop::TokensUtil
   def self.correct(node, style); end
 end
 
@@ -34997,41 +38111,48 @@ end
 module RuboCop::Cop::StringLiteralsHelp
 end
 
-module RuboCop::Cop::Style
-end
-
 class RuboCop::Cop::Style::AccessModifierDeclarations
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
+  def access_modifier_with_symbol?(node=T.unsafe(nil)); end
+
   def on_send(node); end
-  GROUP_STYLE_MESSAGE = ::T.let(nil, ::T.untyped)
-  INLINE_STYLE_MESSAGE = ::T.let(nil, ::T.untyped)
+  ACCESS_MODIFIERS = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::AccessModifierDeclarations
+class RuboCop::Cop::Style::AccessorGrouping
+  include ::RuboCop::Cop::ConfigurableEnforcedStyle
+  include ::RuboCop::Cop::RangeHelp
+  include ::RuboCop::Cop::VisibilityHelp
+  def on_class(node); end
+
+  def on_module(node); end
+
+  def on_sclass(node); end
+  ACCESSOR_METHODS = ::T.let(nil, ::T.untyped)
+  GROUPED_MSG = ::T.let(nil, ::T.untyped)
+  SEPARATED_MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::AccessorGrouping
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::Alias
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def identifier(node=T.unsafe(nil)); end
 
   def on_alias(node); end
 
   def on_send(node); end
-  MSG_ALIAS = ::T.let(nil, ::T.untyped)
-  MSG_ALIAS_METHOD = ::T.let(nil, ::T.untyped)
-  MSG_SYMBOL_ARGS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::Alias
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::AndOr
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_and(node); end
 
   def on_if(node); end
@@ -35045,128 +38166,113 @@ class RuboCop::Cop::Style::AndOr
   def on_while(node); end
 
   def on_while_post(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::AndOr
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 module RuboCop::Cop::Style::AnnotationComment
 end
 
 module RuboCop::Cop::Style::AnnotationComment
+end
+
+class RuboCop::Cop::Style::ArrayCoercion
+  def array_splat?(node=T.unsafe(nil)); end
+
+  def on_array(node); end
+
+  def on_if(node); end
+
+  def unless_array?(node=T.unsafe(nil)); end
+  CHECK_MSG = ::T.let(nil, ::T.untyped)
+  SPLAT_MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::ArrayCoercion
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ArrayJoin
-  def autocorrect(node); end
-
   def join_candidate?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ArrayJoin
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::AsciiComments
   include ::RuboCop::Cop::RangeHelp
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::AsciiComments
 end
 
 class RuboCop::Cop::Style::Attr
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def class_eval?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::Attr
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::AutoResourceCleanup
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  TARGET_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::AutoResourceCleanup
 end
 
 class RuboCop::Cop::Style::BarePercentLiterals
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_dstr(node); end
 
   def on_str(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::BarePercentLiterals
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::BeginBlock
   def on_preexe(node); end
+end
+
+class RuboCop::Cop::Style::BisectedAttrAccessor
+  include ::RuboCop::Cop::VisibilityHelp
+  def on_class(class_node); end
+
+  def on_module(class_node); end
+
+  def on_sclass(class_node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::BeginBlock
+class RuboCop::Cop::Style::BisectedAttrAccessor
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::BlockComments
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(comment); end
-
-  def investigate(processed_source); end
-  BEGIN_LENGTH = ::T.let(nil, ::T.untyped)
-  END_LENGTH = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::BlockComments
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::BlockDelimiters
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::IgnoredMethods
-  def autocorrect(node); end
-
   def on_block(node); end
 
   def on_send(node); end
-  ALWAYS_BRACES_MESSAGE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::BlockDelimiters
-end
-
-class RuboCop::Cop::Style::BracesAroundHashParameters
-  include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  include ::RuboCop::Cop::RangeHelp
-  def autocorrect(send_node); end
-
-  def on_csend(node); end
-
-  def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::BracesAroundHashParameters
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CaseCorrector
-end
-
-class RuboCop::Cop::Style::CaseCorrector
-  extend ::RuboCop::Cop::Style::ConditionalAssignmentHelper
   extend ::RuboCop::Cop::Style::ConditionalCorrectorHelper
   def self.correct(cop, node); end
 
@@ -35177,10 +38283,20 @@ class RuboCop::Cop::Style::CaseEquality
   def case_equality?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::CaseEquality
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::CaseLikeIf
+  include ::RuboCop::Cop::RangeHelp
+  def on_if(node); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::CaseLikeIf
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CharacterLiteral
@@ -35192,132 +38308,100 @@ class RuboCop::Cop::Style::CharacterLiteral
   def offense?(node); end
 
   def opposite_style_detected(); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::CharacterLiteral
 end
 
 class RuboCop::Cop::Style::ClassAndModuleChildren
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_class(node); end
 
   def on_module(node); end
-  COMPACT_MSG = ::T.let(nil, ::T.untyped)
-  NESTED_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ClassAndModuleChildren
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ClassCheck
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def class_check?(node=T.unsafe(nil)); end
 
   def message(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ClassCheck
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ClassMethods
-  def autocorrect(node); end
-
   def on_class(node); end
 
   def on_module(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ClassMethods
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ClassVars
-  def message(node); end
-
   def on_cvasgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
 
-class RuboCop::Cop::Style::ClassVars
+  def on_send(node); end
 end
 
 class RuboCop::Cop::Style::CollectionMethods
   include ::RuboCop::Cop::MethodPreference
-  def autocorrect(node); end
-
   def on_block(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::CollectionMethods
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ColonMethodCall
-  def autocorrect(node); end
-
   def java_type_node?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ColonMethodCall
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ColonMethodDefinition
-  def autocorrect(node); end
-
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ColonMethodDefinition
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CommandLiteral
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_xstr(node); end
-  MSG_USE_BACKTICKS = ::T.let(nil, ::T.untyped)
-  MSG_USE_PERCENT_X = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::CommandLiteral
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CommentAnnotation
   include ::RuboCop::Cop::Style::AnnotationComment
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(comment); end
-
-  def investigate(processed_source); end
-  MISSING_NOTE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::CommentAnnotation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::CommentedKeyword
   def investigate(processed_source); end
-  ALLOWED_COMMENTS = ::T.let(nil, ::T.untyped)
-  KEYWORDS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::CommentedKeyword
+  ALLOWED_COMMENT_REGEXES = ::T.let(nil, ::T.untyped)
+  KEYWORD_REGEXES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ConditionalAssignment
@@ -35352,19 +38436,6 @@ class RuboCop::Cop::Style::ConditionalAssignment
   def on_or_asgn(node); end
 
   def on_send(node); end
-  ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  ASSIGN_TO_CONDITION_MSG = ::T.let(nil, ::T.untyped)
-  ENABLED = ::T.let(nil, ::T.untyped)
-  INDENTATION_WIDTH = ::T.let(nil, ::T.untyped)
-  LINE_LENGTH = ::T.let(nil, ::T.untyped)
-  MAX = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  SINGLE_LINE_CONDITIONS_ONLY = ::T.let(nil, ::T.untyped)
-  VARIABLE_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  WIDTH = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ConditionalAssignment
 end
 
 module RuboCop::Cop::Style::ConditionalAssignmentHelper
@@ -35379,14 +38450,10 @@ module RuboCop::Cop::Style::ConditionalAssignmentHelper
   def lhs(node); end
 
   def tail(branch); end
-  ALIGN_WITH = ::T.let(nil, ::T.untyped)
-  END_ALIGNMENT = ::T.let(nil, ::T.untyped)
-  EQUAL = ::T.let(nil, ::T.untyped)
-  KEYWORD = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::Style::ConditionalAssignmentHelper
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 module RuboCop::Cop::Style::ConditionalCorrectorHelper
@@ -35410,22 +38477,14 @@ class RuboCop::Cop::Style::ConstantVisibility
   def on_casgn(node); end
 
   def visibility_declaration_for?(node=T.unsafe(nil), param1); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ConstantVisibility
 end
 
 class RuboCop::Cop::Style::Copyright
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(token); end
-
-  def investigate(processed_source); end
-  AUTOCORRECT_EMPTY_WARNING = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::Copyright
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::DateTime
@@ -35436,35 +38495,30 @@ class RuboCop::Cop::Style::DateTime
   def on_send(node); end
 
   def to_datetime?(node=T.unsafe(nil)); end
-  CLASS_MSG = ::T.let(nil, ::T.untyped)
-  COERCION_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::DateTime
 end
 
 class RuboCop::Cop::Style::DefWithParentheses
-  def autocorrect(node); end
-
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::DefWithParentheses
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::Dir
-  def autocorrect(node); end
-
   def dir_replacement?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::Dir
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::DisableCopsWithinSourceCodeDirective
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::Documentation
@@ -35472,15 +38526,13 @@ class RuboCop::Cop::Style::Documentation
   include ::RuboCop::Cop::Style::AnnotationComment
   def constant_definition?(node=T.unsafe(nil)); end
 
+  def constant_visibility_declaration?(node=T.unsafe(nil)); end
+
   def on_class(node); end
 
   def on_module(node); end
 
   def outer_module(node0); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Documentation
 end
 
 class RuboCop::Cop::Style::DocumentationMethod
@@ -35492,56 +38544,38 @@ class RuboCop::Cop::Style::DocumentationMethod
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::DocumentationMethod
 end
 
 class RuboCop::Cop::Style::DoubleCopDisableDirective
-  def autocorrect(comment); end
-
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::DoubleCopDisableDirective
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::DoubleNegation
+  include ::RuboCop::Cop::ConfigurableEnforcedStyle
   def double_negative?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::DoubleNegation
 end
 
 class RuboCop::Cop::Style::EachForSimpleLoop
-  def autocorrect(node); end
-
   def offending_each_range(node=T.unsafe(nil)); end
 
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EachForSimpleLoop
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EachWithObject
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def each_with_object_candidate?(node=T.unsafe(nil)); end
 
   def on_block(node); end
-  METHODS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EachWithObject
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EmptyBlockParameter
@@ -35550,36 +38584,28 @@ class RuboCop::Cop::Style::EmptyBlockParameter
   def autocorrect(node); end
 
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::EmptyBlockParameter
 end
 
 class RuboCop::Cop::Style::EmptyCaseCondition
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(case_node); end
-
   def on_case(case_node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EmptyCaseCondition
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EmptyElse
   include ::RuboCop::Cop::OnNormalIfUnless
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_case(node); end
 
   def on_normal_if_unless(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EmptyElse
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EmptyLambdaParameter
@@ -35588,10 +38614,6 @@ class RuboCop::Cop::Style::EmptyLambdaParameter
   def autocorrect(node); end
 
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::EmptyLambdaParameter
 end
 
 class RuboCop::Cop::Style::EmptyLiteral
@@ -35601,8 +38623,6 @@ class RuboCop::Cop::Style::EmptyLiteral
 
   def array_with_block(node=T.unsafe(nil)); end
 
-  def autocorrect(node); end
-
   def hash_node(node=T.unsafe(nil)); end
 
   def hash_with_block(node=T.unsafe(nil)); end
@@ -35610,47 +38630,37 @@ class RuboCop::Cop::Style::EmptyLiteral
   def on_send(node); end
 
   def str_node(node=T.unsafe(nil)); end
-  ARR_MSG = ::T.let(nil, ::T.untyped)
-  HASH_MSG = ::T.let(nil, ::T.untyped)
-  STR_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EmptyLiteral
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EmptyMethod
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_def(node); end
 
   def on_defs(node); end
-  MSG_COMPACT = ::T.let(nil, ::T.untyped)
-  MSG_EXPANDED = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EmptyMethod
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::Encoding
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(range); end
-
-  def investigate(processed_source); end
-  ENCODING_PATTERN = ::T.let(nil, ::T.untyped)
-  MSG_UNNECESSARY = ::T.let(nil, ::T.untyped)
-  SHEBANG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::Encoding
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EndBlock
   def on_postexe(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EndBlock
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::EvalWithLocation
@@ -35659,29 +38669,21 @@ class RuboCop::Cop::Style::EvalWithLocation
   def line_with_offset?(node=T.unsafe(nil), param1, param2); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_INCORRECT_LINE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::EvalWithLocation
+  EVAL_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EvenOdd
-  def autocorrect(node); end
-
   def even_odd_candidate?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::EvenOdd
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ExpandPathArguments
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def file_expand_path(node=T.unsafe(nil)); end
 
   def on_send(node); end
@@ -35689,12 +38691,31 @@ class RuboCop::Cop::Style::ExpandPathArguments
   def pathname_new_parent_expand_path(node=T.unsafe(nil)); end
 
   def pathname_parent_expand_path(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-  PATHNAME_MSG = ::T.let(nil, ::T.untyped)
-  PATHNAME_NEW_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ExpandPathArguments
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::ExplicitBlockArgument
+  include ::RuboCop::Cop::RangeHelp
+  def on_yield(node); end
+
+  def yielding_block?(node=T.unsafe(nil)); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::ExplicitBlockArgument
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::ExponentialNotation
+  include ::RuboCop::Cop::ConfigurableEnforcedStyle
+  def on_float(node); end
+  MESSAGES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::ExponentialNotation
 end
 
 class RuboCop::Cop::Style::FloatDivision
@@ -35708,6 +38729,7 @@ class RuboCop::Cop::Style::FloatDivision
   def on_send(node); end
 
   def right_coerce?(node=T.unsafe(nil)); end
+  MESSAGES = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::FloatDivision
@@ -35716,36 +38738,27 @@ end
 class RuboCop::Cop::Style::For
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_block(node); end
 
   def on_for(node); end
-  EACH_LENGTH = ::T.let(nil, ::T.untyped)
-  PREFER_EACH = ::T.let(nil, ::T.untyped)
-  PREFER_FOR = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::For
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::FormatString
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def formatter(node=T.unsafe(nil)); end
-
-  def message(detected_style); end
-
-  def method_name(style_name); end
 
   def on_send(node); end
 
   def variable_argument?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
+  FORMAT_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::FormatString
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::FormatStringToken
@@ -35762,15 +38775,22 @@ class RuboCop::Cop::Style::FrozenStringLiteralComment
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::FrozenStringLiteral
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_UNNECESSARY = ::T.let(nil, ::T.untyped)
-  SHEBANG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::FrozenStringLiteralComment
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::GlobalStdStream
+  def const_to_gvar_assignment?(node=T.unsafe(nil), param1); end
+
+  def on_const(node); end
+  MSG = ::T.let(nil, ::T.untyped)
+  STD_STREAMS = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::GlobalStdStream
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::GlobalVars
@@ -35783,25 +38803,47 @@ class RuboCop::Cop::Style::GlobalVars
   def on_gvasgn(node); end
 
   def user_vars(); end
-  BUILT_IN_VARS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::GlobalVars
 end
 
 class RuboCop::Cop::Style::GuardClause
   include ::RuboCop::Cop::MinBodyLength
   include ::RuboCop::Cop::StatementModifier
+  include ::RuboCop::Cop::LineLengthHelp
   def on_def(node); end
 
   def on_defs(node); end
 
   def on_if(node); end
+end
+
+class RuboCop::Cop::Style::HashAsLastArrayItem
+  include ::RuboCop::Cop::ConfigurableEnforcedStyle
+  def on_hash(node); end
+end
+
+class RuboCop::Cop::Style::HashAsLastArrayItem
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::HashEachMethods
+  include ::RuboCop::Cop::Lint::UnusedArgument
+  def kv_each(node=T.unsafe(nil)); end
+
+  def on_block(node); end
+end
+
+class RuboCop::Cop::Style::HashEachMethods
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::HashLikeCase
+  def hash_like_case?(node=T.unsafe(nil)); end
+
+  def on_case(node); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::GuardClause
+class RuboCop::Cop::Style::HashLikeCase
 end
 
 class RuboCop::Cop::Style::HashSyntax
@@ -35818,29 +38860,42 @@ class RuboCop::Cop::Style::HashSyntax
   def ruby19_check(pairs); end
 
   def ruby19_no_mixed_keys_check(pairs); end
-  MSG_19 = ::T.let(nil, ::T.untyped)
-  MSG_HASH_ROCKETS = ::T.let(nil, ::T.untyped)
-  MSG_NO_MIXED_KEYS = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::HashSyntax
+class RuboCop::Cop::Style::HashTransformKeys
+  include ::RuboCop::Cop::HashTransformMethod
+  def on_bad_each_with_object(node=T.unsafe(nil)); end
+
+  def on_bad_hash_brackets_map(node=T.unsafe(nil)); end
+
+  def on_bad_map_to_h(node=T.unsafe(nil)); end
+end
+
+class RuboCop::Cop::Style::HashTransformKeys
+  extend ::RuboCop::Cop::TargetRubyVersion
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::HashTransformValues
+  include ::RuboCop::Cop::HashTransformMethod
+  def on_bad_each_with_object(node=T.unsafe(nil)); end
+
+  def on_bad_hash_brackets_map(node=T.unsafe(nil)); end
+
+  def on_bad_map_to_h(node=T.unsafe(nil)); end
+end
+
+class RuboCop::Cop::Style::HashTransformValues
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::IdenticalConditionalBranches
   def on_case(node); end
 
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::IdenticalConditionalBranches
 end
 
 class RuboCop::Cop::Style::IfCorrector
-end
-
-class RuboCop::Cop::Style::IfCorrector
-  extend ::RuboCop::Cop::Style::ConditionalAssignmentHelper
   extend ::RuboCop::Cop::Style::ConditionalCorrectorHelper
   def self.correct(cop, node); end
 
@@ -35849,61 +38904,46 @@ end
 
 class RuboCop::Cop::Style::IfInsideElse
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::IfInsideElse
 end
 
 class RuboCop::Cop::Style::IfUnlessModifier
   include ::RuboCop::Cop::StatementModifier
   include ::RuboCop::Cop::LineLengthHelp
   include ::RuboCop::Cop::IgnoredPattern
-  def autocorrect(node); end
-
   def on_if(node); end
-  ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  MSG_USE_MODIFIER = ::T.let(nil, ::T.untyped)
-  MSG_USE_NORMAL = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::IfUnlessModifier
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::IfUnlessModifierOfIfUnless
   include ::RuboCop::Cop::StatementModifier
+  include ::RuboCop::Cop::LineLengthHelp
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::IfUnlessModifierOfIfUnless
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::IfWithSemicolon
   include ::RuboCop::Cop::OnNormalIfUnless
   def on_normal_if_unless(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::IfWithSemicolon
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::ImplicitRuntimeError
   def implicit_runtime_error_raise_or_fail(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ImplicitRuntimeError
 end
 
 class RuboCop::Cop::Style::InfiniteLoop
   def after_leaving_scope(scope, _variable_table); end
-
-  def autocorrect(node); end
-
-  def join_force?(force_class); end
 
   def on_until(node); end
 
@@ -35912,31 +38952,14 @@ class RuboCop::Cop::Style::InfiniteLoop
   def on_while(node); end
 
   def on_while_post(node); end
-  LEADING_SPACE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::InfiniteLoop
-end
-
-class RuboCop::Cop::Style::InlineComment
-  def investigate(processed_source); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::InlineComment
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::InverseMethods
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
-  def correct_inverse_block(node); end
-
-  def correct_inverse_method(node); end
-
-  def correct_inverse_selector(block, corrector); end
-
   def inverse_block?(node=T.unsafe(nil)); end
 
   def inverse_candidate?(node=T.unsafe(nil)); end
@@ -35944,14 +38967,10 @@ class RuboCop::Cop::Style::InverseMethods
   def on_block(node); end
 
   def on_send(node); end
-  CAMEL_CASE = ::T.let(nil, ::T.untyped)
-  CLASS_COMPARISON_METHODS = ::T.let(nil, ::T.untyped)
-  EQUALITY_METHODS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  NEGATED_EQUALITY_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::InverseMethods
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::IpAddresses
@@ -35961,65 +38980,48 @@ class RuboCop::Cop::Style::IpAddresses
   def offense?(node); end
 
   def opposite_style_detected(); end
-  IPV6_MAX_SIZE = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::IpAddresses
 end
 
 class RuboCop::Cop::Style::Lambda
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_block(node); end
-  LITERAL_MESSAGE = ::T.let(nil, ::T.untyped)
-  METHOD_MESSAGE = ::T.let(nil, ::T.untyped)
-  OFFENDING_SELECTORS = ::T.let(nil, ::T.untyped)
+
+  def on_numblock(node); end
 end
 
 class RuboCop::Cop::Style::Lambda
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::LambdaCall
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
+  def autocorrect(corrector, node); end
 
   def on_send(node); end
 end
 
 class RuboCop::Cop::Style::LambdaCall
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::LineEndConcatenation
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(operator_range); end
-
-  def investigate(processed_source); end
-  COMPLEX_STRING_BEGIN_TOKEN = ::T.let(nil, ::T.untyped)
-  COMPLEX_STRING_END_TOKEN = ::T.let(nil, ::T.untyped)
-  CONCAT_TOKEN_TYPES = ::T.let(nil, ::T.untyped)
-  HIGH_PRECEDENCE_OP_TOKEN_TYPES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  QUOTE_DELIMITERS = ::T.let(nil, ::T.untyped)
-  SIMPLE_STRING_TOKEN_TYPE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::LineEndConcatenation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MethodCallWithArgsParentheses
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::IgnoredMethods
   include ::RuboCop::Cop::IgnoredPattern
+  def autocorrect(_node); end
+
   def initialize(*_); end
 end
 
 module RuboCop::Cop::Style::MethodCallWithArgsParentheses::OmitParentheses
-  def autocorrect(node); end
-
-  def message(_node=T.unsafe(nil)); end
-
   def on_csend(node); end
 
   def on_send(node); end
@@ -36027,15 +39029,9 @@ module RuboCop::Cop::Style::MethodCallWithArgsParentheses::OmitParentheses
   def on_super(node); end
 
   def on_yield(node); end
-  TRAILING_WHITESPACE_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::Style::MethodCallWithArgsParentheses::OmitParentheses
 end
 
 module RuboCop::Cop::Style::MethodCallWithArgsParentheses::RequireParentheses
-  def autocorrect(node); end
-
   def message(_node=T.unsafe(nil)); end
 
   def on_csend(node); end
@@ -36051,17 +39047,16 @@ module RuboCop::Cop::Style::MethodCallWithArgsParentheses::RequireParentheses
 end
 
 class RuboCop::Cop::Style::MethodCallWithArgsParentheses
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MethodCallWithoutArgsParentheses
   include ::RuboCop::Cop::IgnoredMethods
-  def autocorrect(node); end
-
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MethodCallWithoutArgsParentheses
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MethodCalledOnDoEndBlock
@@ -36071,49 +39066,30 @@ class RuboCop::Cop::Style::MethodCalledOnDoEndBlock
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MethodCalledOnDoEndBlock
 end
 
 class RuboCop::Cop::Style::MethodDefParentheses
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_def(node); end
 
   def on_defs(node); end
-  MSG_MISSING = ::T.let(nil, ::T.untyped)
-  MSG_PRESENT = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MethodDefParentheses
-end
-
-class RuboCop::Cop::Style::MethodMissingSuper
-  def on_def(node); end
-
-  def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MethodMissingSuper
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MinMax
-  def autocorrect(node); end
-
   def min_max_candidate(node=T.unsafe(nil)); end
 
   def on_array(node); end
 
   def on_return(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MinMax
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MissingElse
@@ -36122,36 +39098,23 @@ class RuboCop::Cop::Style::MissingElse
   def on_case(node); end
 
   def on_normal_if_unless(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_EMPTY = ::T.let(nil, ::T.untyped)
-  MSG_NIL = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MissingElse
 end
 
 class RuboCop::Cop::Style::MissingRespondToMissing
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MissingRespondToMissing
 end
 
 class RuboCop::Cop::Style::MixinGrouping
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_class(node); end
 
   def on_module(node); end
-  MIXIN_METHODS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MixinGrouping
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MixinUsage
@@ -36160,16 +39123,10 @@ class RuboCop::Cop::Style::MixinUsage
   def on_send(node); end
 
   def wrapped_macro_scope?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MixinUsage
 end
 
 class RuboCop::Cop::Style::ModuleFunction
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def extend_self_node?(node=T.unsafe(nil)); end
 
   def module_function_node?(node=T.unsafe(nil)); end
@@ -36177,87 +39134,72 @@ class RuboCop::Cop::Style::ModuleFunction
   def on_module(node); end
 
   def private_directive?(node=T.unsafe(nil)); end
-  EXTEND_SELF_MSG = ::T.let(nil, ::T.untyped)
-  MODULE_FUNCTION_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ModuleFunction
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultilineBlockChain
   include ::RuboCop::Cop::RangeHelp
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MultilineBlockChain
 end
 
 class RuboCop::Cop::Style::MultilineIfModifier
   include ::RuboCop::Cop::StatementModifier
+  include ::RuboCop::Cop::LineLengthHelp
   include ::RuboCop::Cop::Alignment
-  def autocorrect(node); end
-
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineIfModifier
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultilineIfThen
   include ::RuboCop::Cop::OnNormalIfUnless
   include ::RuboCop::Cop::RangeHelp
-  def autocorrect(node); end
-
   def on_normal_if_unless(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  NON_MODIFIER_THEN = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineIfThen
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultilineMemoization
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
+  def message(_node); end
 
   def on_or_asgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
+  BRACES_MSG = ::T.let(nil, ::T.untyped)
+  KEYWORD_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineMemoization
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultilineMethodSignature
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MultilineMethodSignature
 end
 
 class RuboCop::Cop::Style::MultilineTernaryOperator
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineTernaryOperator
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultilineWhenThen
   include ::RuboCop::Cop::RangeHelp
-  def accept_node_type?(node); end
-
-  def autocorrect(node); end
-
   def on_when(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MultilineWhenThen
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::MultipleComparison
@@ -36266,17 +39208,11 @@ class RuboCop::Cop::Style::MultipleComparison
   def simple_comparison?(node=T.unsafe(nil)); end
 
   def simple_double_comparison?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::MultipleComparison
 end
 
 class RuboCop::Cop::Style::MutableConstant
   include ::RuboCop::Cop::FrozenStringLiteral
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
-  def autocorrect(node); end
-
   def on_casgn(node); end
 
   def on_or_asgn(node); end
@@ -36286,10 +39222,10 @@ class RuboCop::Cop::Style::MutableConstant
   def range_enclosed_in_parentheses?(node=T.unsafe(nil)); end
 
   def splat_value(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::MutableConstant
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::NegatedIf
@@ -36351,31 +39287,22 @@ class RuboCop::Cop::Style::NestedModifier
   def requires_parens?(node); end
 
   def right_hand_operand(node, left_hand_keyword); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NestedModifier
 end
 
 class RuboCop::Cop::Style::NestedParenthesizedCalls
   include ::RuboCop::Cop::RangeHelp
+  include ::RuboCop::Cop::AllowedMethods
   def autocorrect(nested); end
 
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NestedParenthesizedCalls
 end
 
 class RuboCop::Cop::Style::NestedTernaryOperator
+  def autocorrect(node); end
+
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NestedTernaryOperator
 end
 
 class RuboCop::Cop::Style::Next
@@ -36393,11 +39320,6 @@ class RuboCop::Cop::Style::Next
   def on_until(node); end
 
   def on_while(node); end
-  EXIT_TYPES = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Next
 end
 
 class RuboCop::Cop::Style::NilComparison
@@ -36409,11 +39331,6 @@ class RuboCop::Cop::Style::NilComparison
   def nil_comparison?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  EXPLICIT_MSG = ::T.let(nil, ::T.untyped)
-  PREDICATE_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NilComparison
 end
 
 class RuboCop::Cop::Style::NonNilCheck
@@ -36442,11 +39359,6 @@ class RuboCop::Cop::Style::Not
   def autocorrect(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  OPPOSITE_METHODS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Not
 end
 
 class RuboCop::Cop::Style::NumericLiteralPrefix
@@ -36454,19 +39366,6 @@ class RuboCop::Cop::Style::NumericLiteralPrefix
   def autocorrect(node); end
 
   def on_int(node); end
-  BINARY_MSG = ::T.let(nil, ::T.untyped)
-  BINARY_REGEX = ::T.let(nil, ::T.untyped)
-  DECIMAL_MSG = ::T.let(nil, ::T.untyped)
-  DECIMAL_REGEX = ::T.let(nil, ::T.untyped)
-  HEX_MSG = ::T.let(nil, ::T.untyped)
-  HEX_REGEX = ::T.let(nil, ::T.untyped)
-  OCTAL_MSG = ::T.let(nil, ::T.untyped)
-  OCTAL_REGEX = ::T.let(nil, ::T.untyped)
-  OCTAL_ZERO_ONLY_MSG = ::T.let(nil, ::T.untyped)
-  OCTAL_ZERO_ONLY_REGEX = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NumericLiteralPrefix
 end
 
 class RuboCop::Cop::Style::NumericLiterals
@@ -36477,11 +39376,6 @@ class RuboCop::Cop::Style::NumericLiterals
   def on_float(node); end
 
   def on_int(node); end
-  DELIMITER_REGEXP = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NumericLiterals
 end
 
 class RuboCop::Cop::Style::NumericPredicate
@@ -36496,11 +39390,7 @@ class RuboCop::Cop::Style::NumericPredicate
   def on_send(node); end
 
   def predicate(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-  REPLACEMENTS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::NumericPredicate
+  COMPARISON_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::OneLineConditional
@@ -36508,28 +39398,27 @@ class RuboCop::Cop::Style::OneLineConditional
   def autocorrect(node); end
 
   def on_normal_if_unless(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::OneLineConditional
 end
 
 class RuboCop::Cop::Style::OptionHash
   def on_args(node); end
 
   def option_hash(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::OptionHash
 end
 
 class RuboCop::Cop::Style::OptionalArguments
   def on_def(node); end
+end
+
+class RuboCop::Cop::Style::OptionalBooleanParameter
+  def on_def(node); end
+
+  def on_defs(node); end
+  BOOLEAN_TYPES = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::OptionalArguments
+class RuboCop::Cop::Style::OptionalBooleanParameter
 end
 
 class RuboCop::Cop::Style::OrAssignment
@@ -36548,10 +39437,6 @@ class RuboCop::Cop::Style::OrAssignment
   def ternary_assignment?(node=T.unsafe(nil)); end
 
   def unless_assignment?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::OrAssignment
 end
 
 class RuboCop::Cop::Style::ParallelAssignment
@@ -36561,7 +39446,6 @@ class RuboCop::Cop::Style::ParallelAssignment
   def implicit_self_getter?(node=T.unsafe(nil)); end
 
   def on_masgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::ParallelAssignment::AssignmentSorter
@@ -36576,13 +39460,15 @@ class RuboCop::Cop::Style::ParallelAssignment::AssignmentSorter
 
   def tsort_each_child(assignment); end
 
+  def tsort_each_node(&block); end
+
   def uses_var?(node0, param1); end
 
   def var_name(node=T.unsafe(nil)); end
 end
 
 class RuboCop::Cop::Style::ParallelAssignment::AssignmentSorter
-  extend ::RuboCop::NodePattern::Macros
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Cop::Style::ParallelAssignment::GenericCorrector
@@ -36613,9 +39499,6 @@ class RuboCop::Cop::Style::ParallelAssignment::RescueCorrector
 end
 
 class RuboCop::Cop::Style::ParallelAssignment::RescueCorrector
-end
-
-class RuboCop::Cop::Style::ParallelAssignment
 end
 
 class RuboCop::Cop::Style::ParenthesesAroundCondition
@@ -36665,21 +39548,12 @@ class RuboCop::Cop::Style::PercentQLiterals
   def autocorrect(node); end
 
   def on_str(node); end
-  LOWER_CASE_Q_MSG = ::T.let(nil, ::T.untyped)
-  UPPER_CASE_Q_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::PercentQLiterals
 end
 
 class RuboCop::Cop::Style::PerlBackrefs
   def autocorrect(node); end
 
   def on_nth_ref(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::PerlBackrefs
 end
 
 class RuboCop::Cop::Style::PreferredHashMethods
@@ -36689,11 +39563,6 @@ class RuboCop::Cop::Style::PreferredHashMethods
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  OFFENDING_SELECTORS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::PreferredHashMethods
 end
 
 class RuboCop::Cop::Style::Proc
@@ -36702,10 +39571,6 @@ class RuboCop::Cop::Style::Proc
   def on_block(node); end
 
   def proc_new?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Proc
 end
 
 class RuboCop::Cop::Style::RaiseArgs
@@ -36713,19 +39578,12 @@ class RuboCop::Cop::Style::RaiseArgs
   def autocorrect(node); end
 
   def on_send(node); end
-  COMPACT_MSG = ::T.let(nil, ::T.untyped)
-  EXPLODED_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RaiseArgs
 end
 
 class RuboCop::Cop::Style::RandomWithOffset
   def autocorrect(node); end
 
   def integer_op_rand?(node=T.unsafe(nil)); end
-
-  def namespace(node=T.unsafe(nil)); end
 
   def on_send(node); end
 
@@ -36736,10 +39594,20 @@ class RuboCop::Cop::Style::RandomWithOffset
   def random_call(node=T.unsafe(nil)); end
 
   def to_int(node=T.unsafe(nil)); end
+end
+
+class RuboCop::Cop::Style::RedundantAssignment
+  def autocorrect(node); end
+
+  def on_def(node); end
+
+  def on_defs(node); end
+
+  def redundant_assignment?(node=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::RandomWithOffset
+class RuboCop::Cop::Style::RedundantAssignment
 end
 
 class RuboCop::Cop::Style::RedundantBegin
@@ -36750,10 +39618,6 @@ class RuboCop::Cop::Style::RedundantBegin
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantBegin
 end
 
 class RuboCop::Cop::Style::RedundantCapitalW
@@ -36762,10 +39626,6 @@ class RuboCop::Cop::Style::RedundantCapitalW
   def autocorrect(node); end
 
   def on_array(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantCapitalW
 end
 
 class RuboCop::Cop::Style::RedundantCondition
@@ -36773,11 +39633,6 @@ class RuboCop::Cop::Style::RedundantCondition
   def autocorrect(node); end
 
   def on_if(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  REDUNDANT_CONDITION = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantCondition
 end
 
 class RuboCop::Cop::Style::RedundantConditional
@@ -36789,26 +39644,52 @@ class RuboCop::Cop::Style::RedundantConditional
   def redundant_condition?(node=T.unsafe(nil)); end
 
   def redundant_condition_inverted?(node=T.unsafe(nil)); end
-  COMPARISON_OPERATORS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantConditional
+  COMPARISON_OPERATOR_MATCHER = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantException
-  def autocorrect(node); end
-
   def compact?(node=T.unsafe(nil)); end
 
   def exploded?(node=T.unsafe(nil)); end
 
+  def fix_compact(node); end
+
+  def fix_exploded(node); end
+
   def on_send(node); end
-  MSG_1 = ::T.let(nil, ::T.untyped)
-  MSG_2 = ::T.let(nil, ::T.untyped)
+  RAISE_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantException
+  extend ::RuboCop::Cop::AutoCorrector
+end
+
+class RuboCop::Cop::Style::RedundantFetchBlock
+  include ::RuboCop::Cop::FrozenStringLiteral
+  include ::RuboCop::Cop::RangeHelp
+  def autocorrect(node); end
+
+  def on_block(node); end
+
+  def rails_cache?(node=T.unsafe(nil)); end
+
+  def redundant_fetch_block_candidate?(node=T.unsafe(nil)); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::RedundantFetchBlock
+end
+
+class RuboCop::Cop::Style::RedundantFileExtensionInRequire
+  def autocorrect(node); end
+
+  def on_send(node); end
+
+  def require_call?(node=T.unsafe(nil)); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::RedundantFileExtensionInRequire
 end
 
 class RuboCop::Cop::Style::RedundantFreeze
@@ -36818,10 +39699,6 @@ class RuboCop::Cop::Style::RedundantFreeze
   def on_send(node); end
 
   def operation_produces_immutable_object?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantFreeze
 end
 
 class RuboCop::Cop::Style::RedundantInterpolation
@@ -36830,10 +39707,6 @@ class RuboCop::Cop::Style::RedundantInterpolation
   def autocorrect(node); end
 
   def on_dstr(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantInterpolation
 end
 
 class RuboCop::Cop::Style::RedundantParentheses
@@ -36845,6 +39718,8 @@ class RuboCop::Cop::Style::RedundantParentheses
   def first_send_argument?(node=T.unsafe(nil)); end
 
   def first_super_argument?(node=T.unsafe(nil)); end
+
+  def first_yield_argument?(node=T.unsafe(nil)); end
 
   def method_node_and_args(node=T.unsafe(nil)); end
 
@@ -36866,18 +39741,25 @@ class RuboCop::Cop::Style::RedundantPercentQ
   def on_dstr(node); end
 
   def on_str(node); end
-  DYNAMIC_MSG = ::T.let(nil, ::T.untyped)
-  EMPTY = ::T.let(nil, ::T.untyped)
-  ESCAPED_NON_BACKSLASH = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  PERCENT_CAPITAL_Q = ::T.let(nil, ::T.untyped)
-  PERCENT_Q = ::T.let(nil, ::T.untyped)
-  QUOTE = ::T.let(nil, ::T.untyped)
-  SINGLE_QUOTE = ::T.let(nil, ::T.untyped)
-  STRING_INTERPOLATION_REGEXP = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::RedundantPercentQ
+class RuboCop::Cop::Style::RedundantRegexpCharacterClass
+  include ::RuboCop::Cop::MatchRange
+  include ::RuboCop::Cop::RangeHelp
+  include ::RuboCop::Cop::RegexpLiteralHelp
+  def autocorrect(node); end
+
+  def each_redundant_character_class(node); end
+
+  def on_regexp(node); end
+end
+
+class RuboCop::Cop::Style::RedundantRegexpEscape
+  include ::RuboCop::Cop::RangeHelp
+  include ::RuboCop::Cop::RegexpLiteralHelp
+  def autocorrect(node); end
+
+  def on_regexp(node); end
 end
 
 class RuboCop::Cop::Style::RedundantReturn
@@ -36887,11 +39769,6 @@ class RuboCop::Cop::Style::RedundantReturn
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MULTI_RETURN_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantReturn
 end
 
 class RuboCop::Cop::Style::RedundantSelf
@@ -36918,11 +39795,7 @@ class RuboCop::Cop::Style::RedundantSelf
   def on_or_asgn(node); end
 
   def on_send(node); end
-  KERNEL_METHODS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantSelf
+  KEYWORDS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantSort
@@ -36932,10 +39805,7 @@ class RuboCop::Cop::Style::RedundantSort
   def on_send(node); end
 
   def redundant_sort?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantSort
+  SORT_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::RedundantSortBy
@@ -36945,10 +39815,6 @@ class RuboCop::Cop::Style::RedundantSortBy
   def on_block(node); end
 
   def redundant_sort_by(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RedundantSortBy
 end
 
 class RuboCop::Cop::Style::RegexpLiteral
@@ -36957,11 +39823,6 @@ class RuboCop::Cop::Style::RegexpLiteral
   def autocorrect(node); end
 
   def on_regexp(node); end
-  MSG_USE_PERCENT_R = ::T.let(nil, ::T.untyped)
-  MSG_USE_SLASHES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RegexpLiteral
 end
 
 class RuboCop::Cop::Style::RescueModifier
@@ -36970,10 +39831,6 @@ class RuboCop::Cop::Style::RescueModifier
   def autocorrect(node); end
 
   def on_resbody(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RescueModifier
 end
 
 class RuboCop::Cop::Style::RescueStandardError
@@ -36987,11 +39844,6 @@ class RuboCop::Cop::Style::RescueStandardError
   def rescue_standard_error?(node=T.unsafe(nil)); end
 
   def rescue_without_error_class?(node=T.unsafe(nil)); end
-  MSG_EXPLICIT = ::T.let(nil, ::T.untyped)
-  MSG_IMPLICIT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::RescueStandardError
 end
 
 class RuboCop::Cop::Style::ReturnNil
@@ -37007,15 +39859,11 @@ class RuboCop::Cop::Style::ReturnNil
   def return_nil_node?(node=T.unsafe(nil)); end
 
   def return_node?(node=T.unsafe(nil)); end
-  RETURN_MSG = ::T.let(nil, ::T.untyped)
-  RETURN_NIL_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ReturnNil
 end
 
 class RuboCop::Cop::Style::SafeNavigation
   include ::RuboCop::Cop::NilMethods
+  include ::RuboCop::Cop::AllowedMethods
   include ::RuboCop::Cop::RangeHelp
   def autocorrect(node); end
 
@@ -37030,11 +39878,6 @@ class RuboCop::Cop::Style::SafeNavigation
   def on_if(node); end
 
   def use_var_only_in_unless_modifier?(node, variable); end
-  LOGIC_JUMP_KEYWORDS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SafeNavigation
 end
 
 class RuboCop::Cop::Style::Sample
@@ -37043,10 +39886,6 @@ class RuboCop::Cop::Style::Sample
   def on_send(node); end
 
   def sample_candidate?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Sample
 end
 
 class RuboCop::Cop::Style::SelfAssignment
@@ -37057,11 +39896,6 @@ class RuboCop::Cop::Style::SelfAssignment
   def on_ivasgn(node); end
 
   def on_lvasgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  OPS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SelfAssignment
 end
 
 class RuboCop::Cop::Style::Semicolon
@@ -37071,10 +39905,6 @@ class RuboCop::Cop::Style::Semicolon
   def investigate(processed_source); end
 
   def on_begin(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Semicolon
 end
 
 class RuboCop::Cop::Style::Send
@@ -37083,10 +39913,6 @@ class RuboCop::Cop::Style::Send
   def on_send(node); end
 
   def sending?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Send
 end
 
 class RuboCop::Cop::Style::SignalException
@@ -37102,19 +39928,21 @@ class RuboCop::Cop::Style::SignalException
   def on_rescue(node); end
 
   def on_send(node); end
-  FAIL_MSG = ::T.let(nil, ::T.untyped)
-  RAISE_MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::SignalException
+class RuboCop::Cop::Style::SingleArgumentDig
+  def on_send(node); end
+
+  def single_argument_dig?(node=T.unsafe(nil)); end
+  MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Style::SingleArgumentDig
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::SingleLineBlockParams
   def on_block(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SingleLineBlockParams
 end
 
 class RuboCop::Cop::Style::SingleLineMethods
@@ -37124,10 +39952,18 @@ class RuboCop::Cop::Style::SingleLineMethods
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::SingleLineMethods
+class RuboCop::Cop::Style::SlicingWithRange
+  def autocorrect(node); end
+
+  def on_send(node); end
+
+  def range_till_minus_one?(node=T.unsafe(nil)); end
+end
+
+class RuboCop::Cop::Style::SlicingWithRange
+  extend ::RuboCop::Cop::TargetRubyVersion
 end
 
 class RuboCop::Cop::Style::SpecialGlobalVars
@@ -37137,15 +39973,6 @@ class RuboCop::Cop::Style::SpecialGlobalVars
   def message(node); end
 
   def on_gvar(node); end
-  ENGLISH_VARS = ::T.let(nil, ::T.untyped)
-  MSG_BOTH = ::T.let(nil, ::T.untyped)
-  MSG_ENGLISH = ::T.let(nil, ::T.untyped)
-  MSG_REGULAR = ::T.let(nil, ::T.untyped)
-  NON_ENGLISH_VARS = ::T.let(nil, ::T.untyped)
-  PERL_VARS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SpecialGlobalVars
 end
 
 class RuboCop::Cop::Style::StabbyLambdaParentheses
@@ -37153,11 +39980,6 @@ class RuboCop::Cop::Style::StabbyLambdaParentheses
   def autocorrect(node); end
 
   def on_send(node); end
-  MSG_NO_REQUIRE = ::T.let(nil, ::T.untyped)
-  MSG_REQUIRE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::StabbyLambdaParentheses
 end
 
 class RuboCop::Cop::Style::StderrPuts
@@ -37167,10 +39989,17 @@ class RuboCop::Cop::Style::StderrPuts
   def on_send(node); end
 
   def stderr_puts?(node=T.unsafe(nil)); end
+end
+
+class RuboCop::Cop::Style::StringConcatenation
+  def on_send(node); end
+
+  def string_concatenation?(node=T.unsafe(nil)); end
   MSG = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::Cop::Style::StderrPuts
+class RuboCop::Cop::Style::StringConcatenation
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::StringHashKeys
@@ -37181,10 +40010,6 @@ class RuboCop::Cop::Style::StringHashKeys
   def receive_environments_method?(node=T.unsafe(nil)); end
 
   def string_hash_key?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::StringHashKeys
 end
 
 class RuboCop::Cop::Style::StringLiterals
@@ -37194,10 +40019,6 @@ class RuboCop::Cop::Style::StringLiterals
   def autocorrect(node); end
 
   def on_dstr(node); end
-  MSG_INCONSISTENT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::StringLiterals
 end
 
 class RuboCop::Cop::Style::StringLiteralsInInterpolation
@@ -37217,10 +40038,6 @@ class RuboCop::Cop::Style::StringMethods
   def on_csend(node); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::StringMethods
 end
 
 class RuboCop::Cop::Style::Strip
@@ -37230,20 +40047,15 @@ class RuboCop::Cop::Style::Strip
   def lstrip_rstrip(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::Strip
 end
 
 class RuboCop::Cop::Style::StructInheritance
+  include ::RuboCop::Cop::RangeHelp
+  def autocorrect(node); end
+
   def on_class(node); end
 
   def struct_constructor?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::StructInheritance
 end
 
 class RuboCop::Cop::Style::SymbolArray
@@ -37254,8 +40066,6 @@ class RuboCop::Cop::Style::SymbolArray
   def autocorrect(node); end
 
   def on_array(node); end
-  ARRAY_MSG = ::T.let(nil, ::T.untyped)
-  PERCENT_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::SymbolArray
@@ -37268,10 +40078,6 @@ class RuboCop::Cop::Style::SymbolLiteral
   def autocorrect(node); end
 
   def on_sym(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SymbolLiteral
 end
 
 class RuboCop::Cop::Style::SymbolProc
@@ -37286,18 +40092,9 @@ class RuboCop::Cop::Style::SymbolProc
   def proc_node?(node=T.unsafe(nil)); end
 
   def symbol_proc?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-  SUPER_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::SymbolProc
 end
 
 class RuboCop::Cop::Style::TernaryCorrector
-end
-
-class RuboCop::Cop::Style::TernaryCorrector
-  extend ::RuboCop::Cop::Style::ConditionalAssignmentHelper
   extend ::RuboCop::Cop::Style::ConditionalCorrectorHelper
   def self.correct(node); end
 
@@ -37316,13 +40113,6 @@ class RuboCop::Cop::Style::TernaryParentheses
   def on_if(node); end
 
   def only_closing_parenthesis_is_last_line?(condition); end
-  MSG = ::T.let(nil, ::T.untyped)
-  MSG_COMPLEX = ::T.let(nil, ::T.untyped)
-  NON_COMPLEX_TYPES = ::T.let(nil, ::T.untyped)
-  VARIABLE_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TernaryParentheses
 end
 
 class RuboCop::Cop::Style::TrailingBodyOnClass
@@ -37331,10 +40121,6 @@ class RuboCop::Cop::Style::TrailingBodyOnClass
   def autocorrect(node); end
 
   def on_class(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TrailingBodyOnClass
 end
 
 class RuboCop::Cop::Style::TrailingBodyOnMethodDefinition
@@ -37345,10 +40131,6 @@ class RuboCop::Cop::Style::TrailingBodyOnMethodDefinition
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TrailingBodyOnMethodDefinition
 end
 
 class RuboCop::Cop::Style::TrailingBodyOnModule
@@ -37357,10 +40139,6 @@ class RuboCop::Cop::Style::TrailingBodyOnModule
   def autocorrect(node); end
 
   def on_module(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TrailingBodyOnModule
 end
 
 class RuboCop::Cop::Style::TrailingCommaInArguments
@@ -37389,6 +40167,12 @@ end
 class RuboCop::Cop::Style::TrailingCommaInArrayLiteral
 end
 
+class RuboCop::Cop::Style::TrailingCommaInBlockArgs
+  def autocorrect(node); end
+
+  def on_block(node); end
+end
+
 class RuboCop::Cop::Style::TrailingCommaInHashLiteral
   include ::RuboCop::Cop::TrailingComma
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
@@ -37402,14 +40186,11 @@ class RuboCop::Cop::Style::TrailingCommaInHashLiteral
 end
 
 class RuboCop::Cop::Style::TrailingMethodEndStatement
-  include ::RuboCop::Cop::Alignment
-  def autocorrect(node); end
-
   def on_def(node); end
-  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::TrailingMethodEndStatement
+  extend ::RuboCop::Cop::AutoCorrector
 end
 
 class RuboCop::Cop::Style::TrailingUnderscoreVariable
@@ -37418,14 +40199,10 @@ class RuboCop::Cop::Style::TrailingUnderscoreVariable
   def autocorrect(node); end
 
   def on_masgn(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-  UNDERSCORE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TrailingUnderscoreVariable
 end
 
 class RuboCop::Cop::Style::TrivialAccessors
+  include ::RuboCop::Cop::AllowedMethods
   def autocorrect(node); end
 
   def looks_like_trivial_writer?(node=T.unsafe(nil)); end
@@ -37433,10 +40210,6 @@ class RuboCop::Cop::Style::TrivialAccessors
   def on_def(node); end
 
   def on_defs(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::TrivialAccessors
 end
 
 class RuboCop::Cop::Style::UnlessElse
@@ -37448,10 +40221,6 @@ class RuboCop::Cop::Style::UnlessElse
   def range_between_condition_and_else(node, condition); end
 
   def range_between_else_and_end(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::UnlessElse
 end
 
 class RuboCop::Cop::Style::UnpackFirst
@@ -37460,30 +40229,17 @@ class RuboCop::Cop::Style::UnpackFirst
   def on_send(node); end
 
   def unpack_and_first_element?(node=T.unsafe(nil)); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::UnpackFirst
-  extend ::RuboCop::Cop::TargetRubyVersion
 end
 
 class RuboCop::Cop::Style::VariableInterpolation
   include ::RuboCop::Cop::Interpolation
   def autocorrect(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::VariableInterpolation
 end
 
 class RuboCop::Cop::Style::WhenThen
   def autocorrect(node); end
 
   def on_when(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::WhenThen
 end
 
 class RuboCop::Cop::Style::WhileUntilDo
@@ -37494,23 +40250,16 @@ class RuboCop::Cop::Style::WhileUntilDo
   def on_until(node); end
 
   def on_while(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::WhileUntilDo
 end
 
 class RuboCop::Cop::Style::WhileUntilModifier
   include ::RuboCop::Cop::StatementModifier
+  include ::RuboCop::Cop::LineLengthHelp
   def autocorrect(node); end
 
   def on_until(node); end
 
   def on_while(node); end
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::WhileUntilModifier
 end
 
 class RuboCop::Cop::Style::WordArray
@@ -37521,8 +40270,6 @@ class RuboCop::Cop::Style::WordArray
   def autocorrect(node); end
 
   def on_array(node); end
-  ARRAY_MSG = ::T.let(nil, ::T.untyped)
-  PERCENT_MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Style::WordArray
@@ -37539,14 +40286,6 @@ class RuboCop::Cop::Style::YodaCondition
   def file_constant_equal_program_name?(node=T.unsafe(nil)); end
 
   def on_send(node); end
-  EQUALITY_OPERATORS = ::T.let(nil, ::T.untyped)
-  MSG = ::T.let(nil, ::T.untyped)
-  NONCOMMUTATIVE_OPERATORS = ::T.let(nil, ::T.untyped)
-  PROGRAM_NAMES = ::T.let(nil, ::T.untyped)
-  REVERSE_COMPARISON = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::YodaCondition
 end
 
 class RuboCop::Cop::Style::ZeroLengthPredicate
@@ -37563,28 +40302,17 @@ class RuboCop::Cop::Style::ZeroLengthPredicate
   def zero_length_predicate(node=T.unsafe(nil)); end
 
   def zero_length_receiver(node=T.unsafe(nil)); end
-  NONZERO_MSG = ::T.let(nil, ::T.untyped)
-  ZERO_MSG = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Style::ZeroLengthPredicate
-end
-
-module RuboCop::Cop::Style
+  LENGTH_METHODS = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::Cop::SurroundingSpace
   include ::RuboCop::Cop::RangeHelp
-  NO_SPACE_COMMAND = ::T.let(nil, ::T.untyped)
-  SINGLE_SPACE_REGEXP = ::T.let(nil, ::T.untyped)
-  SPACE_COMMAND = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::SurroundingSpace
 end
 
 module RuboCop::Cop::TargetRubyVersion
   def minimum_target_ruby_version(version); end
+
+  def required_minimum_ruby_version(); end
 
   def support_target_ruby_version?(version); end
 end
@@ -37593,8 +40321,6 @@ module RuboCop::Cop::TargetRubyVersion
 end
 
 class RuboCop::Cop::Team
-  def autocorrect(buffer, cops); end
-
   def autocorrect?(); end
 
   def cops(); end
@@ -37607,46 +40333,27 @@ class RuboCop::Cop::Team
 
   def forces(); end
 
-  def forces_for(cops); end
-
-  def initialize(cop_classes, config, options=T.unsafe(nil)); end
+  def initialize(cops, config=T.unsafe(nil), options=T.unsafe(nil)); end
 
   def inspect_file(processed_source); end
+
+  def investigate(processed_source); end
 
   def updated_source_file(); end
 
   def updated_source_file?(); end
 
   def warnings(); end
-  DEFAULT_OPTIONS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::Team::Investigation
-  def errors(); end
-
-  def errors=(_); end
-
-  def offenses(); end
-
-  def offenses=(_); end
-end
-
-class RuboCop::Cop::Team::Investigation
-  def self.[](*_); end
-
-  def self.members(); end
 end
 
 class RuboCop::Cop::Team
-end
+  def self.forces_for(cops); end
 
-module RuboCop::Cop::TooManyLines
-  include ::RuboCop::Cop::CodeLength
-  include ::RuboCop::Cop::ConfigurableMax
-  MSG = ::T.let(nil, ::T.untyped)
-end
+  def self.mobilize(cop_classes, config, options=T.unsafe(nil)); end
 
-module RuboCop::Cop::TooManyLines
+  def self.mobilize_cops(cop_classes, config, options=T.unsafe(nil)); end
+
+  def self.new(cop_or_classes, config, options=T.unsafe(nil)); end
 end
 
 module RuboCop::Cop::TrailingBody
@@ -37663,21 +40370,10 @@ end
 module RuboCop::Cop::TrailingComma
   include ::RuboCop::Cop::ConfigurableEnforcedStyle
   include ::RuboCop::Cop::RangeHelp
-  MSG = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::TrailingComma
 end
 
 module RuboCop::Cop::UncommunicativeName
   def check(node, args); end
-  CASE_MSG = ::T.let(nil, ::T.untyped)
-  FORBIDDEN_MSG = ::T.let(nil, ::T.untyped)
-  LENGTH_MSG = ::T.let(nil, ::T.untyped)
-  NUM_MSG = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Cop::UncommunicativeName
 end
 
 class RuboCop::Cop::UnusedArgCorrector
@@ -37685,22 +40381,30 @@ end
 
 class RuboCop::Cop::UnusedArgCorrector
   extend ::RuboCop::Cop::RangeHelp
-  def self.correct(processed_source, node); end
+  def self.correct(corrector, processed_source, node); end
 
-  def self.correct_for_blockarg_type(node); end
+  def self.correct_for_blockarg_type(corrector, node); end
 
   def self.processed_source(); end
 end
 
 module RuboCop::Cop::Util
   include ::RuboCop::PathUtil
-  LITERAL_REGEX = ::T.let(nil, ::T.untyped)
+  include ::RuboCop::TokensUtil
 end
 
 module RuboCop::Cop::Util
+  def self.add_parentheses(node, corrector); end
+
+  def self.args_begin(node); end
+
+  def self.args_end(node); end
+
   def self.begins_its_line?(range); end
 
   def self.comment_line?(line_source); end
+
+  def self.comment_lines?(node); end
 
   def self.double_quotes_required?(string); end
 
@@ -37724,12 +40428,7 @@ module RuboCop::Cop::Util
 
   def self.to_supported_styles(enforced_style); end
 
-  def self.tokens(node); end
-
   def self.trim_string_interporation_escape_character(str); end
-end
-
-module RuboCop::Cop::Utils
 end
 
 class RuboCop::Cop::Utils::FormatString
@@ -37740,16 +40439,8 @@ class RuboCop::Cop::Utils::FormatString
   def max_digit_dollar_num(); end
 
   def named_interpolation?(); end
-  DIGIT_DOLLAR = ::T.let(nil, ::T.untyped)
-  FLAG = ::T.let(nil, ::T.untyped)
-  NAME = ::T.let(nil, ::T.untyped)
-  NUMBER = ::T.let(nil, ::T.untyped)
-  NUMBER_ARG = ::T.let(nil, ::T.untyped)
-  PRECISION = ::T.let(nil, ::T.untyped)
-  SEQUENCE = ::T.let(nil, ::T.untyped)
-  TEMPLATE_NAME = ::T.let(nil, ::T.untyped)
-  TYPE = ::T.let(nil, ::T.untyped)
-  WIDTH = ::T.let(nil, ::T.untyped)
+
+  def valid?(); end
 end
 
 class RuboCop::Cop::Utils::FormatString::FormatSequence
@@ -37785,33 +40476,12 @@ end
 class RuboCop::Cop::Utils::FormatString::FormatSequence
 end
 
-class RuboCop::Cop::Utils::FormatString
-end
-
-module RuboCop::Cop::Utils
-end
-
 class RuboCop::Cop::VariableForce
   def investigate(processed_source); end
 
   def process_node(node); end
 
   def variable_table(); end
-  ARGUMENT_DECLARATION_TYPES = ::T.let(nil, ::T.untyped)
-  LOGICAL_OPERATOR_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  LOOP_TYPES = ::T.let(nil, ::T.untyped)
-  MULTIPLE_ASSIGNMENT_TYPE = ::T.let(nil, ::T.untyped)
-  OPERATOR_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  POST_CONDITION_LOOP_TYPES = ::T.let(nil, ::T.untyped)
-  REGEXP_NAMED_CAPTURE_TYPE = ::T.let(nil, ::T.untyped)
-  RESCUE_TYPE = ::T.let(nil, ::T.untyped)
-  SCOPE_TYPES = ::T.let(nil, ::T.untyped)
-  SEND_TYPE = ::T.let(nil, ::T.untyped)
-  TWISTED_SCOPE_TYPES = ::T.let(nil, ::T.untyped)
-  VARIABLE_ASSIGNMENT_TYPE = ::T.let(nil, ::T.untyped)
-  VARIABLE_ASSIGNMENT_TYPES = ::T.let(nil, ::T.untyped)
-  VARIABLE_REFERENCE_TYPE = ::T.let(nil, ::T.untyped)
-  ZERO_ARITY_SUPER_TYPE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::VariableForce::Assignment
@@ -37845,10 +40515,6 @@ class RuboCop::Cop::VariableForce::Assignment
   def used?(); end
 
   def variable(); end
-  MULTIPLE_LEFT_HAND_SIDE_TYPE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::VariableForce::Assignment
 end
 
 class RuboCop::Cop::VariableForce::AssignmentReference
@@ -37863,10 +40529,6 @@ class RuboCop::Cop::VariableForce::AssignmentReference
   def self.[](*_); end
 
   def self.members(); end
-end
-
-module RuboCop::Cop::VariableForce::Branch
-  CLASSES_BY_TYPE = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::VariableForce::Branch::And
@@ -38066,10 +40728,6 @@ class RuboCop::Cop::VariableForce::Reference
   def node(); end
 
   def scope(); end
-  VARIABLE_REFERENCE_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::VariableForce::Reference
 end
 
 class RuboCop::Cop::VariableForce::Scope
@@ -38092,10 +40750,6 @@ class RuboCop::Cop::VariableForce::Scope
   def node(); end
 
   def variables(); end
-  OUTER_SCOPE_CHILD_INDICES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::VariableForce::Scope
 end
 
 class RuboCop::Cop::VariableForce::Variable
@@ -38138,10 +40792,6 @@ class RuboCop::Cop::VariableForce::Variable
   def should_be_unused?(); end
 
   def used?(); end
-  VARIABLE_DECLARATION_TYPES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Cop::VariableForce::Variable
 end
 
 class RuboCop::Cop::VariableForce::VariableReference
@@ -38189,10 +40839,13 @@ end
 class RuboCop::Cop::VariableForce::VariableTable
 end
 
-class RuboCop::Cop::VariableForce
+module RuboCop::Cop::VisibilityHelp
+  def visibility_block?(node=T.unsafe(nil)); end
+  VISIBILITY_SCOPES = ::T.let(nil, ::T.untyped)
 end
 
-module RuboCop::Cop
+module RuboCop::Cop::VisibilityHelp
+  extend ::RuboCop::AST::NodePattern::Macros
 end
 
 class RuboCop::Error
@@ -38214,19 +40867,31 @@ end
 class RuboCop::ErrorWithAnalyzedFileLocation
 end
 
-module RuboCop::FileFinder
-  def find_file_upwards(filename, start_dir); end
+module RuboCop::Ext
+end
 
-  def find_files_upwards(filename, start_dir); end
+module RuboCop::Ext::ProcessedSource
+  def comment_config(); end
+
+  def disabled_line_ranges(); end
+end
+
+module RuboCop::Ext::ProcessedSource
+end
+
+module RuboCop::Ext
+end
+
+module RuboCop::FileFinder
+  def find_file_upwards(filename, start_dir, stop_dir=T.unsafe(nil)); end
+
+  def find_last_file_upwards(filename, start_dir, stop_dir=T.unsafe(nil)); end
 end
 
 module RuboCop::FileFinder
   def self.root_level=(level); end
 
-  def self.root_level?(path); end
-end
-
-module RuboCop::Formatter
+  def self.root_level?(path, stop_dir); end
 end
 
 class RuboCop::Formatter::AutoGenConfigFormatter
@@ -38252,13 +40917,6 @@ class RuboCop::Formatter::BaseFormatter
 end
 
 class RuboCop::Formatter::BaseFormatter
-end
-
-class RuboCop::Formatter::ClangStyleFormatter
-  ELLIPSES = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::ClangStyleFormatter
 end
 
 module RuboCop::Formatter::Colorizable
@@ -38290,7 +40948,6 @@ class RuboCop::Formatter::DisabledConfigFormatter
   def file_started(_file, _file_info); end
 
   def finished(_inspected_files); end
-  HEADING = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Formatter::DisabledConfigFormatter
@@ -38301,19 +40958,6 @@ class RuboCop::Formatter::DisabledConfigFormatter
   def self.detected_styles(); end
 
   def self.detected_styles=(detected_styles); end
-end
-
-class RuboCop::Formatter::DisabledLinesFormatter
-  include ::RuboCop::PathUtil
-  include ::RuboCop::Formatter::Colorizable
-  def cop_disabled_line_ranges(); end
-
-  def finished(_inspected_files); end
-
-  def started(_target_files); end
-end
-
-class RuboCop::Formatter::DisabledLinesFormatter
 end
 
 class RuboCop::Formatter::EmacsStyleFormatter
@@ -38342,11 +40986,6 @@ class RuboCop::Formatter::FormatterSet
   def initialize(options=T.unsafe(nil)); end
 
   def started(*args); end
-  BUILTIN_FORMATTERS_FOR_KEYS = ::T.let(nil, ::T.untyped)
-  FORMATTER_APIS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::FormatterSet
 end
 
 class RuboCop::Formatter::FuubarStyleFormatter
@@ -38357,10 +40996,6 @@ class RuboCop::Formatter::FuubarStyleFormatter
   def started(target_files); end
 
   def with_color(); end
-  RESET_SEQUENCE = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::FuubarStyleFormatter
 end
 
 class RuboCop::Formatter::HTMLFormatter
@@ -38369,8 +41004,6 @@ class RuboCop::Formatter::HTMLFormatter
   def render_html(); end
 
   def summary(); end
-  ELLIPSES = ::T.let(nil, ::T.untyped)
-  TEMPLATE_PATH = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Formatter::HTMLFormatter::Color
@@ -38423,14 +41056,6 @@ class RuboCop::Formatter::HTMLFormatter::ERBContext
   def source_before_highlight(offense); end
 
   def summary(); end
-  LOGO_IMAGE_PATH = ::T.let(nil, ::T.untyped)
-  SEVERITY_COLORS = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::HTMLFormatter::ERBContext
-end
-
-class RuboCop::Formatter::HTMLFormatter
 end
 
 class RuboCop::Formatter::JSONFormatter
@@ -38447,6 +41072,19 @@ class RuboCop::Formatter::JSONFormatter
 end
 
 class RuboCop::Formatter::JSONFormatter
+end
+
+class RuboCop::Formatter::JUnitFormatter
+  def classname_attribute_value(file); end
+
+  def finished(_inspected_files); end
+
+  def offenses_for_cop(all_offenses, cop); end
+
+  def relevant_for_output?(options, target_offenses); end
+end
+
+class RuboCop::Formatter::JUnitFormatter
 end
 
 class RuboCop::Formatter::OffenseCountFormatter
@@ -38485,13 +41123,6 @@ class RuboCop::Formatter::PacmanFormatter
   def step(character); end
 
   def update_progress_line(); end
-  FALLBACK_TERMINAL_WIDTH = ::T.let(nil, ::T.untyped)
-  GHOST = ::T.let(nil, ::T.untyped)
-  PACDOT = ::T.let(nil, ::T.untyped)
-  PACMAN = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::PacmanFormatter
 end
 
 class RuboCop::Formatter::ProgressFormatter
@@ -38499,10 +41130,6 @@ class RuboCop::Formatter::ProgressFormatter
   def report_file_as_mark(offenses); end
 
   def started(target_files); end
-  DOT = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Formatter::ProgressFormatter
 end
 
 class RuboCop::Formatter::QuietFormatter
@@ -38519,7 +41146,6 @@ class RuboCop::Formatter::SimpleTextFormatter
   def report_summary(file_count, offense_count, correction_count); end
 
   def started(_target_files); end
-  COLOR_FOR_SEVERITY = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Formatter::SimpleTextFormatter::Report
@@ -38531,9 +41157,6 @@ class RuboCop::Formatter::SimpleTextFormatter::Report
 end
 
 class RuboCop::Formatter::SimpleTextFormatter::Report
-end
-
-class RuboCop::Formatter::SimpleTextFormatter
 end
 
 class RuboCop::Formatter::TapFormatter
@@ -38565,9 +41188,6 @@ end
 class RuboCop::Formatter::WorstOffendersFormatter
 end
 
-module RuboCop::Formatter
-end
-
 class RuboCop::IncorrectCopNameError
 end
 
@@ -38588,7 +41208,6 @@ class RuboCop::MagicComment
   def initialize(comment); end
 
   def valid_literal_value?(); end
-  TOKEN = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::MagicComment::EditorComment
@@ -38599,12 +41218,6 @@ end
 
 class RuboCop::MagicComment::EmacsComment
   def encoding(); end
-  FORMAT = ::T.let(nil, ::T.untyped)
-  OPERATOR = ::T.let(nil, ::T.untyped)
-  SEPARATOR = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::MagicComment::EmacsComment
 end
 
 class RuboCop::MagicComment::SimpleComment
@@ -38616,12 +41229,6 @@ end
 
 class RuboCop::MagicComment::VimComment
   def encoding(); end
-  FORMAT = ::T.let(nil, ::T.untyped)
-  OPERATOR = ::T.let(nil, ::T.untyped)
-  SEPARATOR = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::MagicComment::VimComment
 end
 
 class RuboCop::MagicComment
@@ -38629,54 +41236,15 @@ class RuboCop::MagicComment
 end
 
 module RuboCop::NameSimilarity
-  def find_similar_name(target_name, scope); end
-  MINIMUM_SIMILARITY_TO_SUGGEST = ::T.let(nil, ::T.untyped)
 end
 
 module RuboCop::NameSimilarity
+  def self.find_similar_name(target_name, names); end
+
+  def self.find_similar_names(target_name, names); end
 end
 
-class RuboCop::NodePattern
-  def ==(other); end
-
-  def eql?(other); end
-
-  def initialize(str); end
-
-  def marshal_dump(); end
-
-  def marshal_load(pattern); end
-
-  def match(*args); end
-
-  def pattern(); end
-end
-
-class RuboCop::NodePattern::Invalid
-end
-
-class RuboCop::NodePattern::Invalid
-end
-
-module RuboCop::NodePattern::Macros
-  def def_node_matcher(method_name, pattern_str); end
-
-  def def_node_search(method_name, pattern_str); end
-
-  def node_search(method_name, compiler, on_match, prelude, called_from); end
-
-  def node_search_all(method_name, compiler, called_from); end
-
-  def node_search_body(method_name, trailing_params, prelude, match_code, on_match); end
-
-  def node_search_first(method_name, compiler, called_from); end
-end
-
-module RuboCop::NodePattern::Macros
-end
-
-class RuboCop::NodePattern
-end
+RuboCop::NodePattern = RuboCop::AST::NodePattern
 
 class RuboCop::OptionArgumentError
 end
@@ -38686,21 +41254,6 @@ end
 
 class RuboCop::Options
   def parse(command_line_args); end
-  DEFAULT_MAXIMUM_EXCLUSION_ITEMS = ::T.let(nil, ::T.untyped)
-  EXITING_OPTIONS = ::T.let(nil, ::T.untyped)
-  E_STDIN_NO_PATH = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::Options
-end
-
-module RuboCop::OptionsHelp
-  FORMATTER_OPTION_LIST = ::T.let(nil, ::T.untyped)
-  MAX_EXCL = ::T.let(nil, ::T.untyped)
-  TEXT = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::OptionsHelp
 end
 
 class RuboCop::OptionsValidator
@@ -38724,6 +41277,8 @@ class RuboCop::OptionsValidator
 
   def validate_cop_options(); end
 
+  def validate_display_only_failed(); end
+
   def validate_exclude_limit_option(); end
 
   def validate_parallel(); end
@@ -38741,19 +41296,17 @@ end
 module RuboCop::PathUtil
   def self.absolute?(path); end
 
-  def self.chdir(dir, &block); end
-
   def self.hidden_dir?(path); end
+
+  def self.hidden_file?(path); end
 
   def self.hidden_file_in_not_hidden_dir?(pattern, path); end
 
   def self.match_path?(pattern, path); end
 
-  def self.pwd(); end
+  def self.maybe_hidden_file?(path); end
 
   def self.relative_path(path, base_dir=T.unsafe(nil)); end
-
-  def self.reset_pwd(); end
 
   def self.smart_path(path); end
 end
@@ -38765,72 +41318,7 @@ module RuboCop::Platform
   def self.windows?(); end
 end
 
-class RuboCop::ProcessedSource
-  def [](*args); end
-
-  def ast(); end
-
-  def ast_with_comments(); end
-
-  def blank?(); end
-
-  def buffer(); end
-
-  def checksum(); end
-
-  def comment_config(); end
-
-  def commented?(source_range); end
-
-  def comments(); end
-
-  def comments_before_line(line); end
-
-  def current_line(token); end
-
-  def diagnostics(); end
-
-  def disabled_line_ranges(); end
-
-  def each_comment(); end
-
-  def each_token(); end
-
-  def file_path(); end
-
-  def find_comment(); end
-
-  def find_token(); end
-
-  def following_line(token); end
-
-  def initialize(source, ruby_version, path=T.unsafe(nil)); end
-
-  def line_indentation(line_number); end
-
-  def lines(); end
-
-  def parser_error(); end
-
-  def path(); end
-
-  def preceding_line(token); end
-
-  def raw_source(); end
-
-  def ruby_version(); end
-
-  def start_with?(string); end
-
-  def tokens(); end
-
-  def valid_syntax?(); end
-  STRING_SOURCE_NAME = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::ProcessedSource
-  def self.from_file(path, ruby_version); end
-end
+RuboCop::ProcessedSource = RuboCop::AST::ProcessedSource
 
 class RuboCop::RemoteConfig
   def file(); end
@@ -38840,10 +41328,6 @@ class RuboCop::RemoteConfig
   def initialize(url, base_dir); end
 
   def uri(); end
-  CACHE_LIFETIME = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::RemoteConfig
 end
 
 class RuboCop::ResultCache
@@ -38854,7 +41338,6 @@ class RuboCop::ResultCache
   def save(offenses); end
 
   def valid?(); end
-  NON_CHANGING = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::ResultCache
@@ -38885,7 +41368,6 @@ class RuboCop::Runner
   def run(paths); end
 
   def warnings(); end
-  MAX_ITERATIONS = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Runner::InfiniteCorrectionLoop
@@ -38897,23 +41379,8 @@ end
 class RuboCop::Runner::InfiniteCorrectionLoop
 end
 
-class RuboCop::Runner
-end
-
-class RuboCop::StringInterpreter
-  STRING_ESCAPES = ::T.let(nil, ::T.untyped)
-  STRING_ESCAPE_REGEX = ::T.let(nil, ::T.untyped)
-end
-
 class RuboCop::StringInterpreter
   def self.interpret(string); end
-end
-
-module RuboCop::StringUtil
-end
-
-module RuboCop::StringUtil
-  def self.similarity(string_a, string_b); end
 end
 
 class RuboCop::TargetFinder
@@ -38927,7 +41394,7 @@ class RuboCop::TargetFinder
 
   def fail_fast?(); end
 
-  def find(args); end
+  def find(args, mode); end
 
   def find_files(base_dir, flags); end
 
@@ -38937,7 +41404,7 @@ class RuboCop::TargetFinder
 
   def initialize(config_store, options=T.unsafe(nil)); end
 
-  def process_explicit_path(path); end
+  def process_explicit_path(path, mode); end
 
   def ruby_executable?(file); end
 
@@ -38975,7 +41442,6 @@ class RuboCop::TargetRuby
   def supported?(); end
 
   def version(); end
-  DEFAULT_VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::TargetRuby::BundlerLockFile
@@ -38994,13 +41460,6 @@ class RuboCop::TargetRuby::RuboCopConfig
 end
 
 class RuboCop::TargetRuby::RuboCopConfig
-end
-
-class RuboCop::TargetRuby::RubyVersionFile
-  FILENAME = ::T.let(nil, ::T.untyped)
-end
-
-class RuboCop::TargetRuby::RubyVersionFile
 end
 
 class RuboCop::TargetRuby::Source
@@ -39018,60 +41477,17 @@ class RuboCop::TargetRuby
   def self.supported_versions(); end
 end
 
-class RuboCop::Token
-  def begin_pos(); end
+RuboCop::Token = RuboCop::AST::Token
 
-  def column(); end
-
-  def comma?(); end
-
-  def comment?(); end
-
-  def end?(); end
-
-  def end_pos(); end
-
-  def equal_sign?(); end
-
-  def initialize(pos, type, text); end
-
-  def left_array_bracket?(); end
-
-  def left_brace?(); end
-
-  def left_bracket?(); end
-
-  def left_curly_brace?(); end
-
-  def left_parens?(); end
-
-  def left_ref_bracket?(); end
-
-  def line(); end
-
-  def pos(); end
-
-  def rescue_modifier?(); end
-
-  def right_bracket?(); end
-
-  def right_curly_brace?(); end
-
-  def right_parens?(); end
-
-  def semicolon?(); end
-
-  def space_after?(); end
-
-  def space_before?(); end
-
-  def text(); end
-
-  def type(); end
+module RuboCop::TokensUtil
 end
 
-class RuboCop::Token
-  def self.from_parser_token(parser_token); end
+module RuboCop::TokensUtil
+  def self.index_of_first_token(node); end
+
+  def self.index_of_last_token(node); end
+
+  def self.tokens(node); end
 end
 
 class RuboCop::ValidationError
@@ -39081,12 +41497,7 @@ class RuboCop::ValidationError
 end
 
 module RuboCop::Version
-  MSG = ::T.let(nil, ::T.untyped)
-  STRING = ::T.let(nil, ::T.untyped)
-end
-
-module RuboCop::Version
-  def self.version(debug=T.unsafe(nil)); end
+  def self.version(debug: T.unsafe(nil)); end
 end
 
 class RuboCop::Warning
@@ -39102,57 +41513,45 @@ module RuboCop::YAMLDuplicationChecker
   def self.check(yaml_string, filename, &on_duplicated); end
 end
 
-module RuboCop
+module RubyVM::AbstractSyntaxTree
 end
 
-class RubyVM::InstructionSequence
-  def absolute_path(); end
+class RubyVM::AbstractSyntaxTree::Node
+  def children(); end
 
-  def base_label(); end
-
-  def disasm(); end
-
-  def disassemble(); end
-
-  def each_child(); end
-
-  def eval(); end
+  def first_column(); end
 
   def first_lineno(); end
 
-  def label(); end
+  def last_column(); end
 
-  def path(); end
+  def last_lineno(); end
 
-  def to_a(); end
+  def pretty_print_children(q, names=T.unsafe(nil)); end
 
-  def to_binary(*_); end
-
-  def trace_points(); end
+  def type(); end
 end
 
-class RubyVM::InstructionSequence
-  def self.compile(*_); end
-
-  def self.compile_file(*_); end
-
-  def self.compile_option(); end
-
-  def self.compile_option=(compile_option); end
-
-  def self.disasm(_); end
-
-  def self.disassemble(_); end
-
-  def self.load_from_binary(_); end
-
-  def self.load_from_binary_extra_data(_); end
-
-  def self.of(_); end
+class RubyVM::AbstractSyntaxTree::Node
 end
 
-class RubyVM
-  def self.stat(*_); end
+module RubyVM::AbstractSyntaxTree
+  def self.of(body); end
+
+  def self.parse(string); end
+
+  def self.parse_file(pathname); end
+end
+
+module RubyVM::MJIT
+end
+
+module RubyVM::MJIT
+  def self.enabled?(); end
+
+  def self.pause(*_); end
+
+  def self.resume(); end
 end
 
 module SafeYAML
@@ -39438,7 +41837,7 @@ end
 class SassC::FunctionsHandler
   def initialize(options); end
 
-  def setup(native_options); end
+  def setup(native_options, functions: T.unsafe(nil)); end
 end
 
 class SassC::FunctionsHandler
@@ -39689,15 +42088,6 @@ module SassC::Native
   SassOutputStyle = ::T.let(nil, ::T.untyped)
   SassSeparator = ::T.let(nil, ::T.untyped)
   SassTag = ::T.let(nil, ::T.untyped)
-end
-
-module SassC::Native::LibC
-  def malloc(*_); end
-end
-
-module SassC::Native::LibC
-  extend ::FFI::Library
-  def self.malloc(*_); end
 end
 
 class SassC::Native::SassBoolean
@@ -40241,9 +42631,9 @@ module SassC::Script::ValueConversion
 end
 
 module SassC::Script
-  def self.custom_functions(); end
+  def self.custom_functions(functions: T.unsafe(nil)); end
 
-  def self.formatted_function_name(function_name); end
+  def self.formatted_function_name(function_name, functions: T.unsafe(nil)); end
 end
 
 class SassC::SyntaxError
@@ -40319,10 +42709,6 @@ end
 
 ScanError = StringScanner::Error
 
-module SecureRandom
-  def self.bytes(n); end
-end
-
 class Set
   def ==(other); end
 
@@ -40344,31 +42730,6 @@ class Set
 
   def reset(); end
   InspectKey = ::T.let(nil, ::T.untyped)
-end
-
-module Shellwords
-end
-
-module Shellwords
-  def self.escape(str); end
-
-  def self.join(array); end
-
-  def self.shellescape(str); end
-
-  def self.shelljoin(array); end
-
-  def self.shellsplit(line); end
-
-  def self.shellwords(line); end
-
-  def self.split(line); end
-end
-
-class SignalException
-  def signm(); end
-
-  def signo(); end
 end
 
 module SimpleCov
@@ -40454,6 +42815,8 @@ module SimpleCov::Configuration
 
   def at_exit(&block); end
 
+  def at_fork(&block); end
+
   def branch_coverage?(); end
 
   def branch_coverage_supported?(); end
@@ -40477,6 +42840,10 @@ module SimpleCov::Configuration
   def coverage_start_arguments_supported?(); end
 
   def enable_coverage(criterion); end
+
+  def enable_for_subprocesses(value=T.unsafe(nil)); end
+
+  def enabled_for_subprocesses?(); end
 
   def filters(); end
 
@@ -40555,6 +42922,54 @@ module SimpleCov::ExitCodes
   SUCCESS = ::T.let(nil, ::T.untyped)
 end
 
+module SimpleCov::ExitCodes::ExitCodeHandling
+end
+
+module SimpleCov::ExitCodes::ExitCodeHandling
+  def self.call(result, coverage_limits:); end
+
+  def self.coverage_checks(result, coverage_limits); end
+end
+
+class SimpleCov::ExitCodes::MaximumCoverageDropCheck
+  def exit_code(); end
+
+  def failing?(); end
+
+  def initialize(result, maximum_coverage_drop); end
+
+  def report(); end
+end
+
+class SimpleCov::ExitCodes::MaximumCoverageDropCheck
+end
+
+class SimpleCov::ExitCodes::MinimumCoverageByFileCheck
+  def exit_code(); end
+
+  def failing?(); end
+
+  def initialize(result, minimum_coverage_by_file); end
+
+  def report(); end
+end
+
+class SimpleCov::ExitCodes::MinimumCoverageByFileCheck
+end
+
+class SimpleCov::ExitCodes::MinimumOverallCoverageCheck
+  def exit_code(); end
+
+  def failing?(); end
+
+  def initialize(result, minimum_coverage); end
+
+  def report(); end
+end
+
+class SimpleCov::ExitCodes::MinimumOverallCoverageCheck
+end
+
 module SimpleCov::ExitCodes
 end
 
@@ -40631,8 +43046,47 @@ module SimpleCov::Formatter
 end
 
 class SimpleCov::Formatter::Codecov
-  def format(result); end
+  def build_params(ci); end
+
+  def create_report(report); end
+
+  def detect_ci(); end
+
+  def display_header(); end
+
+  def format(result, disable_net_blockers=T.unsafe(nil)); end
+
+  def gzip_report(report); end
+
+  def handle_report_response(report); end
+
+  def retry_request(req, https); end
+
+  def upload_to_codecov(ci, report); end
+
+  def upload_to_v2(url, report, query, query_without_token); end
+
+  def upload_to_v4(url, report, query, query_without_token); end
+  APPVEYOR = ::T.let(nil, ::T.untyped)
+  AZUREPIPELINES = ::T.let(nil, ::T.untyped)
+  BITBUCKET = ::T.let(nil, ::T.untyped)
+  BITRISE = ::T.let(nil, ::T.untyped)
+  BUILDKITE = ::T.let(nil, ::T.untyped)
+  CIRCLE = ::T.let(nil, ::T.untyped)
+  CODESHIP = ::T.let(nil, ::T.untyped)
+  DRONEIO = ::T.let(nil, ::T.untyped)
+  GITHUB = ::T.let(nil, ::T.untyped)
+  GITLAB = ::T.let(nil, ::T.untyped)
+  HEROKU = ::T.let(nil, ::T.untyped)
+  JENKINS = ::T.let(nil, ::T.untyped)
+  RECOGNIZED_CIS = ::T.let(nil, ::T.untyped)
+  SEMAPHORE = ::T.let(nil, ::T.untyped)
+  SHIPPABLE = ::T.let(nil, ::T.untyped)
+  SOLANO = ::T.let(nil, ::T.untyped)
+  TEAMCITY = ::T.let(nil, ::T.untyped)
+  TRAVIS = ::T.let(nil, ::T.untyped)
   VERSION = ::T.let(nil, ::T.untyped)
+  WERCKER = ::T.let(nil, ::T.untyped)
 end
 
 class SimpleCov::Formatter::Codecov
@@ -40751,7 +43205,7 @@ class SimpleCov::Result
 
   def groups(); end
 
-  def initialize(original_result); end
+  def initialize(original_result, command_name: T.unsafe(nil), created_at: T.unsafe(nil)); end
 
   def least_covered_file(*args, &block); end
 
@@ -40762,6 +43216,8 @@ class SimpleCov::Result
   def original_result(); end
 
   def source_files(); end
+
+  def time_since_creation(); end
 
   def to_hash(); end
 
@@ -40877,6 +43333,8 @@ class SimpleCov::SourceFile
   def src(); end
 
   def total_branches(); end
+  RUBY_FILE_ENCODING_MAGIC_COMMENT_REGEX = ::T.let(nil, ::T.untyped)
+  SHEBANG_REGEX = ::T.let(nil, ::T.untyped)
 end
 
 class SimpleCov::SourceFile::Branch
@@ -40954,22 +43412,31 @@ class SimpleCov::StringFilter
 end
 
 module SimpleCov::UselessResultsRemover
-  ROOT_REGX = ::T.let(nil, ::T.untyped)
 end
 
 module SimpleCov::UselessResultsRemover
   def self.call(coverage_result); end
+
+  def self.root_regx(); end
 end
 
 module SimpleCov
   extend ::SimpleCov::Configuration
+  def self.at_exit_behavior(); end
+
   def self.clear_result(); end
 
   def self.collate(result_filenames, profile=T.unsafe(nil), &block); end
 
-  def self.exit_exception(); end
+  def self.exit_and_report_previous_error(exit_status); end
 
   def self.exit_status_from_exception(); end
+
+  def self.external_at_exit(); end
+
+  def self.external_at_exit=(external_at_exit); end
+
+  def self.external_at_exit?(); end
 
   def self.filtered(files); end
 
@@ -40985,13 +43452,21 @@ module SimpleCov
 
   def self.pid=(pid); end
 
-  def self.process_result(result, exit_status); end
+  def self.previous_error?(error_exit_status); end
+
+  def self.process_result(result); end
+
+  def self.process_results_and_report_error(); end
+
+  def self.ready_to_process_results?(); end
 
   def self.result(); end
 
   def self.result?(); end
 
-  def self.result_exit_status(result, covered_percent); end
+  def self.result_exit_status(result); end
+
+  def self.round_coverage(coverage); end
 
   def self.run_exit_tasks!(); end
 
@@ -40999,31 +43474,15 @@ module SimpleCov
 
   def self.running=(running); end
 
-  def self.set_exit_exception(); end
-
   def self.start(profile=T.unsafe(nil), &block); end
 
   def self.wait_for_other_processes(); end
 
-  def self.write_last_run(covered_percent); end
+  def self.write_last_run(result); end
 end
 
 class SimpleDelegator
   RUBYGEMS_ACTIVATION_MONITOR = ::T.let(nil, ::T.untyped)
-end
-
-module SingleForwardable
-  def def_delegator(accessor, method, ali=T.unsafe(nil)); end
-
-  def def_delegators(accessor, *methods); end
-
-  def def_single_delegator(accessor, method, ali=T.unsafe(nil)); end
-
-  def def_single_delegators(accessor, *methods); end
-
-  def delegate(hash); end
-
-  def single_delegate(hash); end
 end
 
 module Singleton
@@ -41058,411 +43517,6 @@ module Socket::Constants
   SO_BPF_EXTENSIONS = ::T.let(nil, ::T.untyped)
 end
 
-class Sorbet::Private::ConstantLookupCache
-  def all_module_aliases(); end
-
-  def all_module_names(); end
-
-  def all_named_modules(); end
-
-  def class_by_name(name); end
-
-  def name_by_class(klass); end
-  DEPRECATED_CONSTANTS = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::ConstantLookupCache::ConstantEntry
-  def aliases(); end
-
-  def aliases=(_); end
-
-  def const(); end
-
-  def const=(_); end
-
-  def const_name(); end
-
-  def const_name=(_); end
-
-  def found_name(); end
-
-  def found_name=(_); end
-
-  def owner(); end
-
-  def owner=(_); end
-
-  def primary_name(); end
-
-  def primary_name=(_); end
-end
-
-class Sorbet::Private::ConstantLookupCache::ConstantEntry
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class Sorbet::Private::ConstantLookupCache
-end
-
-class Sorbet::Private::CreateConfig
-  include ::Sorbet::Private::StepInterface
-  SORBET_CONFIG_FILE = ::T.let(nil, ::T.untyped)
-  SORBET_DIR = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::CreateConfig
-  def self.main(); end
-
-  def self.output_file(); end
-end
-
-class Sorbet::Private::FetchRBIs
-  include ::Sorbet::Private::StepInterface
-  HEADER = ::T.let(nil, ::T.untyped)
-  RBI_CACHE_DIR = ::T.let(nil, ::T.untyped)
-  SORBET_CONFIG_FILE = ::T.let(nil, ::T.untyped)
-  SORBET_DIR = ::T.let(nil, ::T.untyped)
-  SORBET_RBI_LIST = ::T.let(nil, ::T.untyped)
-  SORBET_RBI_SORBET_TYPED = ::T.let(nil, ::T.untyped)
-  SORBET_TYPED_REPO = ::T.let(nil, ::T.untyped)
-  SORBET_TYPED_REVISION = ::T.let(nil, ::T.untyped)
-  XDG_CACHE_HOME = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::FetchRBIs
-  def self.fetch_sorbet_typed(); end
-
-  def self.main(); end
-
-  def self.matching_version_directories(root, version); end
-
-  def self.output_file(); end
-
-  def self.paths_for_gem_version(gemspec); end
-
-  def self.paths_for_ruby_version(ruby_version); end
-
-  def self.vendor_rbis_within_paths(vendor_paths); end
-end
-
-class Sorbet::Private::FindGemRBIs
-  include ::Sorbet::Private::StepInterface
-  GEM_DIR = ::T.let(nil, ::T.untyped)
-  HEADER = ::T.let(nil, ::T.untyped)
-  RBI_CACHE_DIR = ::T.let(nil, ::T.untyped)
-  XDG_CACHE_HOME = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::FindGemRBIs
-  def self.main(); end
-
-  def self.output_file(); end
-
-  def self.paths_within_gem_sources(gemspec); end
-end
-
-module Sorbet::Private::GemGeneratorTracepoint
-  include ::Sorbet::Private::StepInterface
-  OUTPUT = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::ClassDefinition
-  def defs(); end
-
-  def defs=(_); end
-
-  def id(); end
-
-  def id=(_); end
-
-  def klass(); end
-
-  def klass=(_); end
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::ClassDefinition
-  def self.[](*_); end
-
-  def self.members(); end
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::TracepointSerializer
-  def initialize(files:, delegate_classes:); end
-
-  def serialize(output_dir); end
-  BAD_METHODS = ::T.let(nil, ::T.untyped)
-  HEADER = ::T.let(nil, ::T.untyped)
-  SPECIAL_METHOD_NAMES = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::TracepointSerializer
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::Tracer
-end
-
-class Sorbet::Private::GemGeneratorTracepoint::Tracer
-  def self.add_to_context(item); end
-
-  def self.disable_tracepoints(); end
-
-  def self.finish(); end
-
-  def self.install_tracepoints(); end
-
-  def self.on_method_added(mod, method, singleton); end
-
-  def self.on_module_created(mod); end
-
-  def self.on_module_extended(extended, extender); end
-
-  def self.on_module_included(included, includer); end
-
-  def self.pre_cache_module_methods(); end
-
-  def self.register_delegate_class(klass, delegate); end
-
-  def self.start(); end
-
-  def self.trace(); end
-
-  def self.trace_results(); end
-end
-
-module Sorbet::Private::GemGeneratorTracepoint
-  def self.main(output_dir=T.unsafe(nil)); end
-
-  def self.output_file(); end
-end
-
-class Sorbet::Private::GemLoader
-  GEM_LOADER = ::T.let(nil, ::T.untyped)
-  NO_GEM = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::GemLoader
-  def self.my_require(gem); end
-
-  def self.require_all_gems(); end
-
-  def self.require_gem(gem); end
-end
-
-class Sorbet::Private::HiddenMethodFinder
-  include ::Sorbet::Private::StepInterface
-  def all_modules_and_aliases(); end
-
-  def capture_stderr(); end
-
-  def constant_cache(); end
-
-  def gen_source_rbi(classes, aliases); end
-
-  def looks_like_stub_name(name); end
-
-  def main(); end
-
-  def mk_dir(); end
-
-  def read_constants(); end
-
-  def real_name(mod); end
-
-  def require_everything(); end
-
-  def rm_dir(); end
-
-  def serialize_alias(source_entry, rbi_entry, my_klass, source_symbols, rbi_symbols); end
-
-  def serialize_class(source_entry, rbi_entry, klass, source_symbols, rbi_symbols, source_by_name); end
-
-  def serialize_constants(source, rbi, klass, is_singleton, source_symbols, rbi_symbols); end
-
-  def symbols_id_to_name(entry, prefix); end
-
-  def write_constants(); end
-
-  def write_diff(source, rbi); end
-  BLACKLIST = ::T.let(nil, ::T.untyped)
-  DIFF_RBI = ::T.let(nil, ::T.untyped)
-  ERRORS_RBI = ::T.let(nil, ::T.untyped)
-  HEADER = ::T.let(nil, ::T.untyped)
-  HIDDEN_RBI = ::T.let(nil, ::T.untyped)
-  PATH = ::T.let(nil, ::T.untyped)
-  RBI_CONSTANTS = ::T.let(nil, ::T.untyped)
-  RBI_CONSTANTS_ERR = ::T.let(nil, ::T.untyped)
-  SOURCE_CONSTANTS = ::T.let(nil, ::T.untyped)
-  SOURCE_CONSTANTS_ERR = ::T.let(nil, ::T.untyped)
-  TMP_PATH = ::T.let(nil, ::T.untyped)
-  TMP_RBI = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::HiddenMethodFinder
-  def self.main(); end
-
-  def self.output_file(); end
-end
-
-module Sorbet::Private::Main
-end
-
-module Sorbet::Private::Main
-  def self.cyan(msg); end
-
-  def self.emojify(emoji, msg); end
-
-  def self.init(); end
-
-  def self.main(argv); end
-
-  def self.make_step(step); end
-
-  def self.usage(); end
-
-  def self.yellow(msg); end
-end
-
-module Sorbet::Private::RealStdlib
-end
-
-module Sorbet::Private::RealStdlib
-  def self.real_ancestors(mod); end
-
-  def self.real_autoload?(o, klass); end
-
-  def self.real_const_get(obj, const, arg); end
-
-  def self.real_constants(mod); end
-
-  def self.real_eqeq(obj, other); end
-
-  def self.real_hash(o); end
-
-  def self.real_instance_methods(mod, arg); end
-
-  def self.real_is_a?(o, klass); end
-
-  def self.real_method(obj, sym); end
-
-  def self.real_name(o); end
-
-  def self.real_object_id(o); end
-
-  def self.real_private_instance_methods(mod, arg); end
-
-  def self.real_singleton_class(obj); end
-
-  def self.real_singleton_methods(mod, arg); end
-
-  def self.real_spaceship(obj, arg); end
-
-  def self.real_superclass(o); end
-end
-
-class Sorbet::Private::RequireEverything
-end
-
-class Sorbet::Private::RequireEverything
-  def self.excluded_rails_files(); end
-
-  def self.load_bundler(); end
-
-  def self.load_rails(); end
-
-  def self.my_require(abs_path, numerator, denominator); end
-
-  def self.patch_kernel(); end
-
-  def self.rails?(); end
-
-  def self.rails_load_paths(); end
-
-  def self.rb_file_paths(); end
-
-  def self.require_all_files(); end
-
-  def self.require_everything(); end
-end
-
-class Sorbet::Private::Serialize
-  def alias(base, other_name); end
-
-  def ancestor_has_method(method, klass); end
-
-  def blacklisted_method(method); end
-
-  def class_or_module(class_name); end
-
-  def comparable?(value); end
-
-  def constant(const, value); end
-
-  def from_method(method); end
-
-  def initialize(constant_cache); end
-
-  def serialize_method(method, static=T.unsafe(nil), with_sig: T.unsafe(nil)); end
-
-  def serialize_sig(parameters); end
-
-  def to_sig(kind, name); end
-
-  def valid_class_name(name); end
-
-  def valid_method_name(name); end
-  BLACKLIST_CONSTANTS = ::T.let(nil, ::T.untyped)
-  KEYWORDS = ::T.let(nil, ::T.untyped)
-  SPECIAL_METHOD_NAMES = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::Serialize
-  def self.header(typed=T.unsafe(nil), subcommand=T.unsafe(nil)); end
-end
-
-module Sorbet::Private::Status
-end
-
-module Sorbet::Private::Status
-  def self.done(); end
-
-  def self.say(message, print_without_tty: T.unsafe(nil)); end
-end
-
-module Sorbet::Private::StepInterface
-end
-
-module Sorbet::Private::StepInterface
-  def self.main(); end
-
-  def self.output_file(); end
-end
-
-class Sorbet::Private::SuggestTyped
-  include ::Sorbet::Private::StepInterface
-end
-
-class Sorbet::Private::SuggestTyped
-  def self.main(); end
-
-  def self.output_file(); end
-
-  def self.suggest_typed(); end
-end
-
-class Sorbet::Private::TodoRBI
-  include ::Sorbet::Private::StepInterface
-  HEADER = ::T.let(nil, ::T.untyped)
-  OUTPUT = ::T.let(nil, ::T.untyped)
-end
-
-class Sorbet::Private::TodoRBI
-  def self.main(); end
-
-  def self.output_file(); end
-end
-
 class SortedSet
   def initialize(*args, &block); end
 end
@@ -41471,17 +43525,11 @@ class SortedSet
   def self.setup(); end
 end
 
-class StopIteration
-  def result(); end
-end
-
 class String
   include ::JSON::Ext::Generator::GeneratorMethods::String
-  def []=(*_); end
-
   def ansi_jump(*args); end
 
-  def black(*args); end
+  def black(); end
 
   def blank?(); end
 
@@ -41489,25 +43537,17 @@ class String
 
   def bold(*args); end
 
-  def casecmp?(_); end
-
   def clear_line(*args); end
 
   def clear_screen(*args); end
 
-  def colorize(*args); end
+  def colorize(color_code); end
 
   def cyan(*args); end
 
-  def each_grapheme_cluster(); end
-
-  def encode!(*_); end
-
   def ext(newext=T.unsafe(nil)); end
 
-  def grapheme_clusters(); end
-
-  def green(*args); end
+  def green(); end
 
   def has_ansi?(*args); end
 
@@ -41525,13 +43565,11 @@ class String
 
   def pathmap_replace(patterns, &block); end
 
-  def red(*args); end
+  def red(); end
 
   def reset_ansi(*args); end
 
   def reset_color(*args); end
-
-  def reverse!(); end
 
   def shellescape(); end
 
@@ -41541,153 +43579,34 @@ class String
 
   def strip_color(*args); end
 
-  def succ!(); end
-
   def to_liquid(); end
-
-  def undump(); end
-
-  def unicode_normalize(*_); end
-
-  def unicode_normalize!(*_); end
-
-  def unicode_normalized?(*_); end
-
-  def unpack1(_); end
 
   def white(*args); end
 
   def yellow(*args); end
 end
 
-class String
-  extend ::JSON::Ext::Generator::GeneratorMethods::String::Extend
-end
-
 class StringIO
-  def length(); end
-
-  def truncate(_); end
+  def set_encoding_by_bom(); end
+  VERSION = ::T.let(nil, ::T.untyped)
 end
 
 class StringScanner
-  def <<(_); end
-
-  def [](_); end
-
-  def beginning_of_line?(); end
-
   def bol?(); end
 
-  def captures(); end
-
-  def charpos(); end
-
-  def check(_); end
-
-  def check_until(_); end
-
-  def clear(); end
-
-  def concat(_); end
-
-  def empty?(); end
-
-  def exist?(_); end
-
-  def get_byte(); end
-
-  def getbyte(); end
+  def fixed_anchor?(); end
 
   def initialize(*_); end
-
-  def match?(_); end
-
-  def matched(); end
-
-  def matched?(); end
-
-  def matched_size(); end
-
-  def peek(_); end
-
-  def peep(_); end
-
-  def pointer(); end
-
-  def pointer=(pointer); end
-
-  def pos(); end
-
-  def pos=(pos); end
-
-  def post_match(); end
-
-  def pre_match(); end
-
-  def reset(); end
-
-  def rest(); end
-
-  def rest?(); end
-
-  def rest_size(); end
-
-  def restsize(); end
-
-  def scan_full(_, _1, _2); end
-
-  def scan_until(_); end
-
-  def search_full(_, _1, _2); end
-
-  def size(); end
-
-  def skip(_); end
-
-  def skip_until(_); end
-
-  def string(); end
-
-  def string=(string); end
-
-  def terminate(); end
-
-  def unscan(); end
-
-  def values_at(*_); end
   Id = ::T.let(nil, ::T.untyped)
   Version = ::T.let(nil, ::T.untyped)
 end
 
-class StringScanner
-  def self.must_C_version(); end
-end
-
 class Struct
-  def [](_); end
+  def deconstruct(); end
 
-  def []=(_, _1); end
+  def deconstruct_keys(_); end
 
-  def dig(*_); end
-
-  def each_pair(); end
-
-  def length(); end
-
-  def members(); end
-
-  def select(*_); end
-
-  def size(); end
-
-  def to_a(); end
-
-  def to_h(); end
-
-  def values(); end
-
-  def values_at(*_); end
+  def filter(*_); end
 end
 
 Struct::Group = Etc::Group
@@ -41698,16 +43617,6 @@ Struct::Tms = Process::Tms
 
 class Symbol
   def to_liquid(); end
-end
-
-class SystemCallError
-  def errno(); end
-end
-
-class SystemExit
-  def status(); end
-
-  def success?(); end
 end
 
 class Tempfile
@@ -41726,12 +43635,1110 @@ end
 class Tempfile::Remover
 end
 
+class Thor
+  include ::Thor::Base
+  include ::Thor::Invocation
+  include ::Thor::Shell
+  def help(command=T.unsafe(nil), subcommand=T.unsafe(nil)); end
+  HELP_MAPPINGS = ::T.let(nil, ::T.untyped)
+  TEMPLATE_EXTNAME = ::T.let(nil, ::T.untyped)
+  THOR_RESERVED_WORDS = ::T.let(nil, ::T.untyped)
+end
+
+module Thor::Actions
+  def _cleanup_options_and_set(options, key); end
+
+  def _shared_configuration(); end
+
+  def action(instance); end
+
+  def add_file(destination, *args, &block); end
+
+  def add_link(destination, *args); end
+
+  def append_file(path, *args, &block); end
+
+  def append_to_file(path, *args, &block); end
+
+  def apply(path, config=T.unsafe(nil)); end
+
+  def behavior(); end
+
+  def behavior=(behavior); end
+
+  def chmod(path, mode, config=T.unsafe(nil)); end
+
+  def comment_lines(path, flag, *args); end
+
+  def copy_file(source, *args, &block); end
+
+  def create_file(destination, *args, &block); end
+
+  def create_link(destination, *args); end
+
+  def destination_root(); end
+
+  def destination_root=(root); end
+
+  def directory(source, *args, &block); end
+
+  def empty_directory(destination, config=T.unsafe(nil)); end
+
+  def find_in_source_paths(file); end
+
+  def get(source, *args, &block); end
+
+  def gsub_file(path, flag, *args, &block); end
+
+  def in_root(); end
+
+  def initialize(args=T.unsafe(nil), options=T.unsafe(nil), config=T.unsafe(nil)); end
+
+  def inject_into_class(path, klass, *args, &block); end
+
+  def inject_into_file(destination, *args, &block); end
+
+  def inject_into_module(path, module_name, *args, &block); end
+
+  def insert_into_file(destination, *args, &block); end
+
+  def inside(dir=T.unsafe(nil), config=T.unsafe(nil), &block); end
+
+  def link_file(source, *args); end
+
+  def prepend_file(path, *args, &block); end
+
+  def prepend_to_file(path, *args, &block); end
+
+  def relative_to_original_destination_root(path, remove_dot=T.unsafe(nil)); end
+
+  def remove_dir(path, config=T.unsafe(nil)); end
+
+  def remove_file(path, config=T.unsafe(nil)); end
+
+  def run(command, config=T.unsafe(nil)); end
+
+  def run_ruby_script(command, config=T.unsafe(nil)); end
+
+  def source_paths(); end
+
+  def template(source, *args, &block); end
+
+  def thor(command, *args); end
+
+  def uncomment_lines(path, flag, *args); end
+end
+
+class Thor::Actions::CapturableERB
+end
+
+class Thor::Actions::CapturableERB
+end
+
+module Thor::Actions::ClassMethods
+  def add_runtime_options!(); end
+
+  def source_paths(); end
+
+  def source_paths_for_search(); end
+
+  def source_root(path=T.unsafe(nil)); end
+end
+
+module Thor::Actions::ClassMethods
+end
+
+class Thor::Actions::CreateFile
+  def data(); end
+
+  def force_on_collision?(); end
+
+  def force_or_skip_or_conflict(force, skip, &block); end
+
+  def identical?(); end
+
+  def initialize(base, destination, data, config=T.unsafe(nil)); end
+
+  def on_conflict_behavior(&block); end
+
+  def render(); end
+end
+
+class Thor::Actions::CreateFile
+end
+
+class Thor::Actions::CreateLink
+end
+
+class Thor::Actions::CreateLink
+end
+
+class Thor::Actions::Directory
+  def execute!(); end
+
+  def file_level_lookup(previous_lookup); end
+
+  def files(lookup); end
+
+  def initialize(base, source, destination=T.unsafe(nil), config=T.unsafe(nil), &block); end
+
+  def source(); end
+end
+
+class Thor::Actions::Directory
+end
+
+class Thor::Actions::EmptyDirectory
+  def base(); end
+
+  def config(); end
+
+  def convert_encoded_instructions(filename); end
+
+  def destination(); end
+
+  def destination=(destination); end
+
+  def exists?(); end
+
+  def given_destination(); end
+
+  def initialize(base, destination, config=T.unsafe(nil)); end
+
+  def invoke!(); end
+
+  def invoke_with_conflict_check(&block); end
+
+  def on_conflict_behavior(); end
+
+  def on_file_clash_behavior(); end
+
+  def pretend?(); end
+
+  def relative_destination(); end
+
+  def revoke!(); end
+
+  def say_status(status, color); end
+end
+
+class Thor::Actions::EmptyDirectory
+end
+
+class Thor::Actions::InjectIntoFile
+  def behavior(); end
+
+  def flag(); end
+
+  def initialize(base, destination, data, config); end
+
+  def replace!(regexp, string, force); end
+
+  def replacement(); end
+
+  def say_status(behavior); end
+end
+
+class Thor::Actions::InjectIntoFile
+end
+
+module Thor::Actions
+  def self.included(base); end
+end
+
+class Thor::AmbiguousCommandError
+end
+
+class Thor::AmbiguousCommandError
+end
+
+Thor::AmbiguousTaskError = Thor::AmbiguousCommandError
+
+class Thor::Argument
+  def banner(); end
+
+  def default(); end
+
+  def default_banner(); end
+
+  def description(); end
+
+  def enum(); end
+
+  def human_name(); end
+
+  def initialize(name, options=T.unsafe(nil)); end
+
+  def name(); end
+
+  def required(); end
+
+  def required?(); end
+
+  def show_default?(); end
+
+  def type(); end
+
+  def usage(); end
+
+  def valid_type?(type); end
+
+  def validate!(); end
+  VALID_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Argument
+end
+
+class Thor::Arguments
+  def initialize(arguments=T.unsafe(nil)); end
+
+  def parse(args); end
+
+  def remaining(); end
+  NUMERIC = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Arguments
+  def self.parse(*args); end
+
+  def self.split(args); end
+end
+
+module Thor::Base
+  def args(); end
+
+  def args=(args); end
+
+  def initialize(args=T.unsafe(nil), local_options=T.unsafe(nil), config=T.unsafe(nil)); end
+
+  def options(); end
+
+  def options=(options); end
+
+  def parent_options(); end
+
+  def parent_options=(parent_options); end
+end
+
+module Thor::Base::ClassMethods
+  def all_commands(); end
+
+  def all_tasks(); end
+
+  def argument(name, options=T.unsafe(nil)); end
+
+  def arguments(); end
+
+  def attr_accessor(*_); end
+
+  def attr_reader(*_); end
+
+  def attr_writer(*_); end
+
+  def baseclass(); end
+
+  def basename(); end
+
+  def build_option(name, options, scope); end
+
+  def build_options(options, scope); end
+
+  def check_default_type(); end
+
+  def check_default_type!(); end
+
+  def check_default_type?(); end
+
+  def check_unknown_options(); end
+
+  def check_unknown_options!(); end
+
+  def check_unknown_options?(config); end
+
+  def class_option(name, options=T.unsafe(nil)); end
+
+  def class_options(options=T.unsafe(nil)); end
+
+  def class_options_help(shell, groups=T.unsafe(nil)); end
+
+  def commands(); end
+
+  def create_command(meth); end
+
+  def create_task(meth); end
+
+  def disable_required_check?(command_name); end
+
+  def dispatch(command, given_args, given_opts, config); end
+
+  def exit_on_failure?(); end
+
+  def find_and_refresh_command(name); end
+
+  def find_and_refresh_task(name); end
+
+  def from_superclass(method, default=T.unsafe(nil)); end
+
+  def group(name=T.unsafe(nil)); end
+
+  def handle_argument_error(command, error, args, arity); end
+
+  def handle_no_command_error(command, has_namespace=T.unsafe(nil)); end
+
+  def handle_no_task_error(command, has_namespace=T.unsafe(nil)); end
+
+  def inherited(klass); end
+
+  def initialize_added(); end
+
+  def is_thor_reserved_word?(word, type); end
+
+  def method_added(meth); end
+
+  def namespace(name=T.unsafe(nil)); end
+
+  def no_commands(); end
+
+  def no_tasks(); end
+
+  def print_options(shell, options, group_name=T.unsafe(nil)); end
+
+  def public_command(*names); end
+
+  def public_task(*names); end
+
+  def remove_argument(*names); end
+
+  def remove_class_option(*names); end
+
+  def remove_command(*names); end
+
+  def remove_task(*names); end
+
+  def start(given_args=T.unsafe(nil), config=T.unsafe(nil)); end
+
+  def stop_on_unknown_option?(command_name); end
+
+  def strict_args_position(); end
+
+  def strict_args_position!(); end
+
+  def strict_args_position?(config); end
+
+  def tasks(); end
+end
+
+module Thor::Base::ClassMethods
+end
+
+module Thor::Base
+  def self.included(base); end
+
+  def self.register_klass_file(klass); end
+
+  def self.shell(); end
+
+  def self.shell=(shell); end
+
+  def self.subclass_files(); end
+
+  def self.subclasses(); end
+end
+
+class Thor::Command
+  def formatted_usage(klass, namespace=T.unsafe(nil), subcommand=T.unsafe(nil)); end
+
+  def handle_argument_error?(instance, error, caller); end
+
+  def handle_no_method_error?(instance, error, caller); end
+
+  def hidden?(); end
+
+  def initialize(name, description, long_description, usage, options=T.unsafe(nil)); end
+
+  def local_method?(instance, name); end
+
+  def not_debugging?(instance); end
+
+  def private_method?(instance); end
+
+  def public_method?(instance); end
+
+  def required_options(); end
+
+  def run(instance, args=T.unsafe(nil)); end
+
+  def sans_backtrace(backtrace, caller); end
+  FILE_REGEXP = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Command
+end
+
+module Thor::CoreExt
+end
+
+class Thor::CoreExt::HashWithIndifferentAccess
+  def [](key); end
+
+  def []=(key, value); end
+
+  def convert_key(key); end
+
+  def delete(key); end
+
+  def fetch(key, *args); end
+
+  def initialize(hash=T.unsafe(nil)); end
+
+  def key?(key); end
+
+  def merge(other); end
+
+  def merge!(other); end
+
+  def method_missing(method, *args); end
+
+  def replace(other_hash); end
+
+  def reverse_merge(other); end
+
+  def reverse_merge!(other_hash); end
+
+  def values_at(*indices); end
+end
+
+class Thor::CoreExt::HashWithIndifferentAccess
+end
+
+class Thor::CoreExt::OrderedHash
+end
+
+class Thor::CoreExt::OrderedHash
+end
+
+module Thor::CoreExt
+end
+
+Thor::Correctable = DidYouMean::Correctable
+
+class Thor::DynamicCommand
+  def initialize(name, options=T.unsafe(nil)); end
+end
+
+class Thor::DynamicCommand
+end
+
+Thor::DynamicTask = Thor::DynamicCommand
+
+class Thor::Error
+end
+
+class Thor::Error
+end
+
+class Thor::Group
+  include ::Thor::Base
+  include ::Thor::Invocation
+  include ::Thor::Shell
+  def _invoke_for_class_method(klass, command=T.unsafe(nil), *args, &block); end
+end
+
+class Thor::Group
+  extend ::Thor::Base::ClassMethods
+  extend ::Thor::Invocation::ClassMethods
+  def self.banner(); end
+
+  def self.desc(description=T.unsafe(nil)); end
+
+  def self.get_options_from_invocations(group_options, base_options); end
+
+  def self.handle_argument_error(command, error, _args, arity); end
+
+  def self.help(shell); end
+
+  def self.invocation_blocks(); end
+
+  def self.invocations(); end
+
+  def self.invoke(*names, &block); end
+
+  def self.invoke_from_option(*names, &block); end
+
+  def self.printable_commands(*_); end
+
+  def self.printable_tasks(*_); end
+
+  def self.remove_invocation(*names); end
+
+  def self.self_command(); end
+
+  def self.self_task(); end
+end
+
+class Thor::HiddenCommand
+end
+
+class Thor::HiddenCommand
+end
+
+Thor::HiddenTask = Thor::HiddenCommand
+
+module Thor::Invocation
+  def _parse_initialization_options(args, opts, config); end
+
+  def _retrieve_class_and_command(name, sent_command=T.unsafe(nil)); end
+
+  def _retrieve_class_and_task(name, sent_command=T.unsafe(nil)); end
+
+  def _shared_configuration(); end
+
+  def current_command_chain(); end
+
+  def initialize(args=T.unsafe(nil), options=T.unsafe(nil), config=T.unsafe(nil), &block); end
+
+  def invoke(name=T.unsafe(nil), *args); end
+
+  def invoke_all(); end
+
+  def invoke_command(command, *args); end
+
+  def invoke_task(command, *args); end
+
+  def invoke_with_padding(*args); end
+end
+
+module Thor::Invocation::ClassMethods
+  def prepare_for_invocation(key, name); end
+end
+
+module Thor::Invocation::ClassMethods
+end
+
+module Thor::Invocation
+  def self.included(base); end
+end
+
+class Thor::InvocationError
+end
+
+class Thor::InvocationError
+end
+
+module Thor::LineEditor
+end
+
+class Thor::LineEditor::Basic
+  def initialize(prompt, options); end
+
+  def options(); end
+
+  def prompt(); end
+
+  def readline(); end
+end
+
+class Thor::LineEditor::Basic
+  def self.available?(); end
+end
+
+class Thor::LineEditor::Readline
+end
+
+class Thor::LineEditor::Readline::PathCompletion
+  def initialize(text); end
+
+  def matches(); end
+end
+
+class Thor::LineEditor::Readline::PathCompletion
+end
+
+class Thor::LineEditor::Readline
+end
+
+module Thor::LineEditor
+  def self.best_available(); end
+
+  def self.readline(prompt, options=T.unsafe(nil)); end
+end
+
+class Thor::MalformattedArgumentError
+end
+
+class Thor::MalformattedArgumentError
+end
+
+class Thor::NoKwargSpellChecker
+  def initialize(dictionary); end
+end
+
+class Thor::NoKwargSpellChecker
+end
+
+class Thor::Option
+  def aliases(); end
+
+  def array?(); end
+
+  def boolean?(); end
+
+  def dasherize(str); end
+
+  def dasherized?(); end
+
+  def group(); end
+
+  def hash?(); end
+
+  def hide(); end
+
+  def lazy_default(); end
+
+  def numeric?(); end
+
+  def string?(); end
+
+  def switch_name(); end
+
+  def undasherize(str); end
+
+  def usage(padding=T.unsafe(nil)); end
+
+  def validate_default_type!(); end
+  VALID_TYPES = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Option
+  def self.parse(key, value); end
+end
+
+class Thor::Options
+  def check_unknown!(); end
+
+  def current_is_switch?(); end
+
+  def current_is_switch_formatted?(); end
+
+  def initialize(hash_options=T.unsafe(nil), defaults=T.unsafe(nil), stop_on_unknown=T.unsafe(nil), disable_required_check=T.unsafe(nil)); end
+
+  def normalize_switch(arg); end
+
+  def parse_boolean(switch); end
+
+  def parse_peek(switch, option); end
+
+  def parsing_options?(); end
+
+  def switch?(arg); end
+
+  def switch_option(arg); end
+  EQ_RE = ::T.let(nil, ::T.untyped)
+  LONG_RE = ::T.let(nil, ::T.untyped)
+  OPTS_END = ::T.let(nil, ::T.untyped)
+  SHORT_NUM = ::T.let(nil, ::T.untyped)
+  SHORT_RE = ::T.let(nil, ::T.untyped)
+  SHORT_SQ_RE = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Options
+  def self.to_switches(options); end
+end
+
+module Thor::RakeCompat
+  include ::Rake::DSL
+  include ::Rake::FileUtilsExt
+  include ::FileUtils
+  include ::FileUtils::StreamUtils_
+end
+
+module Thor::RakeCompat
+  def self.included(base); end
+
+  def self.rake_classes(); end
+end
+
+class Thor::RequiredArgumentMissingError
+end
+
+class Thor::RequiredArgumentMissingError
+end
+
+module Thor::Sandbox
+end
+
+module Thor::Sandbox
+end
+
+module Thor::Shell
+  def _shared_configuration(); end
+
+  def ask(*args, &block); end
+
+  def error(*args, &block); end
+
+  def file_collision(*args, &block); end
+
+  def initialize(args=T.unsafe(nil), options=T.unsafe(nil), config=T.unsafe(nil)); end
+
+  def no?(*args, &block); end
+
+  def print_in_columns(*args, &block); end
+
+  def print_table(*args, &block); end
+
+  def print_wrapped(*args, &block); end
+
+  def say(*args, &block); end
+
+  def say_status(*args, &block); end
+
+  def set_color(*args, &block); end
+
+  def shell(); end
+
+  def shell=(shell); end
+
+  def terminal_width(*args, &block); end
+
+  def with_padding(); end
+
+  def yes?(*args, &block); end
+  SHELL_DELEGATED_METHODS = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Shell::Basic
+  def as_unicode(); end
+
+  def ask(statement, *args); end
+
+  def ask_filtered(statement, color, options); end
+
+  def ask_simply(statement, color, options); end
+
+  def base(); end
+
+  def base=(base); end
+
+  def can_display_colors?(); end
+
+  def dynamic_width(); end
+
+  def dynamic_width_stty(); end
+
+  def dynamic_width_tput(); end
+
+  def error(statement); end
+
+  def file_collision(destination); end
+
+  def file_collision_help(); end
+
+  def git_merge_tool(); end
+
+  def indent(count=T.unsafe(nil)); end
+
+  def is?(value); end
+
+  def lookup_color(color); end
+
+  def merge(destination, content); end
+
+  def merge_tool(); end
+
+  def mute(); end
+
+  def mute?(); end
+
+  def no?(statement, color=T.unsafe(nil)); end
+
+  def padding(); end
+
+  def padding=(value); end
+
+  def prepare_message(message, *color); end
+
+  def print_in_columns(array); end
+
+  def print_table(array, options=T.unsafe(nil)); end
+
+  def print_wrapped(message, options=T.unsafe(nil)); end
+
+  def quiet?(); end
+
+  def say(message=T.unsafe(nil), color=T.unsafe(nil), force_new_line=T.unsafe(nil)); end
+
+  def say_status(status, message, log_status=T.unsafe(nil)); end
+
+  def set_color(string, *_); end
+
+  def show_diff(destination, content); end
+
+  def stderr(); end
+
+  def stdout(); end
+
+  def terminal_width(); end
+
+  def truncate(string, width); end
+
+  def unix?(); end
+
+  def yes?(statement, color=T.unsafe(nil)); end
+  DEFAULT_TERMINAL_WIDTH = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Shell::Basic
+end
+
+class Thor::Shell::Color
+  def diff_lcs_loaded?(); end
+
+  def output_diff_line(diff); end
+
+  def set_color(string, *colors); end
+  BLACK = ::T.let(nil, ::T.untyped)
+  BLUE = ::T.let(nil, ::T.untyped)
+  BOLD = ::T.let(nil, ::T.untyped)
+  CLEAR = ::T.let(nil, ::T.untyped)
+  CYAN = ::T.let(nil, ::T.untyped)
+  GREEN = ::T.let(nil, ::T.untyped)
+  MAGENTA = ::T.let(nil, ::T.untyped)
+  ON_BLACK = ::T.let(nil, ::T.untyped)
+  ON_BLUE = ::T.let(nil, ::T.untyped)
+  ON_CYAN = ::T.let(nil, ::T.untyped)
+  ON_GREEN = ::T.let(nil, ::T.untyped)
+  ON_MAGENTA = ::T.let(nil, ::T.untyped)
+  ON_RED = ::T.let(nil, ::T.untyped)
+  ON_WHITE = ::T.let(nil, ::T.untyped)
+  ON_YELLOW = ::T.let(nil, ::T.untyped)
+  RED = ::T.let(nil, ::T.untyped)
+  WHITE = ::T.let(nil, ::T.untyped)
+  YELLOW = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Shell::Color
+end
+
+class Thor::Shell::HTML
+  def ask(statement, color=T.unsafe(nil)); end
+
+  def diff_lcs_loaded?(); end
+
+  def output_diff_line(diff); end
+
+  def set_color(string, *colors); end
+  BLACK = ::T.let(nil, ::T.untyped)
+  BLUE = ::T.let(nil, ::T.untyped)
+  BOLD = ::T.let(nil, ::T.untyped)
+  CYAN = ::T.let(nil, ::T.untyped)
+  GREEN = ::T.let(nil, ::T.untyped)
+  MAGENTA = ::T.let(nil, ::T.untyped)
+  ON_BLACK = ::T.let(nil, ::T.untyped)
+  ON_BLUE = ::T.let(nil, ::T.untyped)
+  ON_CYAN = ::T.let(nil, ::T.untyped)
+  ON_GREEN = ::T.let(nil, ::T.untyped)
+  ON_MAGENTA = ::T.let(nil, ::T.untyped)
+  ON_RED = ::T.let(nil, ::T.untyped)
+  ON_WHITE = ::T.let(nil, ::T.untyped)
+  ON_YELLOW = ::T.let(nil, ::T.untyped)
+  RED = ::T.let(nil, ::T.untyped)
+  WHITE = ::T.let(nil, ::T.untyped)
+  YELLOW = ::T.let(nil, ::T.untyped)
+end
+
+class Thor::Shell::HTML
+end
+
+module Thor::Shell
+end
+
+Thor::Task = Thor::Command
+
+class Thor::UndefinedCommandError
+  include ::DidYouMean::Correctable
+  def all_commands(); end
+
+  def command(); end
+
+  def initialize(command, all_commands, namespace); end
+end
+
+class Thor::UndefinedCommandError::SpellChecker
+  def corrections(); end
+
+  def error(); end
+
+  def initialize(error); end
+
+  def spell_checker(); end
+end
+
+class Thor::UndefinedCommandError::SpellChecker
+end
+
+class Thor::UndefinedCommandError
+end
+
+Thor::UndefinedTaskError = Thor::UndefinedCommandError
+
+class Thor::UnknownArgumentError
+  include ::DidYouMean::Correctable
+  def initialize(switches, unknown); end
+
+  def switches(); end
+
+  def unknown(); end
+end
+
+class Thor::UnknownArgumentError::SpellChecker
+  def corrections(); end
+
+  def error(); end
+
+  def initialize(error); end
+
+  def spell_checker(); end
+end
+
+class Thor::UnknownArgumentError::SpellChecker
+end
+
+class Thor::UnknownArgumentError
+end
+
+module Thor::Util
+end
+
+module Thor::Util
+  def self.camel_case(str); end
+
+  def self.escape_globs(path); end
+
+  def self.find_by_namespace(namespace); end
+
+  def self.find_class_and_command_by_namespace(namespace, fallback=T.unsafe(nil)); end
+
+  def self.find_class_and_task_by_namespace(namespace, fallback=T.unsafe(nil)); end
+
+  def self.globs_for(path); end
+
+  def self.load_thorfile(path, content=T.unsafe(nil), debug=T.unsafe(nil)); end
+
+  def self.namespace_from_thor_class(constant); end
+
+  def self.namespaces_in_content(contents, file=T.unsafe(nil)); end
+
+  def self.ruby_command(); end
+
+  def self.snake_case(str); end
+
+  def self.thor_classes_in(klass); end
+
+  def self.thor_root(); end
+
+  def self.thor_root_glob(); end
+
+  def self.user_home(); end
+end
+
+class Thor
+  extend ::Thor::Base::ClassMethods
+  extend ::Thor::Invocation::ClassMethods
+  def self.banner(command, namespace=T.unsafe(nil), subcommand=T.unsafe(nil)); end
+
+  def self.check_unknown_options!(options=T.unsafe(nil)); end
+
+  def self.command_help(shell, command_name); end
+
+  def self.default_command(meth=T.unsafe(nil)); end
+
+  def self.default_task(meth=T.unsafe(nil)); end
+
+  def self.desc(usage, description, options=T.unsafe(nil)); end
+
+  def self.disable_required_check(); end
+
+  def self.disable_required_check!(*command_names); end
+
+  def self.disable_required_check?(command); end
+
+  def self.dispatch(meth, given_args, given_opts, config); end
+
+  def self.dynamic_command_class(); end
+
+  def self.find_command_possibilities(meth); end
+
+  def self.find_task_possibilities(meth); end
+
+  def self.help(shell, subcommand=T.unsafe(nil)); end
+
+  def self.long_desc(long_description, options=T.unsafe(nil)); end
+
+  def self.map(mappings=T.unsafe(nil)); end
+
+  def self.method_option(name, options=T.unsafe(nil)); end
+
+  def self.method_options(options=T.unsafe(nil)); end
+
+  def self.normalize_command_name(meth); end
+
+  def self.normalize_task_name(meth); end
+
+  def self.option(name, options=T.unsafe(nil)); end
+
+  def self.options(options=T.unsafe(nil)); end
+
+  def self.package_name(name, _=T.unsafe(nil)); end
+
+  def self.printable_commands(all=T.unsafe(nil), subcommand=T.unsafe(nil)); end
+
+  def self.printable_tasks(all=T.unsafe(nil), subcommand=T.unsafe(nil)); end
+
+  def self.register(klass, subcommand_name, usage, description, options=T.unsafe(nil)); end
+
+  def self.retrieve_command_name(args); end
+
+  def self.retrieve_task_name(args); end
+
+  def self.stop_on_unknown_option(); end
+
+  def self.stop_on_unknown_option!(*command_names); end
+
+  def self.stop_on_unknown_option?(command); end
+
+  def self.subcommand(subcommand, subcommand_class); end
+
+  def self.subcommand_classes(); end
+
+  def self.subcommand_help(cmd); end
+
+  def self.subcommands(); end
+
+  def self.subtask(subcommand, subcommand_class); end
+
+  def self.subtask_help(cmd); end
+
+  def self.subtasks(); end
+
+  def self.task_help(shell, command_name); end
+end
+
 class Time
   def to_liquid(); end
 end
 
 class TracePoint
-  def event(); end
+  def eval_script(); end
+
+  def instruction_sequence(); end
+
+  def parameters(); end
+end
+
+class TracePoint
+  def self.new(*events); end
 end
 
 class TrueClass
@@ -41743,26 +44750,23 @@ module URI
   include ::URI::RFC2396_REGEXP
 end
 
-module URI::Escape
-  def decode(*arg); end
-
-  def encode(*arg); end
-
-  def escape(*arg); end
-
-  def unescape(*arg); end
-end
-
-class URI::FTP
-  def set_typecode(v); end
-
-  def typecode(); end
-
-  def typecode=(typecode); end
-end
-
 class URI::FTP
   def self.new2(user, password, host, port, path, typecode=T.unsafe(nil), arg_check=T.unsafe(nil)); end
+end
+
+class URI::File
+  def check_password(user); end
+
+  def check_user(user); end
+
+  def check_userinfo(user); end
+
+  def set_userinfo(v); end
+  COMPONENT = ::T.let(nil, ::T.untyped)
+  DEFAULT_PORT = ::T.let(nil, ::T.untyped)
+end
+
+class URI::File
 end
 
 class URI::LDAP
@@ -41800,23 +44804,7 @@ class URI::LDAP
 end
 
 class URI::MailTo
-  def headers(); end
-
-  def headers=(v); end
-
   def initialize(*arg); end
-
-  def set_headers(v); end
-
-  def set_to(v); end
-
-  def to(); end
-
-  def to=(v); end
-
-  def to_mailtext(); end
-
-  def to_rfc822text(); end
 end
 
 URI::Parser = URI::RFC2396_Parser
@@ -41824,25 +44812,7 @@ URI::Parser = URI::RFC2396_Parser
 URI::REGEXP = URI::RFC2396_REGEXP
 
 class URI::RFC2396_Parser
-  def escape(str, unsafe=T.unsafe(nil)); end
-
-  def extract(str, schemes=T.unsafe(nil)); end
-
   def initialize(opts=T.unsafe(nil)); end
-
-  def join(*uris); end
-
-  def make_regexp(schemes=T.unsafe(nil)); end
-
-  def parse(uri); end
-
-  def pattern(); end
-
-  def regexp(); end
-
-  def split(uri); end
-
-  def unescape(str, escaped=T.unsafe(nil)); end
 end
 
 class URI::RFC3986_Parser
@@ -41863,21 +44833,12 @@ end
 module URI
   extend ::URI::Escape
   def self.get_encoding(label); end
-
 end
 
 class UnboundMethod
   include ::MethodSource::SourceLocation::UnboundMethodExtensions
   include ::MethodSource::MethodExtensions
-  def clone(); end
-
-  def original_name(); end
-end
-
-class UncaughtThrowError
-  def tag(); end
-
-  def value(); end
+  def bind_call(*_); end
 end
 
 module Unicode
@@ -41909,331 +44870,24 @@ module UnicodeNormalize
 end
 
 module Warning
-  def warn(_); end
-end
-
-module Warning
   extend ::Warning
-end
+  def self.[](_); end
 
-YAML = Psych
-
-module Zlib
-  ASCII = ::T.let(nil, ::T.untyped)
-  BEST_COMPRESSION = ::T.let(nil, ::T.untyped)
-  BEST_SPEED = ::T.let(nil, ::T.untyped)
-  BINARY = ::T.let(nil, ::T.untyped)
-  DEFAULT_COMPRESSION = ::T.let(nil, ::T.untyped)
-  DEFAULT_STRATEGY = ::T.let(nil, ::T.untyped)
-  DEF_MEM_LEVEL = ::T.let(nil, ::T.untyped)
-  FILTERED = ::T.let(nil, ::T.untyped)
-  FINISH = ::T.let(nil, ::T.untyped)
-  FIXED = ::T.let(nil, ::T.untyped)
-  FULL_FLUSH = ::T.let(nil, ::T.untyped)
-  HUFFMAN_ONLY = ::T.let(nil, ::T.untyped)
-  MAX_MEM_LEVEL = ::T.let(nil, ::T.untyped)
-  MAX_WBITS = ::T.let(nil, ::T.untyped)
-  NO_COMPRESSION = ::T.let(nil, ::T.untyped)
-  NO_FLUSH = ::T.let(nil, ::T.untyped)
-  OS_AMIGA = ::T.let(nil, ::T.untyped)
-  OS_ATARI = ::T.let(nil, ::T.untyped)
-  OS_CODE = ::T.let(nil, ::T.untyped)
-  OS_CPM = ::T.let(nil, ::T.untyped)
-  OS_MACOS = ::T.let(nil, ::T.untyped)
-  OS_MSDOS = ::T.let(nil, ::T.untyped)
-  OS_OS2 = ::T.let(nil, ::T.untyped)
-  OS_QDOS = ::T.let(nil, ::T.untyped)
-  OS_RISCOS = ::T.let(nil, ::T.untyped)
-  OS_TOPS20 = ::T.let(nil, ::T.untyped)
-  OS_UNIX = ::T.let(nil, ::T.untyped)
-  OS_UNKNOWN = ::T.let(nil, ::T.untyped)
-  OS_VMCMS = ::T.let(nil, ::T.untyped)
-  OS_VMS = ::T.let(nil, ::T.untyped)
-  OS_WIN32 = ::T.let(nil, ::T.untyped)
-  OS_ZSYSTEM = ::T.let(nil, ::T.untyped)
-  RLE = ::T.let(nil, ::T.untyped)
-  SYNC_FLUSH = ::T.let(nil, ::T.untyped)
-  TEXT = ::T.let(nil, ::T.untyped)
-  UNKNOWN = ::T.let(nil, ::T.untyped)
-  VERSION = ::T.let(nil, ::T.untyped)
-  ZLIB_VERSION = ::T.let(nil, ::T.untyped)
-end
-
-class Zlib::BufError
-end
-
-class Zlib::BufError
-end
-
-class Zlib::DataError
-end
-
-class Zlib::DataError
+  def self.[]=(_, _1); end
 end
 
 class Zlib::Deflate
-  def <<(_); end
-
-  def deflate(*_); end
-
-  def flush(*_); end
-
   def initialize(*_); end
-
-  def params(_, _1); end
-
-  def set_dictionary(_); end
-end
-
-class Zlib::Deflate
-  def self.deflate(*_); end
-end
-
-class Zlib::Error
-end
-
-class Zlib::Error
-end
-
-class Zlib::GzipFile
-  def close(); end
-
-  def closed?(); end
-
-  def comment(); end
-
-  def crc(); end
-
-  def finish(); end
-
-  def level(); end
-
-  def mtime(); end
-
-  def orig_name(); end
-
-  def os_code(); end
-
-  def sync(); end
-
-  def sync=(sync); end
-
-  def to_io(); end
-end
-
-class Zlib::GzipFile::CRCError
-end
-
-class Zlib::GzipFile::CRCError
-end
-
-class Zlib::GzipFile::Error
-  def input(); end
-end
-
-class Zlib::GzipFile::Error
-end
-
-class Zlib::GzipFile::LengthError
-end
-
-class Zlib::GzipFile::LengthError
-end
-
-class Zlib::GzipFile::NoFooter
-end
-
-class Zlib::GzipFile::NoFooter
-end
-
-class Zlib::GzipFile
-  def self.wrap(*_); end
 end
 
 class Zlib::GzipReader
-  include ::Enumerable
-  def bytes(); end
-
-  def each(*_, &blk); end
-
-  def each_byte(); end
-
-  def each_char(); end
-
-  def each_line(*_); end
-
-  def eof(); end
-
-  def eof?(); end
-
-  def external_encoding(); end
-
-  def getbyte(); end
-
-  def getc(); end
-
   def initialize(*_); end
-
-  def lineno(); end
-
-  def lineno=(lineno); end
-
-  def lines(*_); end
-
-  def pos(); end
-
-  def read(*_); end
-
-  def readbyte(); end
-
-  def readchar(); end
-
-  def readpartial(*_); end
-
-  def rewind(); end
-
-  def tell(); end
-
-  def ungetbyte(_); end
-
-  def ungetc(_); end
-
-  def unused(); end
-end
-
-class Zlib::GzipReader
 end
 
 class Zlib::GzipWriter
-  def <<(_); end
-
-  def comment=(comment); end
-
-  def flush(*_); end
-
   def initialize(*_); end
-
-  def mtime=(mtime); end
-
-  def orig_name=(orig_name); end
-
-  def pos(); end
-
-  def tell(); end
-
-  def write(*_); end
-end
-
-class Zlib::GzipWriter
 end
 
 class Zlib::Inflate
-  def <<(_); end
-
-  def add_dictionary(_); end
-
-  def inflate(_); end
-
   def initialize(*_); end
-
-  def set_dictionary(_); end
-
-  def sync(_); end
-
-  def sync_point?(); end
-end
-
-class Zlib::Inflate
-  def self.inflate(_); end
-end
-
-class Zlib::MemError
-end
-
-class Zlib::MemError
-end
-
-class Zlib::NeedDict
-end
-
-class Zlib::NeedDict
-end
-
-class Zlib::StreamEnd
-end
-
-class Zlib::StreamEnd
-end
-
-class Zlib::StreamError
-end
-
-class Zlib::StreamError
-end
-
-class Zlib::VersionError
-end
-
-class Zlib::VersionError
-end
-
-class Zlib::ZStream
-  def adler(); end
-
-  def avail_in(); end
-
-  def avail_out(); end
-
-  def avail_out=(avail_out); end
-
-  def close(); end
-
-  def closed?(); end
-
-  def data_type(); end
-
-  def end(); end
-
-  def ended?(); end
-
-  def finish(); end
-
-  def finished?(); end
-
-  def flush_next_in(); end
-
-  def flush_next_out(); end
-
-  def reset(); end
-
-  def stream_end?(); end
-
-  def total_in(); end
-
-  def total_out(); end
-end
-
-class Zlib::ZStream
-end
-
-module Zlib
-  def self.adler32(*_); end
-
-  def self.adler32_combine(_, _1, _2); end
-
-  def self.crc32(*_); end
-
-  def self.crc32_combine(_, _1, _2); end
-
-  def self.crc_table(); end
-
-  def self.deflate(*_); end
-
-  def self.gunzip(_); end
-
-  def self.gzip(*_); end
-
-  def self.inflate(_); end
-
-  def self.zlib_version(); end
 end

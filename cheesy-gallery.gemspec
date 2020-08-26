@@ -13,8 +13,6 @@ Gem::Specification.new do |spec|
   spec.summary       = 'A jekyll plugin for building galleries.'
   spec.homepage      = 'https://github.com/DavidS/cheesy-gallery'
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata['homepage_uri'] = spec.homepage
     spec.metadata['source_code_uri'] = 'https://github.com/DavidS/cheesy-gallery'
@@ -22,6 +20,8 @@ Gem::Specification.new do |spec|
   else
     raise 'RubyGems 2.0 or newer is required to set advanced metadata.'
   end
+
+  spec.required_ruby_version = '>= 2.7.0'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'

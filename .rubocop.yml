@@ -1,12 +1,13 @@
 AllCops:
+  TargetRubyVersion: "2.7"
   Exclude:
-    - 'spec/fixtures/**/*'
-    - 'vendor/**/*'
+    - "spec/fixtures/**/*"
+    - "vendor/**/*"
 
 # This is part of jekylls loading convention
 Naming/FileName:
   Exclude:
-    - 'lib/cheesy-gallery.rb'
+    - "lib/cheesy-gallery.rb"
 
 # A more modern default
 Layout/LineLength:
@@ -15,7 +16,7 @@ Layout/LineLength:
 # don't deviate from the default template too much
 Style/GuardClause:
   Exclude:
-    - 'cheesy-gallery.gemspec'
+    - "cheesy-gallery.gemspec"
 
 # Metrics, excludes complexity and sizing metrics for now, as ruby's defaults are very strict
 Metrics/AbcSize:
@@ -25,7 +26,7 @@ Metrics/BlockLength:
   Description: rspec uses long describe blocks, so allow long blocks under spec/
   Enabled: False
   Exclude:
-    - 'spec/**/*.rb'
+    - "spec/**/*.rb"
 
 Metrics/ClassLength:
   Enabled: False
@@ -45,7 +46,7 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: False
 
-  # Style Cops
+# Style Cops
 Style/AsciiComments:
   Description: Names, non-english speaking communities.
   Enabled: False
