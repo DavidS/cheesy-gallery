@@ -36,4 +36,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/DavidS
 
 ## Code of Conduct
 
-Everyone interacting in the Cheesy::Gallery project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/DavidS/cheesy-gallery/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Cheesy::Gallery project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/DavidS/cheesy-gallery/blob/main/CODE_OF_CONDUCT.md).
