@@ -48,7 +48,7 @@ class CheesyGallery::Generator < Jekyll::Generator
       collection.files.each { |e| (files_by_dirname[File.dirname(e.relative_path)] ||= []) << e }
 
       # and galleries by their relative_path, after adding the Documents
-      # only galleries named `index` can show up as parents
+      # only documents named `index` can show up as parent galleries
       galleries_by_dirname = {}
       collection.docs.find_all { |e| e.basename_without_ext == 'index' }.each { |e| galleries_by_dirname[File.dirname(e.relative_path)] = e }
 
