@@ -16,7 +16,7 @@ install: bundle install
 
 jobs:
   include:
-  - env: CHECK=rspec
+  - env: CHECK=ruby
     script:
     - bundle exec rake
   - env: CHECK=sorbet
