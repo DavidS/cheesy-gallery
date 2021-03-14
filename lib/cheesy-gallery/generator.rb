@@ -66,6 +66,8 @@ class CheesyGallery::Generator < Jekyll::Generator
 
         # attach images
         doc.data['images'] = files_by_dirname[gallery_path]
+        doc.data['thumbnail_source'] = doc.data['images']&.select { |i| i.name == 'thumbnail.jpg' }&.first || doc.data['images']&.first
+        doc.data['images']&.reject! { |i| i.name == 'thumbnail.jpg' }
 
         # attach parent
         parent = if gallery_path == collection.relative_directory
@@ -77,13 +79,13 @@ class CheesyGallery::Generator < Jekyll::Generator
         doc.data['parent'] = parent
         galleries_by_parent[parent] << doc
 
-        # add thumbnail when there are images
-        next if doc.data['images'].nil?
+        # only add thumbnail when there is a thumbnail source
+        next unless doc.data['thumbnail_source']
 
         collection.files << doc.data['thumbnail'] = CheesyGallery::ImageThumb.new(
           site,
           collection,
-          doc.data['images'].first,
+          doc.data['thumbnail_source'],
           '_index.jpg',
           collection.metadata['gallery_thumbnail_size'] || 72,
           collection.metadata['gallery_thumbnail_size'] || 72,
