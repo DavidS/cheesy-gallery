@@ -8,7 +8,6 @@ rvm:
 
 # adopt future bundler 3 config style
 before_install:
-  - bundle config set deployment 'true' # expect Gemfile.lock to be up-to-date for testing
   - bundle config set path ${BUNDLE_PATH:-vendor/bundle}
   - bundle config set jobs 3
   - bundle config set retry 3
