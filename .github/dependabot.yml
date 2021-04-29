@@ -1,0 +1,58 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: bundler
+    versions:
+    - "> 1.17"
+  - dependency-name: sorbet-runtime
+    versions:
+    - 0.5.6318
+    - 0.5.6324
+    - 0.5.6330
+    - 0.5.6332
+    - 0.5.6336
+  - dependency-name: sorbet
+    versions:
+    - 0.5.6318
+    - 0.5.6324
+    - 0.5.6330
+    - 0.5.6332
+    - 0.5.6336
+  - dependency-name: rubocop
+    versions:
+    - 1.10.0
+    - 1.11.0
+    - 1.9.0
+    - 1.9.1
+  - dependency-name: codecov
+    versions:
+    - 0.4.2
+    - 0.4.3
+    - 0.5.0
+  - dependency-name: rmagick
+    versions:
+    - 4.2.1
+    - 4.2.2
+  - dependency-name: pry
+    versions:
+    - 0.14.0
+  - dependency-name: rake
+    versions:
+    - 13.0.3
+  - dependency-name: jekyll
+    versions:
+    - 4.2.0
+- package-ecosystem: bundler
+  directory: "/spec/fixtures/test_site"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: jekyll
+    versions:
+    - 4.2.0
