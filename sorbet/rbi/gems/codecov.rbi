@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/codecov/all/codecov.rbi
 #
-# codecov-0.5.1
+# codecov-0.5.2
 
 module Codecov
   extend Codecov::Configuration

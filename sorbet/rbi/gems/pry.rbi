@@ -7,7 +7,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/new/master?filename=lib/pry/all/pry.rbi
 #
-# pry-0.14.0
+# pry-0.14.1
 
 class Pry
   def add_sticky_local(name, &block); end

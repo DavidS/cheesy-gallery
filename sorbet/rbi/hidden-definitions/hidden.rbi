@@ -2503,8 +2503,6 @@ module Bundler
   def self.unbundled_exec(*args); end
 
   def self.unbundled_system(*args); end
-
-  def self.with_unbundled_env(); end
 end
 
 module CGI::HtmlExtension
@@ -2955,6 +2953,7 @@ class Codecov::Uploader
   BITRISE = ::T.let(nil, ::T.untyped)
   BUILDKITE = ::T.let(nil, ::T.untyped)
   CIRCLE = ::T.let(nil, ::T.untyped)
+  CIRRUS = ::T.let(nil, ::T.untyped)
   CODEBUILD = ::T.let(nil, ::T.untyped)
   CODESHIP = ::T.let(nil, ::T.untyped)
   DRONEIO = ::T.let(nil, ::T.untyped)
@@ -8710,8 +8709,6 @@ module OpenSSL::SSL
 end
 
 class OpenSSL::SSL::SSLContext
-  def add_certificate(*_); end
-
   def alpn_protocols(); end
 
   def alpn_protocols=(alpn_protocols); end
@@ -8804,8 +8801,6 @@ module Parser
   VERSION = ::T.let(nil, ::T.untyped)
 end
 
-Parser::CurrentRuby = Parser::Ruby27
-
 class Parser::Diagnostic
   LEVELS = ::T.let(nil, ::T.untyped)
 end
@@ -8842,12 +8837,6 @@ class Parser::Rewriter
 end
 
 class Parser::Ruby24
-  Racc_arg = ::T.let(nil, ::T.untyped)
-  Racc_debug_parser = ::T.let(nil, ::T.untyped)
-  Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
-end
-
-class Parser::Ruby27
   Racc_arg = ::T.let(nil, ::T.untyped)
   Racc_debug_parser = ::T.let(nil, ::T.untyped)
   Racc_token_to_s_table = ::T.let(nil, ::T.untyped)
@@ -9101,6 +9090,9 @@ class PublicSuffix::List
 end
 
 class REXML::Parsers::BaseParser
+  EXTERNAL_ID_PUBLIC = ::T.let(nil, ::T.untyped)
+  EXTERNAL_ID_SYSTEM = ::T.let(nil, ::T.untyped)
+  PUBLIC_ID = ::T.let(nil, ::T.untyped)
   QNAME = ::T.let(nil, ::T.untyped)
   QNAME_STR = ::T.let(nil, ::T.untyped)
 end
@@ -10117,14 +10109,6 @@ class RuboCop::CLI::Command::SuggestExtensions
   INCLUDED_FORMATTERS = ::T.let(nil, ::T.untyped)
 end
 
-class RuboCop::CommentConfig
-  COMMENT_DIRECTIVE_REGEXP = ::T.let(nil, ::T.untyped)
-  COPS_PATTERN = ::T.let(nil, ::T.untyped)
-  COP_NAMES_PATTERN = ::T.let(nil, ::T.untyped)
-  COP_NAME_PATTERN = ::T.let(nil, ::T.untyped)
-  REDUNDANT_DISABLE = ::T.let(nil, ::T.untyped)
-end
-
 class RuboCop::Config
   DEFAULT_RAILS_VERSION = ::T.let(nil, ::T.untyped)
 end
@@ -10193,6 +10177,8 @@ end
 class RuboCop::Cop::Bundler::GemComment
   CHECKED_OPTIONS_CONFIG = ::T.let(nil, ::T.untyped)
   MSG = ::T.let(nil, ::T.untyped)
+  RESTRICTIVE_VERSION_PATTERN = ::T.let(nil, ::T.untyped)
+  RESTRICTIVE_VERSION_SPECIFIERS_OPTION = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
   VERSION_SPECIFIERS_OPTION = ::T.let(nil, ::T.untyped)
 end
@@ -10562,6 +10548,10 @@ end
 class RuboCop::Cop::Layout::ParameterAlignment
   ALIGN_PARAMS_MSG = ::T.let(nil, ::T.untyped)
   FIXED_INDENT_MSG = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::Cop::Layout::RedundantLineBreak
+  MSG = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Cop::Layout::RescueEnsureAlignment
@@ -11145,6 +11135,7 @@ end
 
 class RuboCop::Cop::Lint::SymbolConversion
   MSG = ::T.let(nil, ::T.untyped)
+  MSG_CONSISTENCY = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
@@ -12287,6 +12278,12 @@ class RuboCop::Cop::Style::StderrPuts
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
 end
 
+class RuboCop::Cop::Style::StringChars
+  BAD_ARGUMENTS = ::T.let(nil, ::T.untyped)
+  MSG = ::T.let(nil, ::T.untyped)
+  RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
+end
+
 class RuboCop::Cop::Style::StringConcatenation
   MSG = ::T.let(nil, ::T.untyped)
   RESTRICT_ON_SEND = ::T.let(nil, ::T.untyped)
@@ -12496,6 +12493,14 @@ end
 
 module RuboCop::Cop::VisibilityHelp
   VISIBILITY_SCOPES = ::T.let(nil, ::T.untyped)
+end
+
+class RuboCop::DirectiveComment
+  COPS_PATTERN = ::T.let(nil, ::T.untyped)
+  COP_NAMES_PATTERN = ::T.let(nil, ::T.untyped)
+  COP_NAME_PATTERN = ::T.let(nil, ::T.untyped)
+  DIRECTIVE_COMMENT_REGEXP = ::T.let(nil, ::T.untyped)
+  REDUNDANT_COP = ::T.let(nil, ::T.untyped)
 end
 
 class RuboCop::Formatter::ClangStyleFormatter
