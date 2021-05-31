@@ -32,7 +32,7 @@ class CheesyGallery::Generator < Jekyll::Generator
       end
 
       # create replacements for the files with additional functionality
-      image_files = collection.files.map do |f|
+      image_files = collection.files.sort { |a, b| a.name <=> b.name }.map do |f|
         CheesyGallery::ImageFile.new(
           site, collection, f,
           max_size: collection.metadata['max_size'] || '1920x1080',
