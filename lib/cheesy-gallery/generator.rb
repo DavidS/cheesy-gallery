@@ -36,7 +36,7 @@ class CheesyGallery::Generator < Jekyll::Generator
         CheesyGallery::ImageFile.new(
           site, collection, f,
           max_size: collection.metadata['max_size'] || '1920x1080',
-          quality: collection.metadata['quality'] || 50
+          quality: collection.metadata['quality'] || 85
         )
       end
 
