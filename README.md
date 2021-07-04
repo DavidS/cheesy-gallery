@@ -44,6 +44,12 @@ If you want an inline display of your photos, I recommend [glightbox](https://gi
 
 at the bottom of the layout.
 
+## Caching
+
+This plugin uses aggressive caching to keep render times short.
+If you need to re-render images for any reason, remove the `.jekyll-cache` folder or change the `_config.yml` file.
+See the [Cache API tutorial](https://jekyllrb.com/tutorials/cache-api/) for some background.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment. There is also a test site in `spec/fixtures/test_site` that you can use to try out changes.
