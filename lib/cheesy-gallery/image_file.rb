@@ -40,6 +40,11 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
     img.change_geometry!(@max_size) do |cols, rows, i|
       i.resize!(cols, rows)
     end
+    # follow recommendations from https://stackoverflow.com/a/7262050/4918 to get better compression
+    img.interlace = Magick::PlaneInterlace
+    # but skip the blur to avoid too many changes to the data
+    # img.gaussian_blur(0.05)
+    img.strip!
     # workaround weird {self} initialisation pattern
     quality = @quality
     img.write(path) { self.quality = quality }
