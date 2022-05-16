@@ -47,6 +47,6 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
     img.strip!
     # workaround weird {self} initialisation pattern
     quality = @quality
-    img.write(path) { self.quality = quality }
+    img.write(path) { |image| image.quality = quality }
   end
 end
