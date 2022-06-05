@@ -1,20 +1,22 @@
-name: Publish Gem
-on:
-  push:
-    tags:
-      - "*"
-  workflow_dispatch:
+# Doesn't work because of rubygems.org MFA requirements for API access
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.0"
-          bundler-cache: true
-      - uses: dawidd6/action-publish-gem@v1
-        with:
-          api_key: ${{secrets.RUBYGEMS_API_KEY}}
-          github_token: ${{secrets.GITHUB_TOKEN}}
+# name: Publish Gem
+# on:
+#   push:
+#     tags:
+#       - "*"
+#   workflow_dispatch:
+
+# jobs:
+#   publish:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: "3.0"
+#           bundler-cache: true
+#       - uses: dawidd6/action-publish-gem@v1
+#         with:
+#           api_key: ${{secrets.RUBYGEMS_API_KEY}}
+#           github_token: ${{secrets.GITHUB_TOKEN}}
