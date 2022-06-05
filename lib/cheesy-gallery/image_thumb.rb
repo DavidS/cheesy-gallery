@@ -21,6 +21,6 @@ class CheesyGallery::ImageThumb < CheesyGallery::BaseImageFile
   sig { params(img: Magick::ImageList, path: String).void }
   def process_and_write(img, path)
     img.resize_to_fill!(height, width)
-    img.write(path) {}
+    img.write(path)
   end
 end
