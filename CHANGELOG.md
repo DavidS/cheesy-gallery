@@ -1,3 +1,8 @@
+# 1.1.1
+
+* Address some deprecations warnings thanks to @pdxmph
+* CI housekeeping: move to GHA from travis
+
 # 1.1.0
 
 * Adds aggressive caching to reduce rebuild times.
