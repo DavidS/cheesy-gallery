@@ -8,7 +8,6 @@ require 'cheesy-gallery/image_thumb'
 
 # The generator modifies the `site` data structure to contain all data necessary by the layouts and tags to render the galleries
 class CheesyGallery::Generator < Jekyll::Generator
-
   def generate(site)
     @site = site
     (site.collections.values.find_all { |c| c.metadata['cheesy-gallery'] } || [site.collections['galleries']]).compact.each do |collection|
