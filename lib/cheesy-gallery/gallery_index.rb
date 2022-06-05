@@ -1,4 +1,3 @@
-# typed: strict
 # frozen_string_literal: true
 
 # This Document subclass is used to stand in for gallery indices which do not have a `index.html`

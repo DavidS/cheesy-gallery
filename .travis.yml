@@ -19,9 +19,6 @@ jobs:
   - env: CHECK=ruby
     script:
     - bundle exec rake
-  - env: CHECK=sorbet
-    script:
-    - bundle exec srb tc --ignore=/vendor
   - env: CHECK=build
     gemfile: spec/fixtures/test_site/Gemfile
     script:
