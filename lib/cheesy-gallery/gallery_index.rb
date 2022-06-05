@@ -5,7 +5,7 @@ class CheesyGallery::GalleryIndex < Jekyll::Document
   DEFAULT_CONTENT = "This page intentionally left plank.\n"
 
   # skip reading content, as there is by definition no backing file for this
-  def read_content(_opts)
+  def read_content(_opts = nil)
     self.content = DEFAULT_CONTENT
   end
 end
