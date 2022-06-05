@@ -2,7 +2,6 @@
 
 require 'jekyll'
 require 'fileutils'
-require 'sorbet-runtime'
 
 # Main holder of all things cheesy and gallery-y
 module CheesyGallery
