@@ -117,5 +117,5 @@ Jekyll docs/source:
       `:site, :post_read` or `:documents, :pre_render`) would be a
       cleaner integration point than mutating collections in a
       `Generator`.
-- [ ] Document findings in `docs/` (e.g. `docs/jekyll-api-review.md`)
-      and update `CLAUDE.md` / `docs/index.md` to link it.
+- [x] Document findings in `docs/jekyll-api-review.md` and link it from
+      `docs/index.md` (2026-05-10).
