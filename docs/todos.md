@@ -5,7 +5,7 @@ Newer items at the bottom; tick items off in PRs as they land.
 
 ## 1. Upgrade Jekyll
 
-- [ ] Bump test fixture (`spec/fixtures/test_site/Gemfile.lock`) from
+- [x] Bump test fixture (`spec/fixtures/test_site/Gemfile.lock`) from
       Jekyll **4.3.2** to **4.4.1** (current latest, 2025-01-29).
 - [ ] Verify `~> 4.0` constraint in `cheesy-gallery.gemspec` still
       makes sense; consider tightening to `~> 4.4` if 4.4 introduces APIs
@@ -13,9 +13,14 @@ Newer items at the bottom; tick items off in PRs as they land.
       intentional.
 - [ ] Close / supersede stale dependabot PRs #410 (4.3.3) and #401-era
       bumps in favour of going straight to 4.4.1.
-- [ ] Re-run the fixture build under the new Jekyll and confirm
+- [x] Re-run the fixture build under the new Jekyll and confirm
       `Jekyll::StaticFile`, `Jekyll::Document`, and `Jekyll::Cache`
-      surface used by the plugin still match (see §5 below).
+      surface used by the plugin still match (see §5 below). _Surfaced
+      a latent bug: since Jekyll 4.3, `Collection#read` snapshots
+      `collection.files` into `site.static_files`, so the generator's
+      in-place mutations no longer reach the writer. Fixed in
+      `lib/cheesy-gallery/generator.rb` by re-syncing `site.static_files`
+      at the end of each per-collection block._
 
 ## 2. Upgrade Ruby
 
@@ -31,20 +36,29 @@ Newer items at the bottom; tick items off in PRs as they land.
 
 ## 3. Upgrade other dependencies
 
-- [ ] **rmagick** — gemspec already allows `>= 4, < 6`; bump test_site
+- [x] **rmagick** — gemspec already allows `>= 4, < 6`; bump test_site
       lock to the latest 5.x and confirm `change_geometry!`,
       `resize_to_fill!`, `Magick::Image.ping`, and `interlace=` still
       work as used in `lib/cheesy-gallery/image_file.rb` and
-      `image_thumb.rb`.
-- [ ] **bundler / rake / rspec / rubocop / pry / codecov** — refresh
+      `image_thumb.rb`. _Bumped to rmagick 5.5.0; fixture build
+      produces the expected `*_thumb.jpg` / `*_index.jpg`._
+- [x] **bundler / rake / rspec / rubocop / pry / codecov** — refresh
       development dependencies to current majors; drop `codecov` if
-      coverage uploading is no longer wired up.
-- [ ] **test_site fixture deps** — accept or rebase open dependabot
+      coverage uploading is no longer wired up. _CI never uploaded
+      coverage; dropped `codecov` from the gemspec and `spec_helper.rb`.
+      Loosened the `bundler` dev dep to `>= 2.1`. The other constraints
+      (`rake ~> 13.0`, `rspec ~> 3.0`) already cover current majors._
+- [x] **test_site fixture deps** — accept or rebase open dependabot
       PRs:
-  - [ ] #408 rake 13.0.6 → 13.1.0 (and onward to current)
-  - [ ] #409 tzinfo-data 1.2023.3 → 1.2023.4 (and onward)
-  - [ ] anything else dependabot has filed since.
-- [ ] After dependency churn, regenerate `Gemfile.lock`s and confirm
+  - [x] #408 rake 13.0.6 → 13.1.0 (and onward to current). _Bumped to
+        13.4.2._
+  - [x] #409 tzinfo-data 1.2023.3 → 1.2023.4 (and onward). _Bumped to
+        1.2026.2._
+  - [x] anything else dependabot has filed since. _`bundle update`
+        also moved jekyll, jekyll-feed, jekyll-seo-tag, minima, kramdown,
+        rouge, listen, sass-embedded, et al. to current within
+        constraints._
+- [x] After dependency churn, regenerate `Gemfile.lock`s and confirm
       both `rake spec` and the fixture `jekyll build` pass.
 
 ## 4. Develop a minimal spec suite
@@ -77,9 +91,15 @@ The plugin reaches deeper into Jekyll internals than a typical plugin
 using `Jekyll::Cache` directly). Audit current usage against current
 Jekyll docs/source:
 
-- [ ] `Jekyll::Generator` lifecycle: confirm ordering relative to other
+- [x] `Jekyll::Generator` lifecycle: confirm ordering relative to other
       generators and that mutating `collection.files` /
       `collection.docs` from inside `generate` is still supported.
+      _Mutating `collection.files` is no longer enough since Jekyll
+      4.3.0: `Collection#read` snapshots the files into
+      `site.static_files`, and `Site#each_site_file` writes from that
+      array. The generator now re-syncs `site.static_files` after
+      mutating `collection.files`. Re-evaluate whether moving to a
+      `:site, :post_read` hook (see below) would be cleaner._
 - [ ] `Jekyll::StaticFile`: review the `write` override in
       `lib/cheesy-gallery/base_image_file.rb` against current upstream
       `lib/jekyll/static_file.rb` — the inline comment already calls
