@@ -24,15 +24,16 @@ Newer items at the bottom; tick items off in PRs as they land.
 
 ## 2. Upgrade Ruby
 
-- [ ] Bump `required_ruby_version` in `cheesy-gallery.gemspec` from
+- [x] Bump `required_ruby_version` in `cheesy-gallery.gemspec` from
       `>= 2.6.0` to a currently-supported floor (`>= 3.2` recommended).
-- [ ] Replace CI matrix in `.github/workflows/tests.yaml` (currently
+- [x] Replace CI matrix in `.github/workflows/tests.yaml` (currently
       `2.7`, `3.0`, `3.1` — all EOL) with the supported lines:
-      `3.2`, `3.3`, `3.4`, `4.0`.
-- [ ] Update Rubocop's `TargetRubyVersion` in `.rubocop.yml` to match
+      `3.2`, `3.3`, `3.4`, `4.0`. _Also bumped `actions/checkout` to v4._
+- [x] Update Rubocop's `TargetRubyVersion` in `.rubocop.yml` to match
       the new floor.
 - [ ] Re-run `rake` and the fixture `jekyll build` on each version;
-      address any new cop offences or deprecation warnings.
+      address any new cop offences or deprecation warnings. _Local run
+      under Ruby 3.3 is clean; awaiting CI matrix run for the rest._
 
 ## 3. Upgrade other dependencies
 
