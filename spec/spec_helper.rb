@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-
-require 'simplecov'
-SimpleCov.start
-
-require 'codecov'
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
-
 require 'cheesy-gallery'
 
 RSpec.configure do |config|
