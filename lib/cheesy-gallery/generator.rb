@@ -13,6 +13,10 @@ class CheesyGallery::Generator < Jekyll::Generator
     (site.collections.values.find_all { |c| c.metadata['cheesy-gallery'] } || [site.collections['galleries']]).compact.each do |collection|
       collection.metadata['output'] = true unless collection.metadata.key? 'output'
 
+      # snapshot the StaticFile entries Collection#read added to site.static_files,
+      # so we can re-sync that array with our replacements/additions below
+      original_files = collection.files.dup
+
       # all directories in the collection that have a file in them, as absolute paths from the root of the collection
       galleries = Set[*collection.entries.map { |e| File.expand_path(File.join('/', File.dirname(e))) }]
 
@@ -111,6 +115,12 @@ class CheesyGallery::Generator < Jekyll::Generator
       # with more effort files could share the Magick::ImageList instance, but destroying those
       # at the right time to stay within Magick's cache policy would be awkward at best
       collection.files.sort! { |a, b| a.path <=> b.path }
+
+      # Since Jekyll 4.3, Collection#read appends collection.files to site.static_files at
+      # read time, and Site#each_site_file iterates that array directly. Replace the
+      # originals there with whatever we've made of collection.files.
+      site.static_files.reject! { |f| original_files.include?(f) }
+      site.static_files.concat(collection.files)
     end
   end
 end

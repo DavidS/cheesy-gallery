@@ -5,11 +5,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.0'
-        ruby: ["2.7", "3.0", "3.1"]
+        # Quoted to keep YAML from coercing trailing-zero versions like '3.0' / '4.0'
+        # to floats (https://github.com/actions/runner/issues/849).
+        ruby: ["3.2", "3.3", "3.4", "4.0"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Install ImageMagick headers for rmagick
+        run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -19,11 +22,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Due to https://github.com/actions/runner/issues/849, we have to use quotes for '3.0'
-        ruby: ["2.7", "3.0", "3.1"]
+        # Quoted to keep YAML from coercing trailing-zero versions like '3.0' / '4.0'
+        # to floats (https://github.com/actions/runner/issues/849).
+        ruby: ["3.2", "3.3", "3.4", "4.0"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Install ImageMagick headers for rmagick
+        run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
