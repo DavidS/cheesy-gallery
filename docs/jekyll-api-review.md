@@ -17,6 +17,10 @@ was last released.
   registry only knows the owners `:site`, `:pages`, `:posts`, `:documents`,
   `:clean` — not `:static_files`. So subclassing `StaticFile` and overriding
   `write` remains the only way to plug in RMagick rendering.
+- Jekyll 4.3 changed *where the writer reads static files from*
+  (`site.static_files` rather than `collection.files`), which silently
+  broke the plugin's thumbnail output. That's already fixed on `main` in
+  `9dd18c0`; see §1.2.
 - The biggest realistic wins are: (1) switching to **libvips/ruby-vips** for
   ~10× faster thumbnail generation, (2) using `Jekyll::Cache.clear_if_config_changed`
   for automatic invalidation on `_config.yml` edits, (3) honouring
@@ -52,8 +56,15 @@ What's new since `cheesy-gallery` 1.1.1 was last cut:
   HTML; not directly relevant to image rendering.
 - **4.3.0** — `site.static_files` now also enumerates *collection* static
   files (#8961), and `Document#name` (the basename) is exposed to Liquid
-  (#8761). The first matters for layout-side filtering; the second is a
-  small Liquid quality-of-life win.
+  (#8761). The first is more than a layout-filtering convenience: as of
+  4.3, `Collection#read` snapshots `collection.files` into
+  `site.static_files` at *read* time, and `Site#each_site_file` writes
+  from `site.static_files` rather than re-iterating each collection.
+  Plugins (like this one) that mutate `collection.files` from inside a
+  generator therefore have to mirror those mutations into
+  `site.static_files`, otherwise the writer doesn't see them. This is
+  the bug fixed on `main` in commit `9dd18c0` (`Sync site.static_files
+  in generator; refresh fixture lock`).
 - **4.4.0** — no plugin-API surface change; bumps min Ruby to 2.7, adds
   `csv`, `base64`, `json` to the runtime dep list.
 
@@ -266,10 +277,13 @@ Jekyll::Hooks.register :site, :post_read do |site|
 end
 ```
 
-This is a stylistic refactor, not a capability change, and only really
-makes sense if we adopt 3.3 / 3.4 (i.e. the remaining work is pure
-metadata wiring). Until then, the existing `Jekyll::Generator` subclass
-is the more idiomatic place for it.
+This is mostly a stylistic refactor, but it has one real upside given
+the 4.3 `site.static_files` snapshot behaviour: a `:site, :post_read`
+hook fires *immediately after* the snapshot is taken, so the manual
+"re-sync `site.static_files`" dance currently pushed onto the generator
+in `9dd18c0` could be dropped — the hook can mutate the array directly
+in place. Worth pairing with §3.3 / §3.4 if we ever adopt them; on its
+own it's a small win.
 
 ## 4. Recommendation
 
