@@ -24,7 +24,15 @@ underneath it all.
 - None of these caches honour `--disable-disk-cache`, none invalidate
   on `_config.yml` changes that affect `max_size` / `quality`, and the
   `mtimes` hash is per-subclass (not shared across `ImageFile` /
-  `ImageThumb`) — see §4.
+  `ImageThumb`) — see §5.
+- **Run-to-run** (§3): the in-memory layers (A and the in-process
+  half of B/C) die with the process, so a cold `jekyll build` re-loads
+  Layer B and C from `.jekyll-cache/` and never hits Layer A on the
+  first pass. The Render cache key is **just the destination path**,
+  which means *editing a source file in place does not invalidate
+  Layer B* — `jekyll clean` is required after edits. Under `--watch`
+  the same staleness propagates further because Layer A then caches
+  the new source mtime and short-circuits subsequent cycles.
 - With `git-annex`, the workdir entries are symlinks into
   `.git/annex/objects/`. The plugin's geometry cache keys off
   `File.realdirpath(path)` + `File.mtime`, which means the key is
@@ -172,7 +180,7 @@ Key points:
 - Cache key is `"#{realpath}##{mtime}"`. **Symlinks are resolved**
   (`File.realdirpath`), and the **mtime is the realpath's mtime** —
   not the symlink's. This is exactly the right behaviour for plain
-  files; the consequences for `git-annex` are in §5.
+  files; the consequences for `git-annex` are in §6.
 - Stored value is a 2-element array `[height, width]`. Tiny, so the
   disk-cache footprint is negligible even for 10 000 images.
 - `getset` raises-and-rescues to detect cache misses (this is
@@ -228,7 +236,7 @@ subclass opens, decodes, processes, and destroys independently.
 
 This is the cache layer most affected by the choice of source-image
 storage (local FS vs. `git-annex`-resolved symlink vs. networked
-FS) — see §5.
+FS) — see §6.
 
 ## 2. End-to-end timeline of a build
 
@@ -263,10 +271,200 @@ The `File.utime(source_mtime, source_mtime, dest_path)` step on line
 60 of `base_image_file.rb` is what makes the *next* build's Layer A
 short-circuit fire: `File.exist?(dest_path)` is true, and the dest's
 mtime now equals the source mtime that will be re-set into
-`mtimes[path]` on the next pass. (See §3 for why this isn't quite
+`mtimes[path]` on the next pass. (See §4 for why this isn't quite
 enough on its own.)
 
-## 3. What actually invalidates each layer
+## 3. Run-to-run behaviour
+
+The four layers above describe *one* build. Most of what makes
+`cheesy-gallery` feel fast — or stale — is what happens between
+builds.
+
+### 3.1 What survives a process exit
+
+| State                                              | Lives in     | Cleared by                          |
+|----------------------------------------------------|--------------|-------------------------------------|
+| `StaticFile.mtimes` (per-subclass class-ivar)      | Process RAM  | Process exit                        |
+| `Jekyll::Cache.base_cache` in-memory hashes        | Process RAM  | Process exit                        |
+| `.jekyll-cache/Jekyll--Cache/CheesyGallery--Render`| Disk         | `jekyll clean`, `rm -rf .jekyll-cache` |
+| `.jekyll-cache/Jekyll--Cache/CheesyGallery--Geometry`| Disk       | `jekyll clean`, `rm -rf .jekyll-cache` |
+| `_site/<rendered files>` (utime-stamped)           | Disk         | `jekyll clean`, `rm -rf _site`      |
+
+The two volatile rows (RAM) are why a cold `jekyll build` cannot hit
+Layer A on the *first* visit to any file: there is no in-memory state
+left to consult. Layer B and Layer C survive because they are
+serialised to disk; the rendered file in `_site/` survives for the
+same reason.
+
+### 3.2 What `.jekyll-cache/` looks like between builds
+
+Each named cache is a directory tree of `Marshal.dump`-encoded files,
+keyed by SHA2 of the cache key:
+
+```
+.jekyll-cache/Jekyll--Cache/
+├── CheesyGallery--Geometry/
+│   ├── 9f/
+│   │   └── 23c8b1d2e4f6…   # Marshal.dump([1080, 1920])
+│   └── …                   # one entry per (realpath#mtime)
+└── CheesyGallery--Render/
+    ├── 7e/
+    │   └── 4d8f2a1c…        # Marshal.dump(true)
+    └── …                   # one entry per dest_path
+```
+
+For a gallery of N source images with M sub-galleries that emit an
+index thumbnail, expect roughly **N** Geometry entries + **2N + M**
+Render entries (full-size, `*_thumb.jpg`, and each gallery's
+`*_index.jpg`). Geometry blobs are ~30 bytes each; Render blobs are
+the Marshal encoding of `true`, around 10 bytes. Total disk footprint
+is small even at 100 000 images (~ 5 MB), but the **file count**
+matters on slow filesystems; SHA2-prefixed bucket directories cap
+fanout at 256.
+
+Marshal format is stable across Ruby patch and minor versions; a
+Ruby major-version bump is the only realistic way for old entries to
+fail to deserialise. `Jekyll::Cache#getset` rescues `StandardError`,
+so a corrupted blob is silently recomputed and rewritten on the next
+build — no manual recovery needed.
+
+Both cache keys embed **absolute paths** (`dest_path` for Render,
+`realdirpath(path)` for Geometry), so `.jekyll-cache/` is not portable
+across machines or even across `--destination` choices on the same
+machine; see §3.4.
+
+### 3.3 Path through `write` in seven common scenarios
+
+For each scenario, the trace below assumes a fresh `jekyll build`
+process (the `--watch` case is treated separately as scenario 8).
+
+1. **Cold build, first ever.** No `.jekyll-cache/`, no `_site/`.
+   - Layer A: miss (`mtimes` empty).
+   - Layer B: miss (no entry on disk).
+   - Layer C: miss (no entry on disk). `Magick::Image.ping` runs for
+     every source.
+   - `copy_file` runs for every variant.
+   - After: `.jekyll-cache/` and `_site/` populated; dest mtimes
+     match source mtimes via `File.utime`.
+
+2. **Warm build, no source changes.**
+   - Layer A: miss on every file (cold mtimes hash).
+   - Layer B: hit. `key?` falls through to the on-disk file,
+     `Marshal.load` deserialises `true`, in-memory hash populated.
+     `File.exist?(dest_path)` is true. `write` returns `nil` —
+     skipped.
+   - Layer C: hit on every source. `getset` deserialises the cached
+     `[h, w]` tuple. No `Magick::Image.ping` runs.
+   - Net work: one `File.stat` and one disk `key?` per dest (cheap),
+     one `File.mtime` + disk lookup per source. No RMagick activity
+     at all.
+
+3. **Warm build, one new photo added.**
+   - The new source: cold path (ping + render full + render thumb,
+     plus a gallery-thumb re-render if the new file became the
+     gallery's `thumbnail.jpg` or first-by-name image).
+   - Everything else: as in scenario 2.
+
+4. **Warm build, source photo edited in place (or annex symlink
+   repointed to a new object).** The destination filename is
+   unchanged.
+   - `File.stat(source).mtime` is now newer than the dest's `utime`
+     stamp.
+   - Layer A: miss. `mtimes` is empty *and* `modified?` is true
+     (new source mtime ≠ nil).
+   - `mtimes[path] = new_mtime`.
+   - Layer B: **hit**. The Render cache key is `dest_path` only.
+     `File.exist?(dest_path)` is true (we never deleted it).
+     `write` returns `nil` — **skipped**.
+   - **Result: the output is stale until manually invalidated.**
+     Vanilla `Jekyll::StaticFile#write` would fall through to
+     `copy_file` here (the mtime check fails so it copies the new
+     content); the plugin's render-cache short-circuit suppresses
+     that fallthrough. This is a real bug — call it the
+     "Layer-B-shadows-Layer-A" gap — and is mentioned in
+     §6.4 in its git-annex form. The fix is in §7.1: include source
+     content/mtime in the Render cache key.
+   - Workaround today: `jekyll clean`, or
+     `rm .jekyll-cache/Jekyll--Cache/CheesyGallery--Render` after an
+     edit.
+
+5. **After `jekyll clean`.** Both `.jekyll-cache/` and `_site/`
+   removed. Reduces to scenario 1.
+
+6. **After `rm -rf _site/`** (cache kept).
+   - Layer A: miss (dest doesn't exist; the
+     `File.exist?(dest_path) && !modified?` is false on the first
+     conjunct).
+   - Layer B: `key?` hits on disk → loaded → `true`. But the second
+     conjunct `File.exist?(dest_path)` is false. So the guard
+     evaluates to false and `write` falls through to `copy_file`.
+   - Layer C: hit. Geometry cache is fully intact, no pings.
+   - Net work: full re-render, but no `Magick::Image.ping` calls.
+     This is the "rebuild without RMagick metadata cost" path.
+
+7. **After `rm -rf .jekyll-cache/`** (`_site/` kept).
+   - Layer A: miss (cold mtimes). But `File.exist?(dest_path) &&
+     !modified?` is `true && false` = false — falls through.
+   - Layer B: `key?` returns false (no on-disk entry). Falls through.
+   - Layer C: miss. Every source is re-pinged.
+   - Net work: full re-render *and* full re-ping.
+   - This is strictly worse than scenario 6, because the kept `_site/`
+     buys nothing. The lesson: cache `.jekyll-cache/` in CI before
+     caching `_site/`.
+
+8. **`jekyll serve --watch`** (same process across many cycles).
+   - Cycle 1: as scenario 1 or 2 depending on prior state.
+   - Cycle 2+: `mtimes` is now populated from cycle 1's writes.
+     `modified?` is `false` for unchanged files → Layer A fires and
+     `write` returns `false` early. This is much faster than the
+     `key?`-on-disk path that cold builds take.
+   - **The Layer-B-shadows-Layer-A bug from scenario 4 is *worse*
+     under `--watch`**: after the first write of the edited file
+     (which is still skipped by Layer B), `mtimes[path]` is set to
+     the new source mtime. On the next watch cycle, Layer A
+     short-circuits the file out even *before* reaching Layer B —
+     and stays stale until the process is restarted or the cache is
+     cleared.
+
+### 3.4 CI cache strategy
+
+Three reasonable CI cache configurations, in decreasing order of
+effectiveness:
+
+- **Save and restore both `.jekyll-cache/` and `_site/`.** Maximum
+  hit rate. On a no-source-change run, scenario 2 applies: no
+  RMagick work at all. Caveat: `dest_path` is absolute, so the CI
+  workspace path must be stable across runs. GitHub Actions hosted
+  runners always check out under
+  `/home/runner/work/<repo>/<repo>/`, so this is naturally stable;
+  self-hosted runners with ephemeral working directories will not
+  hit anything.
+- **Save and restore `.jekyll-cache/` only.** Scenario 6 applies on
+  every run: full re-render, but no geometry pings. Useful when
+  `_site/` is too large to cache or you publish a fresh build
+  artefact every run anyway.
+- **Save and restore `_site/` only.** Scenario 7 applies — full
+  re-render *and* full re-ping. Don't bother; the saved `_site/`
+  buys nothing on a cold-process cold-cache build.
+
+A subtler note: because the keys embed absolute paths, switching the
+build between two parallel checkouts of the same repo
+(`/home/user/checkout-a/` and `/home/user/checkout-b/`) gives each
+its own cache. That's fine, just not surprising.
+
+### 3.5 Concurrency between processes
+
+`Jekyll::Cache#[]=` writes via `Marshal.dump` to a path computed from
+SHA2 of the key; there is no file locking. Two simultaneous
+`jekyll build` processes pointing at the same `.jekyll-cache/`
+directory can interleave writes for the same key and leave a
+half-Marshalled file on disk. The next read via `getset` rescues the
+`StandardError` from `Marshal.load`, treats the entry as a miss,
+recomputes, and rewrites — so the corruption is self-healing, but
+the recompute cost (a full `Magick::Image.ping` or full re-render)
+is paid. Don't run parallel builds against a shared cache.
+
+## 4. What actually invalidates each layer
 
 | Layer | Invalidated by                                                                                            | Survives `jekyll clean`? | Survives `_config.yml` edit? |
 |-------|-----------------------------------------------------------------------------------------------------------|--------------------------|------------------------------|
@@ -315,9 +513,9 @@ There is also a third, subtler gap:
    But it does mean swapping destinations doubles the cache footprint
    over time.
 
-## 4. Other implementation details worth knowing
+## 5. Other implementation details worth knowing
 
-### 4.1 `path` vs. `realpath`
+### 5.1 `path` vs. `realpath`
 
 `BaseImageFile#path` is overridden to return the *source file's*
 declared path (`@source_file.path`) rather than letting
@@ -331,7 +529,7 @@ geometry cache key. This is the only place in the plugin that resolves
 symlinks. Layer A (mtimes), Layer B (render cache, keyed off
 `dest_path`), and `path` itself all stay symbolic.
 
-### 4.2 Layer A fires only on warm processes
+### 5.2 Layer A fires only on warm processes
 
 As noted in §1.1, `StaticFile.mtimes` is populated by `#write` itself,
 so on a cold `jekyll build` it is empty when the first static file
@@ -345,7 +543,7 @@ process re-enters `Site#process` whenever a watched file changes,
 short-circuit. This is also why the `--watch` story is reasonably
 snappy despite the plugin not implementing `--incremental`.
 
-### 4.3 The destination-utime trick
+### 5.3 The destination-utime trick
 
 `copy_file` finishes with:
 
@@ -372,7 +570,7 @@ Two reasons:
   symlinks by default). The plugin never emits symlinked output, so
   this is mostly defensive.
 
-### 4.4 The redundant `FileUtils.rm`
+### 5.4 The redundant `FileUtils.rm`
 
 Line 37 (`FileUtils.rm(dest_path) if File.exist?(dest_path)`)
 duplicates what Jekyll's own `StaticFile#write` does and the comment
@@ -384,20 +582,20 @@ where the render cache thinks a file is already on disk but Layer B's
 between cache-write and now). Net effect: harmless if the file is
 already gone, costs one syscall otherwise.
 
-### 4.5 `ImageThumb` never touches geometry cache
+### 5.5 `ImageThumb` never touches geometry cache
 
 `ImageThumb` resizes-to-fill to fixed pixel dimensions
 (`@height`, `@width`) — no aspect-ratio math, so no `change_geometry!`,
 so no need to memoise anything. Layer C is `ImageFile`-only.
 
-## 5. Source images on `git-annex`
+## 6. Source images on `git-annex`
 
 The cheesy.at site keeps its master archive on `git-annex`. The
 relevant question is: when `git annex get` populates objects in
 `.git/annex/objects/`, and the workdir contains symlinks pointing
 into those objects, do the four cache layers behave well?
 
-### 5.1 What the workdir looks like
+### 6.1 What the workdir looks like
 
 By default (`git annex add`, no `unlock`), each tracked image is a
 **symlink**:
@@ -421,7 +619,7 @@ Variations:
   file becomes a regular writable copy in the workdir.
 - **Locked symlink (default)** — the case we focus on below.
 
-### 5.2 Layer-by-layer interaction
+### 6.2 Layer-by-layer interaction
 
 **Layer A (`mtimes` + dest-on-disk).** `BaseImageFile#path` returns
 the symlink path. `Jekyll::StaticFile#modified_time` is
@@ -486,7 +684,7 @@ the symlink. Two notes:
   object's directory, so there is no risk of corrupting the
   immutable object.
 
-### 5.3 Things that go subtly wrong with `git-annex`
+### 6.3 Things that go subtly wrong with `git-annex`
 
 1. **Missing objects = build failure.** A locked symlink with no
    annex object present is a *dangling* symlink. `File.exist?(path)`
@@ -525,7 +723,7 @@ the symlink. Two notes:
    image reflects the *new* one. Easy to avoid — don't run annex
    operations during a build.
 
-### 5.4 Recommended workflow
+### 6.4 Recommended workflow
 
 For a `git-annex`-backed gallery archive consumed by `cheesy-gallery`:
 
@@ -562,7 +760,7 @@ For a `git-annex`-backed gallery archive consumed by `cheesy-gallery`:
   fix: include the source mtime (or realpath suffix) in the
   Render cache key.
 
-### 5.5 Summary table
+### 6.5 Summary table
 
 | Concern                         | Locked annex symlink                  | Unlocked / adjusted file |
 |---------------------------------|---------------------------------------|--------------------------|
@@ -575,7 +773,7 @@ For a `git-annex`-backed gallery archive consumed by `cheesy-gallery`:
 | Risk of mutating source?        | None                                  | None                     |
 | Build needs `git annex get`?    | Yes                                   | No                       |
 
-## 6. Concrete improvement opportunities
+## 7. Concrete improvement opportunities
 
 These build on `docs/jekyll-api-review.md` §3.1 but are specifically
 cache-shaped.
@@ -583,13 +781,14 @@ cache-shaped.
 1. **Make the `Render` cache key content-aware.** Either
    `"#{dest_path}##{File.mtime(@source_file.path).to_i}"` or include
    `File.realdirpath(path)` so that, when the annex key changes,
-   the cache key changes too. This closes the §5.4 last-bullet hole.
+   the cache key changes too. This closes the §6.4 last-bullet hole
+   and §3.3 scenario 4's Layer-B-shadows-Layer-A bug.
 2. **Hook into `clear_if_config_changed`.** Call
    `Jekyll::Cache.clear_if_config_changed(site.config)` from
    `Generator#generate` (or, more selectively, include a digest of
    `collection.metadata.slice('max_size', 'quality',
    'image_thumbnail_size', 'gallery_thumbnail_size')` in the
-   `Geometry` and `Render` cache keys). Prevents the §3 stale-cache
+   `Geometry` and `Render` cache keys). Prevents the §4 stale-cache
    gap after `max_size`/`quality` edits.
 3. **Honour `--disable-disk-cache` explicitly.** Even though
    `Jekyll::Cache` already short-circuits disk I/O when the flag is
@@ -611,7 +810,7 @@ cache-shaped.
    `@mtimes`) so both subclasses share one hash and the
    `jekyll-api-review.md` §1.4 description becomes accurate.
 
-## 7. References
+## 8. References
 
 - Plugin source: `lib/cheesy-gallery/base_image_file.rb`,
   `lib/cheesy-gallery/image_file.rb`,
