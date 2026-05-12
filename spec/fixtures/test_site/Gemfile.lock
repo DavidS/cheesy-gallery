@@ -2,7 +2,7 @@ PATH
   remote: ../../..
   specs:
     cheesy-gallery (1.1.1)
-      jekyll (~> 4.0)
+      jekyll (~> 4.4)
       rmagick (>= 4, < 6)
 
 GEM

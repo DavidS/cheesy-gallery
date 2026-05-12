@@ -106,10 +106,15 @@ The shape of `write(dest)` in 4.4.1:
 
 Notable points for our subclass:
 
-- `self.class.mtimes` is a class-level `Hash`. **Multiple subclasses share
-  the same hash via inheritance**, which is *what we want* (the source path
-  appears as the key whether we're writing the full-size image or its
-  thumbnail). The existing comment in `base_image_file.rb` is accurate.
+- `self.class.mtimes` is a class-level **instance** variable (`@mtimes`),
+  so each subclass gets its own hash — `ImageFile.mtimes` and
+  `ImageThumb.mtimes` are distinct objects. Verified by
+  `spec/cheesy/cache_spec.rb` "§1.1: StaticFile.mtimes is per-subclass"
+  and documented in `docs/cache-analysis.md` §1.1. The two `ImageThumb`
+  variants (per-image `*_thumb.jpg` and per-gallery `*_index.jpg`) for
+  the same source *do* share an entry, since they're both `ImageThumb`
+  instances — see scenario 7 in `cache-analysis.md` §3.3 for the
+  surprise this causes.
 - There is still no `before_write` / `after_write` hook, so the only way
   to short-circuit copy and substitute RMagick rendering is to override
   `write` (current approach) or `copy_file` (slightly cleaner — see §3.1).
@@ -119,13 +124,16 @@ Notable points for our subclass:
 
 ### 1.5 `Jekyll::Document`
 
-`GalleryIndex#read_content` is still a valid override in 4.4. The internal
-flow is `read → merge_defaults → read_content → read_post_data`. Three
-mild gotchas:
+As of PR #415 (`d5133a6`) `GalleryIndex` overrides `read` directly
+rather than the private `read_content`. The internal flow is
+`read → merge_defaults → read_content → read_post_data`. Three mild
+gotchas:
 
-- `read_content` is technically a **private** method in 4.x; overriding it
-  works but is semi-internal. Safer alternatives: override `read` itself,
-  or set `self.content` directly after `super`.
+- `read_content` is technically a **private** method in 4.x; the
+  earlier `read_content` override worked but was semi-internal. The
+  override on `read` calls `merge_defaults` itself and sets
+  `self.content` without calling `super`, because the synthetic doc
+  has no backing file and `super` would `ENOENT` on `File.read(path)`.
 - `data.default_proc` is set in `initialize` to fall through to
   `site.frontmatter_defaults`. That means setting `doc.data['layout']`
   *after* `read` (as the generator does on line 26) is fine, but if we
@@ -162,7 +170,7 @@ What we could newly use:
 | Concern                          | Current implementation                                                                         | API still appropriate? |
 |----------------------------------|------------------------------------------------------------------------------------------------|------------------------|
 | Discover gallery directories     | `Jekyll::Generator#generate` walking `collection.entries` / `collection.docs`                  | Yes                    |
-| Synthesise an index document     | `CheesyGallery::GalleryIndex < Jekyll::Document`, override `read_content`                      | Yes, with caveats §1.5 |
+| Synthesise an index document     | `CheesyGallery::GalleryIndex < Jekyll::Document`, override `read`                              | Yes, with caveats §1.5 |
 | Replace each JPG with a renderer | Subclass `Jekyll::StaticFile`, override `write` to skip delete-before-copy and run RMagick     | Yes — no hook exists   |
 | Generate per-image thumbnails    | A second `StaticFile` subclass, pushed onto `collection.files`                                 | Yes                    |
 | Cache rendered output            | Two named `Jekyll::Cache` instances, keyed by `dest_path` and `realpath#mtime`                 | Yes, but see §1.6      |
@@ -183,21 +191,34 @@ relative to "leave it alone".
 Cheapest path. Keep the generator/StaticFile/Document trio; refresh the
 implementation against 4.4 source.
 
-- Override `copy_file(dest_path)` instead of `write(dest)`. `copy_file` is
-  the documented integration point that subclasses are expected to
-  customise (Active Storage, jekyll-postfiles, jekyll_picture_tag all do
-  this), and it lets us drop the bespoke "delete-before-copy" workaround
-  in `base_image_file.rb`.
-- Honour `--disable-disk-cache` for both `CheesyGallery::Render` and
-  `CheesyGallery::Geometry`.
-- Include a config fingerprint in the cache keys (or call
-  `clear_if_config_changed` explicitly) so editing `max_size` invalidates
-  geometry entries.
-- Add `safe true` and `priority :low` to the Generator so it composes
-  well with other plugins and could be whitelisted under `--safe`.
-- Replace the `read_content` override on `GalleryIndex` with a `read`
-  override that calls `merge_defaults` + sets `self.content` — leaves the
-  private API alone.
+Status as of PR #415 (2026-05-12): three of five bullets landed; one
+is moot (Jekyll already covers it); one is still open.
+
+- [x] Override `copy_file(dest_path)` instead of `write(dest)`.
+  `copy_file` is the documented integration point that subclasses are
+  expected to customise (Active Storage, jekyll-postfiles,
+  jekyll_picture_tag all do this), and it lets us drop the bespoke
+  "delete-before-copy" workaround in `base_image_file.rb`. _Landed in
+  `e118c10`: the RMagick rendering moved into a `copy_file` override
+  and the remaining `write` override is just the cross-process Render-
+  cache short-circuit._
+- [ ] Honour `--disable-disk-cache` for both `CheesyGallery::Render`
+  and `CheesyGallery::Geometry`.
+- [~] Include a config fingerprint in the cache keys (or call
+  `clear_if_config_changed` explicitly) so editing `max_size`
+  invalidates geometry entries. _Moot: `cache_spec.rb` "§4:
+  invalidation behaviour" verified that Jekyll's `Site#process`
+  already calls `Jekyll::Cache.clear_if_config_changed`, which
+  `rm -rf`s the whole cache dir and takes both our named caches with
+  it._
+- [x] Add `safe true` and `priority :low` to the Generator so it
+  composes well with other plugins and could be whitelisted under
+  `--safe`. _Landed in `8a1602a`._
+- [x] Replace the `read_content` override on `GalleryIndex` with a
+  `read` override that calls `merge_defaults` + sets `self.content` —
+  leaves the private API alone. _Landed in `d5133a6`. Cannot call
+  `super`: there is no backing file, so `File.read(path)` would
+  `ENOENT` and `handle_read_error` would abort the build under 4.4.1._
 
 Estimated effort: ~half a day, all behind existing tests.
 

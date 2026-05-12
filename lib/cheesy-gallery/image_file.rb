@@ -16,12 +16,12 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
 
     realpath = File.realdirpath(path)
     mtime = File.mtime(realpath)
-    geom = @@geometry_cache.getset("#{realpath}##{mtime}") do
+    geom = @@geometry_cache.getset("#{realpath}##{mtime}##{geometry_string}") do
       result = [100, 100]
       # read file metadata in the same way it will be processed
       Jekyll.logger.debug 'Identifying:', path
       source = Magick::Image.ping(path).first
-      source.change_geometry!(@max_size) do |cols, rows, _img|
+      source.change_geometry!(geometry_string) do |cols, rows, _img|
         result = [rows, cols]
       end
       source.destroy!
@@ -34,7 +34,7 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
 
   # instead of copying, renders an optimised version
   def process_and_write(img, path)
-    img.change_geometry!(@max_size) do |cols, rows, i|
+    img.change_geometry!(geometry_string) do |cols, rows, i|
       i.resize!(cols, rows)
     end
     # follow recommendations from https://stackoverflow.com/a/7262050/4918 to get better compression
@@ -45,5 +45,23 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
     # workaround weird {self} initialisation pattern
     quality = @quality
     img.write(path) { |image| image.quality = quality }
+  end
+
+  private
+
+  # Append the `>` flag so `change_geometry!` fits originals into
+  # @max_size when they're larger, but never enlarges smaller ones —
+  # a photo gallery should not produce blurry upscales of small
+  # source images. Idempotent: skip the append if the user already
+  # supplied any ImageMagick geometry flag (!, <, >, ^, @, #).
+  def geometry_string
+    @geometry_string ||= @max_size.match?(%r{[!<>^@#]}) ? @max_size : "#{@max_size}>"
+  end
+
+  # Mix the geometry into the Render-cache key so changing the
+  # `max_size` config (or upgrading to a release that changes the
+  # upscale policy) invalidates stale rendered outputs.
+  def render_cache_discriminator
+    geometry_string
   end
 end
