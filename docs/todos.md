@@ -3,6 +3,21 @@
 Working list for the next round of maintenance on `cheesy-gallery`.
 Newer items at the bottom; tick items off in PRs as they land.
 
+## 0. Behavioural follow-ups
+
+- [ ] Consider adding the `>` modifier to the `change_geometry!`
+      geometry strings in `lib/cheesy-gallery/image_file.rb`. Today
+      the plugin uses bare `'1920x1080'` (and whatever `max_size`
+      collection metadata supplies) which, per ImageMagick geometry
+      semantics, *enlarges* originals smaller than the box. For a
+      photo gallery the more useful behaviour is "shrink to fit, but
+      never upscale" — i.e. `'1920x1080>'`. `spec/cheesy/generator_spec.rb`
+      pins the current upscale-by-default behaviour (1000×750 →
+      1440×1080 under `'1920x1080'`); flipping the default would
+      require flipping those expectations and ought to land as its
+      own PR with a release note since it changes rendered output for
+      anyone with small source files.
+
 ## 1. Upgrade Jekyll
 
 - [x] Bump test fixture (`spec/fixtures/test_site/Gemfile.lock`) from
