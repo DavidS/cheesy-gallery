@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'jekyll'
 require 'fileutils'
 require 'tmpdir'
-require 'rmagick'
+require 'vips'
 
 # Plugin-behaviour specs covering docs/todos.md §4: end-to-end site
 # generation, the synthetic GalleryIndex doc for index-less gallery
@@ -329,13 +329,9 @@ RSpec.describe CheesyGallery::Generator do
       write_two_gallery_fixture!
       build!
 
-      out = Magick::Image.ping(File.join(dest_dir, 'gallery_two', 'Frostig-001.jpg')).first
-      begin
-        expect(out.columns).to be <= 600
-        expect(out.rows).to be <= 400
-      ensure
-        out.destroy!
-      end
+      out = Vips::Image.new_from_file(File.join(dest_dir, 'gallery_two', 'Frostig-001.jpg')).autorot
+      expect(out.width).to be <= 600
+      expect(out.height).to be <= 400
     end
 
     it 'leaves rendered output at source size when below the default max_size' do
@@ -344,12 +340,8 @@ RSpec.describe CheesyGallery::Generator do
 
       # Shrink-only `>` policy: 1000x750 stays 1000x750 under the
       # default '1920x1080' max_size.
-      out = Magick::Image.ping(File.join(dest_dir, 'gallery_one', 'Frostig-001.jpg')).first
-      begin
-        expect([out.columns, out.rows]).to eq([1000, 750])
-      ensure
-        out.destroy!
-      end
+      out = Vips::Image.new_from_file(File.join(dest_dir, 'gallery_one', 'Frostig-001.jpg')).autorot
+      expect([out.width, out.height]).to eq([1000, 750])
     end
 
     it 'passes max_size and quality through from collection metadata to ImageFile' do

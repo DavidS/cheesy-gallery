@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'jekyll'
 require 'fileutils'
 require 'tmpdir'
-require 'rmagick'
+require 'vips'
 
 # Cache behaviour specs for cheesy-gallery.
 #
@@ -17,15 +17,19 @@ require 'rmagick'
 # The expensive operations that the caches are designed to short-circuit
 # are:
 #
-#   * `Magick::Image.ping(path)` — runs inside `CheesyGallery::ImageFile`'s
-#     Geometry-cache `getset` block. Exactly one call per source image
-#     on a Geometry-cache miss; zero calls on a hit.
+#   * `Vips::Image.new_from_file(path)` — runs inside
+#     `CheesyGallery::ImageFile`'s Geometry-cache `getset` block.
+#     Exactly one call per source image on a Geometry-cache miss; zero
+#     calls on a hit. The header read is cheap but non-trivial (libvips
+#     opens the file and parses the JPEG marker chain).
 #
-#   * `Magick::ImageList.new(path)` — the first line of
-#     `BaseImageFile#copy_file`, which is reached only when Layer A
-#     (mtimes/dest existence) and Layer B (Render cache) both miss.
-#     Exactly one call per variant on a Layer-B miss; zero calls on
-#     a hit.
+#   * `Vips::Image.thumbnail(path, ...)` — the fused decode + resize
+#     used by every subclass's `process_and_write`. Reached only when
+#     Layer A (mtimes/dest existence) and Layer B (Render cache) both
+#     miss. Exactly one call per variant on a Layer-B miss; zero calls
+#     on a hit. Under libvips the legacy "decode" and "resize" steps
+#     are a single fused operation, so we count one `thumbnail` call
+#     where the RMagick generation counted one `Magick::ImageList.new`.
 #
 # We install spies via `and_wrap_original` so the original calls still
 # happen (we want real Jekyll output) and assert per-scenario counts.
@@ -36,7 +40,7 @@ require 'rmagick'
 # calls by clearing in-memory class state without touching the on-disk
 # cache or the rendered `_site/` tree — that's the only state a fresh
 # Ruby process would actually have lost.
-# Use the smaller _gallery_two JPGs (~1000x750) to keep RMagick work
+# Use the smaller _gallery_two JPGs (~1000x750) to keep libvips work
 # cheap across the matrix of scenarios.
 CHEESY_CACHE_FIXTURE_DIR  = File.expand_path('../fixtures/test_site/_gallery_two', __dir__)
 CHEESY_CACHE_FIXTURE_JPGS = %w[Frostig-001.jpg Frostig-003.jpg].freeze
@@ -69,15 +73,15 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
     @decode_count = 0
     @ping_paths   = []
     @decode_paths = []
-    allow(Magick::Image).to receive(:ping).and_wrap_original do |orig, *args|
+    allow(Vips::Image).to receive(:new_from_file).and_wrap_original do |orig, *args, **kwargs|
       @ping_count += 1
       @ping_paths << args.first
-      orig.call(*args)
+      orig.call(*args, **kwargs)
     end
-    allow(Magick::ImageList).to receive(:new).and_wrap_original do |orig, *args|
+    allow(Vips::Image).to receive(:thumbnail).and_wrap_original do |orig, *args, **kwargs|
       @decode_count += 1
       @decode_paths << args.first
-      orig.call(*args)
+      orig.call(*args, **kwargs)
     end
   end
 
@@ -186,7 +190,7 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
   # --- §3.3 scenario 2: warm second build, no source changes ---------
 
   describe 'scenario 2: warm second build, no source changes' do
-    it 'does no RMagick work at all (Layers B and C both hit)' do
+    it 'does no libvips work at all (Layers B and C both hit)' do
       build!
       simulate_cold_process!
       reset_counters!
@@ -210,7 +214,7 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
   # --- §3.3 scenario 3: warm build with one new photo ----------------
 
   describe 'scenario 3: warm build with one new photo' do
-    it 'only does RMagick work for the new source' do
+    it 'only does libvips work for the new source' do
       build!
       simulate_cold_process!
       new_jpg = File.join(source_dir, '_gallery', 'zzz-new-photo.jpg')
@@ -340,7 +344,7 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
         expect(File.realdirpath(realpath)).to eq(realpath)
         expect(mtime).to match(%r{\A\d{4}-\d{2}-\d{2}})
         # The geometry component is the `geometry_string` that
-        # ImageFile passes to `change_geometry!`, with the `>`
+        # ImageFile uses for cache fingerprinting, with the `>`
         # appended so we never upscale small originals.
         expect(geom).to eq('1920x1080>')
       end

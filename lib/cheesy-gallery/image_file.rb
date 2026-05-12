@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rmagick'
+require 'vips'
 require 'cheesy-gallery/base_image_file'
 
 # This StaticFile subclass adds additional functionality for images in the
@@ -16,44 +16,45 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
 
     realpath = File.realdirpath(path)
     mtime = File.mtime(realpath)
-    geom = @@geometry_cache.getset("#{realpath}##{mtime}##{geometry_string}") do
-      result = [100, 100]
-      # read file metadata in the same way it will be processed
+    @geometry = @@geometry_cache.getset("#{realpath}##{mtime}##{geometry_string}") do
       Jekyll.logger.debug 'Identifying:', path
-      source = Magick::Image.ping(path).first
-      source.change_geometry!(geometry_string) do |cols, rows, _img|
-        result = [rows, cols]
-      end
-      source.destroy!
-      result
+      # autorot so width/height reflect post-orientation pixels — matches
+      # what Vips::Image.thumbnail will produce at render time.
+      source = Vips::Image.new_from_file(path, access: :sequential).autorot
+      fit_inside(source.width, source.height)
     end
 
-    data['height'] = geom[0]
-    data['width'] = geom[1]
+    data['height'] = @geometry[0]
+    data['width'] = @geometry[1]
   end
 
   # instead of copying, renders an optimised version
-  def process_and_write(img, path)
-    img.change_geometry!(geometry_string) do |cols, rows, i|
-      i.resize!(cols, rows)
-    end
-    # follow recommendations from https://stackoverflow.com/a/7262050/4918 to get better compression
-    img.interlace = Magick::PlaneInterlace
-    # but skip the blur to avoid too many changes to the data
-    # img.gaussian_blur(0.05)
-    img.strip!
-    # workaround weird {self} initialisation pattern
-    quality = @quality
-    img.write(path) { |image| image.quality = quality }
+  def process_and_write(source_path, dest_path)
+    target_h, target_w = @geometry
+    img = Vips::Image.thumbnail(
+      source_path,
+      target_w,
+      height: target_h,
+      size: :down, # never upscale — equivalent of the `>` in geometry_string
+      crop: :none,
+    )
+    img.write_to_file(
+      dest_path,
+      Q: @quality,
+      interlace: true,
+      strip: true,
+      optimize_coding: true,
+    )
   end
 
   private
 
-  # Append the `>` flag so `change_geometry!` fits originals into
-  # @max_size when they're larger, but never enlarges smaller ones —
-  # a photo gallery should not produce blurry upscales of small
-  # source images. Idempotent: skip the append if the user already
-  # supplied any ImageMagick geometry flag (!, <, >, ^, @, #).
+  # Preserved from the RMagick era. Under libvips this is no longer
+  # passed to an image library — its value is purely the cache
+  # fingerprint so that changing `max_size` (or upgrading to a release
+  # that changes the upscale policy) invalidates entries naturally.
+  # Idempotent: skip the `>` append if the user already supplied any
+  # ImageMagick geometry flag (!, <, >, ^, @, #).
   def geometry_string
     @geometry_string ||= @max_size.match?(%r{[!<>^@#]}) ? @max_size : "#{@max_size}>"
   end
@@ -63,5 +64,18 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
   # upscale policy) invalidates stale rendered outputs.
   def render_cache_discriminator
     geometry_string
+  end
+
+  # Replicates the shrink-only `WxH>` semantics that the geometry
+  # string previously got from ImageMagick: fit inside the box,
+  # preserve aspect ratio, never upscale. Returns [height, width] to
+  # match the legacy Geometry-cache shape and the data hash. The
+  # ImageMagick-style trailing flags (`!`, `^`, `@`, `#`) are parsed
+  # out by `to_i`'s leading-digits rule and silently ignored — see
+  # CHANGELOG for the narrowing.
+  def fit_inside(src_width, src_height)
+    max_w, max_h = @max_size.split('x').map(&:to_i)
+    scale = [max_w.to_f / src_width, max_h.to_f / src_height, 1.0].min
+    [(src_height * scale).round, (src_width * scale).round]
   end
 end
