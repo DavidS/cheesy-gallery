@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'rmagick'
+require 'fileutils'
+require 'vips'
 
 # This StaticFile subclass adds additional functionality for images in the
 # gallery
@@ -19,8 +20,8 @@ class CheesyGallery::BaseImageFile < Jekyll::StaticFile
   end
 
   # overwrite this method to add additional processing
-  def process_and_write(img, path)
-    img.write(path) {}
+  def process_and_write(source_path, dest_path)
+    FileUtils.cp(source_path, dest_path)
   end
 
   # Skip the render when our content-aware Render-cache key says we've
@@ -57,17 +58,14 @@ class CheesyGallery::BaseImageFile < Jekyll::StaticFile
     ''
   end
 
-  # Replace Jekyll's StaticFile#copy_file (FileUtils.cp) with RMagick
+  # Replace Jekyll's StaticFile#copy_file (FileUtils.cp) with libvips
   # rendering. Super's write has already mkdir_p'd the parent and
-  # rm'd any existing dest_path before getting here.
+  # rm'd any existing dest_path before getting here. Subclasses do
+  # their own decode + resize + write via Vips::Image.thumbnail; the
+  # base no longer opens the source file itself.
   def copy_file(dest_path)
-    source = Magick::ImageList.new(path)
-    begin
-      Jekyll.logger.debug 'Rendering:', dest_path
-      process_and_write(source, dest_path)
-    ensure
-      source.destroy!
-    end
+    Jekyll.logger.debug 'Rendering:', dest_path
+    process_and_write(path, dest_path)
 
     unless File.symlink?(dest_path)
       File.utime(self.class.mtimes[path], self.class.mtimes[path], dest_path)

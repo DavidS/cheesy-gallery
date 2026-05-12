@@ -13,6 +13,9 @@ Internal documentation and reports for `cheesy-gallery`.
 - [Cache Mechanism Analysis](cache-analysis.md) — the four cache layers
   the plugin sits on top of, how they invalidate, and how `git-annex`
   source storage interacts with each layer (generated 2026-05-11).
+- [libvips Bench](libvips-bench.md) — perf comparison that motivated
+  the 1.2.0 RMagick → libvips migration; methodology, numbers across
+  small / DSLR workloads, and the gate decision (generated 2026-05-12).
 
 ## Working lists
 

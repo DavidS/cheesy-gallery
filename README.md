@@ -2,6 +2,16 @@
 
 This is a jekyll photo gallery to manage large amounts of galleries and pictures. You can see the results at https://www.cheesy.at/fotos/.
 
+## Requirements
+
+Image rendering is done by [libvips](https://www.libvips.org/) via the
+[ruby-vips](https://github.com/libvips/ruby-vips) gem. Install libvips
+before installing the gem:
+
+- Debian / Ubuntu: `sudo apt install libvips42 libvips-dev`
+- macOS: `brew install vips`
+- Other distros: see the [libvips install docs](https://www.libvips.org/install.html)
+
 ## Installation
 
 Follow Jekyll's documentation on [how to install plugins](https://jekyllrb.com/docs/plugins/installation/) using "cheesy-gallery" as name for the gem and plugin.

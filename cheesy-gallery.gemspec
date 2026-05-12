@@ -39,5 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
 
   spec.add_dependency 'jekyll', '~> 4.4'
-  spec.add_dependency 'rmagick', '>= 4', '< 6'
+  spec.add_dependency 'ruby-vips', '~> 2.2'
 end

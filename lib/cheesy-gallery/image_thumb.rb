@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rmagick'
+require 'vips'
 require 'cheesy-gallery/base_image_file'
 
 # This StaticFile subclass represents thumbnail images for each image. On `write()` it renders a 150x150 center crop of the source
@@ -14,9 +14,21 @@ class CheesyGallery::ImageThumb < CheesyGallery::BaseImageFile
     @width = width
   end
 
-  # instead of copying, renders the thumbnail
-  def process_and_write(img, path)
-    img.resize_to_fill!(height, width)
-    img.write(path)
+  # centre-crop square thumbnail, optimised for file size at Q80
+  def process_and_write(source_path, dest_path)
+    img = Vips::Image.thumbnail(
+      source_path,
+      width,
+      height: height,
+      crop: :centre,
+    )
+    img.write_to_file(
+      dest_path,
+      Q: 80,
+      interlace: true,
+      keep: :none,
+      optimize_coding: true,
+      subsample_mode: :on,
+    )
   end
 end

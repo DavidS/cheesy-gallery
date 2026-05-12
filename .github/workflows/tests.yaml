@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install ImageMagick headers for rmagick
-        run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev
+      - name: Install libvips for ruby-vips
+        run: sudo apt-get update && sudo apt-get install -y libvips42 libvips-dev libvips-tools
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install ImageMagick headers for rmagick
-        run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev
+      - name: Install libvips for ruby-vips
+        run: sudo apt-get update && sudo apt-get install -y libvips42 libvips-dev libvips-tools
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -42,7 +42,22 @@ jobs:
         working-directory: spec/fixtures/test_site
         run: |
           bundle exec jekyll build --strict --trace --verbose
-          find _site -type f 
+          find _site -type f
           echo -e '\n===\n'
-          cat _site/gallery_one/index.html 
+          cat _site/gallery_one/index.html
           file _site/gallery_two/third/Morgenspaziergang-3.jpg_thumb.jpg
+      - name: Verify rendered output (dimensions + EXIF strip)
+        working-directory: spec/fixtures/test_site
+        run: |
+          set -euo pipefail
+          # gallery_two: max_size 600x400; source 1000x750 → 533x400
+          vipsheader _site/gallery_two/Frostig-001.jpg
+          test "$(vipsheader -f width  _site/gallery_two/Frostig-001.jpg)" = 533
+          test "$(vipsheader -f height _site/gallery_two/Frostig-001.jpg)" = 400
+          # 150x150 centre-cropped per-image thumb
+          test "$(vipsheader -f width  _site/gallery_two/Frostig-001.jpg_thumb.jpg)" = 150
+          test "$(vipsheader -f height _site/gallery_two/Frostig-001.jpg_thumb.jpg)" = 150
+          # EXIF must be stripped from every rendered output
+          ! vipsheader -a _site/gallery_two/Frostig-001.jpg | grep -i '^exif-'
+          ! vipsheader -a _site/gallery_two/Frostig-001.jpg_thumb.jpg | grep -i '^exif-'
+          ! vipsheader -a _site/gallery_one/2012-07-29-Eingeschlafen.jpg | grep -i '^exif-'

@@ -3,7 +3,7 @@
 ## Project
 
 `cheesy-gallery` — a Ruby gem providing a Jekyll plugin that turns
-directory trees of JPGs into navigable, RMagick-rendered photo galleries.
+directory trees of JPGs into navigable, libvips-rendered photo galleries.
 Powers <https://www.cheesy.at/fotos/>.
 
 ## Structure
