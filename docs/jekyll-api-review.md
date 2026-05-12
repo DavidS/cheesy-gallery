@@ -222,28 +222,31 @@ is moot (Jekyll already covers it); one is still open.
 
 Estimated effort: ~half a day, all behind existing tests.
 
-### 3.2 Same architecture, swap RMagick for libvips
+### 3.2 Same architecture, swap RMagick for libvips _(landed in 1.2.0)_
+
+Originally a forward-looking option; landed in `cheesy-gallery 1.2.0`
+on top of PR #416 via the `claude/libvips-migration-plan-5CjpP` branch.
 
 The numbers from `jekyll_picture_tag`'s migration and OpsLevel's blog
-suggest **5–10× build-time speedup** and **roughly an order of magnitude
-less RAM**. RMagick has also had recurring CVE / build-pain issues, while
-`ruby-vips` ships as a thin FFI wrapper.
+suggested **5–10× build-time speedup** and **roughly an order of magnitude
+less RAM**. cheesy-gallery's empirical numbers turned out workload-
+dependent (see `docs/libvips-bench.md`): a **3.35× speedup at DSLR
+source sizes** (the production workload), and a slight regression for
+already-web-sized sources. RAM is roughly comparable to RMagick across
+both workloads, not the 10× public claim. The migration was justified
+on the DSLR speedup plus two non-perf wins: escape from RMagick's CVE /
+build-pain churn, and correct EXIF Orientation handling (latent bug
+under RMagick).
 
-Two ways to land this:
-
-- **Drop-in via the [`image_processing`](https://github.com/janko/image_processing)
-  gem.** That gem exposes a single API over both libvips and
-  ImageMagick/MiniMagick, so we could keep RMagick as a fallback and
-  default to vips. Smallest behavioural risk.
-- **Direct `ruby-vips`.** Fewer dependencies, but a chunkier diff in
-  `image_file.rb` / `image_thumb.rb`.
-
-Either way, the plugin's external interface (the collection metadata
-keys, the generated layout data) does not change. CI matrix needs to
-ensure libvips is installed (`apt install libvips`).
-
-Estimated effort: 1–2 days; bulk of the work is parity testing against
-existing fixtures.
+The chosen path was **direct `ruby-vips`** (no `image_processing` gem,
+no RMagick fallback). The plugin's external interface (collection
+metadata keys, generated layout data) did not change. Subclass shape:
+`process_and_write` now takes `(source_path, dest_path)` and calls
+`Vips::Image.thumbnail` directly; the base class no longer opens the
+source file. CI installs `libvips42 libvips-dev libvips-tools` in
+place of `libmagickwand-dev`. See `CHANGELOG.md` for the user-facing
+notes (EXIF Orientation, thumb encoder settings, geometry-flag
+narrowing).
 
 ### 3.3 Split into two gems
 

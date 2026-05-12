@@ -1,9 +1,20 @@
 # Cache Mechanism Analysis (2026-05-11)
 
-How `cheesy-gallery` 1.1.1 caches work, how they sit on top of (and
+How `cheesy-gallery` 1.2.0 caches work, how they sit on top of (and
 sometimes around) Jekyll 4.4.1's own caching, where invalidation
 happens, and what happens once you put a `git-annex` worktree
 underneath it all.
+
+> **Note for readers of v1.2+:** this doc was originally written for the
+> RMagick-backed v1.1.x. Layers A–C and the invalidation model are
+> unchanged under the libvips backend. **Layer D** has been rewritten
+> below to describe libvips' operation cache instead of RMagick's
+> decoded pixel cache. Code snippets that mention `Magick::Image.ping`
+> or `Magick::ImageList.new` reflect the historical implementation;
+> the current call sites are `Vips::Image.new_from_file` (replacing
+> the ping) and `Vips::Image.thumbnail` (replacing the decode+resize
+> pair, now fused). The cache-spec spy targets are updated to match —
+> see `spec/cheesy/cache_spec.rb`.
 
 ## TL;DR
 
@@ -209,25 +220,47 @@ re-read at write time — geometry is only used to populate
 width=… height=…>` attributes. So Layer C does not gate I/O the way
 Layer B does; it gates the per-image `Magick::Image.ping` call.
 
-### 1.4 Layer D — RMagick's internal cache
+### 1.4 Layer D — libvips operation cache
 
-When we *do* render (Layer A and B both miss), `copy_file` in
-`base_image_file.rb:49-62` runs:
+When we *do* render (Layer A and B both miss), the subclass's
+`process_and_write` runs `Vips::Image.thumbnail(source_path, ...)`
+directly — libvips fuses decode + shrink-on-load + resize + (for
+thumbnails) centre-crop into a single operation. The base class no
+longer opens the source file itself; it just hands the source path
+to the subclass:
 
 ```ruby
-source = Magick::ImageList.new(path)
-begin
-  process_and_write(source, dest_path)
-ensure
-  source.destroy!
+# base_image_file.rb
+def copy_file(dest_path)
+  Jekyll.logger.debug 'Rendering:', dest_path
+  process_and_write(path, dest_path)
+  unless File.symlink?(dest_path)
+    File.utime(self.class.mtimes[path], self.class.mtimes[path], dest_path)
+  end
+  @@render_cache[render_cache_key(dest_path)] = true
 end
+
+# image_file.rb#process_and_write (full-size)
+img = Vips::Image.thumbnail(source_path, target_w, height: target_h,
+                            size: :down, crop: :none)
+img.write_to_file(dest_path, Q: @quality, interlace: true,
+                  strip: true, optimize_coding: true)
 ```
 
-`Magick::ImageList.new` decodes the JPEG into a pixel cache. RMagick
-keeps that decoded image in memory (and, depending on
-`MAGICK_TEMPORARY_PATH` and `MAGICK_DISK_LIMIT`, on disk too) until
-`destroy!` is called. The generator's *only* concession to this layer
-is the `collection.files.sort!` on `generator.rb:117`:
+What used to be "decode the entire JPEG into a pixel buffer and then
+resize" is now one library call that streams only the rows it needs
+(JPEG shrink-on-load at 1/2, 1/4, or 1/8 inside the codec, plus
+in-memory resize). There is **no separate decoded-pixel cache** to
+size, and no `destroy!` lifecycle — the `Vips::Image` is freed by GC.
+
+libvips does keep a small **operation cache** of recently-compiled
+operation graphs (default ~100 entries; tunable via
+`Vips.cache_set_max`). That's a process-local performance optimisation,
+not a correctness-affecting cache; it's transparent to our code and
+to the four-layer model above.
+
+The generator's `collection.files.sort!` on `generator.rb:117` still
+helps Layer D, but for a different reason now:
 
 ```ruby
 # sort files by source path, so that we have better cache hits when
@@ -238,12 +271,14 @@ is the `collection.files.sort!` on `generator.rb:117`:
 collection.files.sort! { |a, b| a.path <=> b.path }
 ```
 
-Sorting by source path keeps the full-size variant, the
-`*_thumb.jpg`, and (if applicable) the `*_index.jpg` for the same
-source next to each other in iteration order, so the underlying file
-data is more likely to be hot in the OS page cache when each variant
-opens it. There's no shared `Magick::ImageList` instance — each
-subclass opens, decodes, processes, and destroys independently.
+Sorting by source path keeps the full-size variant and its thumb(s)
+adjacent in iteration order. Under libvips this benefits **OS page
+cache locality** (each `Vips::Image.thumbnail` re-opens the file; the
+JPEG bytes are warm from the previous variant's open) and gives the
+libvips operation cache a better chance of reusing a previously-
+compiled graph. The TODO in the comment is now obsolete: there's no
+`ImageList` instance to share, because there's no separate decode
+step.
 
 This is the cache layer most affected by the choice of source-image
 storage (local FS vs. `git-annex`-resolved symlink vs. networked
