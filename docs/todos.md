@@ -18,8 +18,13 @@ Newer items at the bottom; tick items off in PRs as they land.
       Render-cache mtime fix (`e118c10`) keys on Jekyll's current
       cache surface — no reason to keep claiming 4.0 / 4.1 / 4.2
       compatibility._
-- [ ] Close / supersede stale dependabot PRs #410 (4.3.3) and #401-era
-      bumps in favour of going straight to 4.4.1.
+- [x] Close / supersede stale dependabot PRs #410 (4.3.3) and #401-era
+      bumps in favour of going straight to 4.4.1. _Verified via the
+      GitHub API: all four stale PRs were closed (unmerged) on
+      2026-05-12 alongside PR #412 — #410 (jekyll 4.3.2 → 4.3.3),
+      #408 (rake 13.0.6 → 13.1.0), #409 (tzinfo-data 1.2023.3 →
+      1.2023.4), and #394 (rmagick widening, already superseded by
+      the merged PR #406). Nothing else is open against the repo._
 - [x] Re-run the fixture build under the new Jekyll and confirm
       `Jekyll::StaticFile`, `Jekyll::Document`, and `Jekyll::Cache`
       surface used by the plugin still match (see §5 below). _Surfaced
