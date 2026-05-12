@@ -4,8 +4,10 @@
 class CheesyGallery::GalleryIndex < Jekyll::Document
   DEFAULT_CONTENT = "This page intentionally left blank.\n"
 
-  # skip reading content, as there is by definition no backing file for this
-  def read_content(_opts = nil)
+  # No backing file exists — calling super would try File.read(path) and
+  # abort the build. Mirror Jekyll::Document#read minus the file I/O.
+  def read(_opts = {})
+    merge_defaults
     self.content = DEFAULT_CONTENT
   end
 end
