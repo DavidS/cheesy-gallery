@@ -9,10 +9,18 @@
 * **Behaviour change:** EXIF Orientation is now honoured. Sources that
   previously rendered sideways (Orientation 5–8) will now render
   upright. Output JPEGs no longer carry the orientation tag.
-* **Behaviour change:** thumbnails (`*_thumb.jpg`, `*_index.jpg`) are
-  now progressive JPEGs encoded at Q80 with optimised Huffman tables
-  and EXIF metadata stripped. Previously they used RMagick's default
-  encoder settings (baseline JPEG, ~Q75, EXIF retained).
+* **Behaviour change:** every rendered JPEG (full-size + thumbs) now
+  ships as a progressive JPEG with optimised Huffman tables, explicit
+  4:2:0 chroma subsampling, and all metadata stripped (`keep: :none`).
+  Thumbnails are encoded at Q80 and full-size renders honour the
+  collection-metadata `quality` value (default 85). Previously
+  thumbnails used RMagick's default encoder (baseline JPEG, ~Q75, EXIF
+  retained). The explicit `subsample_mode: :on` guards against a
+  silent ~25% file-size jump if a user bumps `quality` to ≥ 90 (where
+  libvips' `:auto` mode would otherwise switch to 4:4:4).
+* **Robustness:** image header reads now use `fail_on: :error`, so a
+  truncated or corrupt source JPEG aborts the build with a clear
+  error rather than silently rendering a half-grey output.
 * **Behaviour narrowing:** `max_size` values with ImageMagick trailing
   flags other than `>` (i.e. `!`, `^`, `@`, `#`) are silently treated
   as the plain `WxH` form. cheesy-gallery's own config never used

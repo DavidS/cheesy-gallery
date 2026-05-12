@@ -26,8 +26,9 @@ class CheesyGallery::ImageThumb < CheesyGallery::BaseImageFile
       dest_path,
       Q: 80,
       interlace: true,
-      strip: true,
+      keep: :none,
       optimize_coding: true,
+      subsample_mode: :on,
     )
   end
 end

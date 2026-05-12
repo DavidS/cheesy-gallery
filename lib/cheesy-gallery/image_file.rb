@@ -20,7 +20,7 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
       Jekyll.logger.debug 'Identifying:', path
       # autorot so width/height reflect post-orientation pixels — matches
       # what Vips::Image.thumbnail will produce at render time.
-      source = Vips::Image.new_from_file(path, access: :sequential).autorot
+      source = Vips::Image.new_from_file(path, access: :sequential, fail_on: :error).autorot
       fit_inside(source.width, source.height)
     end
 
@@ -42,8 +42,9 @@ class CheesyGallery::ImageFile < CheesyGallery::BaseImageFile
       dest_path,
       Q: @quality,
       interlace: true,
-      strip: true,
+      keep: :none,
       optimize_coding: true,
+      subsample_mode: :on,
     )
   end
 
