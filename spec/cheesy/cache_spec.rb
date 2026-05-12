@@ -230,11 +230,7 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
   # --- §3.3 scenario 4: edited source, dest_path unchanged ------------
 
   describe 'scenario 4: source edited in place, dest_path unchanged' do
-    it 'documents the Layer-B-shadows-Layer-A bug: dest is stale (PENDING)' do
-      pending 'docs/cache-analysis.md §3.3 #4: Render cache keys only on ' \
-              'dest_path so an in-place source edit is silently skipped. ' \
-              'Fix per §7.1.'
-
+    it 're-renders because the Render-cache key includes the source mtime' do
       build!
       target_source = File.join(source_dir, '_gallery', CHEESY_CACHE_FIXTURE_JPGS.first)
       target_dest   = File.join(dest_dir,   'gallery',  CHEESY_CACHE_FIXTURE_JPGS.first)
@@ -248,32 +244,8 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
       reset_counters!
       build!
 
-      # Desired behaviour after fix: the cache notices the source
-      # changed and re-renders. Today it doesn't, and these
-      # expectations fail; the `pending` marker keeps the test green.
       expect(@decode_count).to be > 0
       expect(File.mtime(target_dest)).not_to eq(original_dest_mtime)
-    end
-
-    it 'still records the bug as a regression check' do
-      # Inverse of the pending test above: assert the buggy behaviour
-      # we currently ship so that a fix shows up as a deliberate
-      # change to the suite, not a surprise.
-      build!
-      target_source = File.join(source_dir, '_gallery', CHEESY_CACHE_FIXTURE_JPGS.first)
-      target_dest   = File.join(dest_dir,   'gallery',  CHEESY_CACHE_FIXTURE_JPGS.first)
-      dest_mtime_before = File.mtime(target_dest)
-
-      future = Time.now + 60
-      File.utime(future, future, target_source)
-
-      simulate_cold_process!
-      reset_counters!
-      build!
-
-      expect(@decode_count).to eq(0),
-                               'Layer B hit despite source change — known bug'
-      expect(File.mtime(target_dest)).to eq(dest_mtime_before)
     end
   end
 
