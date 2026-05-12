@@ -296,17 +296,18 @@ RSpec.describe CheesyGallery::Generator do
   # --- image dimension extraction ------------------------------------
 
   describe 'image dimension extraction' do
-    it 'sets data[\'width\'] / data[\'height\'] to the change_geometry! result for the default max_size' do
+    it 'leaves source dimensions alone when smaller than max_size (shrink-only)' do
       write_two_gallery_fixture!
       site = build!
 
       # 1000x750 source under default max_size '1920x1080'.
-      # `change_geometry!` (no `>` modifier) scales up to fit the
-      # box while preserving aspect ratio → 1440x1080.
+      # ImageFile appends `>` so change_geometry! only shrinks
+      # originals larger than the box; smaller ones pass through
+      # unchanged.
       frostig = site.collections['gallery_one'].files.find do |f|
         f.is_a?(CheesyGallery::ImageFile) && f.name == 'Frostig-001.jpg'
       end
-      expect([frostig.data['width'], frostig.data['height']]).to eq([1440, 1080])
+      expect([frostig.data['width'], frostig.data['height']]).to eq([1000, 750])
     end
 
     it 'reflects the max_size override in data dimensions' do
@@ -337,15 +338,15 @@ RSpec.describe CheesyGallery::Generator do
       end
     end
 
-    it 'scales rendered output to the default max_size (1920x1080)' do
+    it 'leaves rendered output at source size when below the default max_size' do
       write_two_gallery_fixture!
       build!
 
-      # change_geometry!('1920x1080') without `>` enlarges
-      # 1000x750 → 1440x1080.
+      # Shrink-only `>` policy: 1000x750 stays 1000x750 under the
+      # default '1920x1080' max_size.
       out = Magick::Image.ping(File.join(dest_dir, 'gallery_one', 'Frostig-001.jpg')).first
       begin
-        expect([out.columns, out.rows]).to eq([1440, 1080])
+        expect([out.columns, out.rows]).to eq([1000, 750])
       ensure
         out.destroy!
       end

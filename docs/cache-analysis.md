@@ -167,11 +167,11 @@ re-rendered**:
 # lib/cheesy-gallery/image_file.rb:17-29
 realpath = File.realdirpath(path)
 mtime = File.mtime(realpath)
-geom = @@geometry_cache.getset("#{realpath}##{mtime}") do
+geom = @@geometry_cache.getset("#{realpath}##{mtime}##{geometry_string}") do
   result = [100, 100]
   Jekyll.logger.debug 'Identifying:', path
   source = Magick::Image.ping(path).first
-  source.change_geometry!(@max_size) do |cols, rows, _img|
+  source.change_geometry!(geometry_string) do |cols, rows, _img|
     result = [rows, cols]
   end
   source.destroy!
@@ -184,10 +184,14 @@ data['width']  = geom[1]
 
 Key points:
 
-- Cache key is `"#{realpath}##{mtime}"`. **Symlinks are resolved**
-  (`File.realdirpath`), and the **mtime is the realpath's mtime** —
-  not the symlink's. This is exactly the right behaviour for plain
-  files; the consequences for `git-annex` are in §6.
+- Cache key is `"#{realpath}##{mtime}##{geometry_string}"`. **Symlinks
+  are resolved** (`File.realdirpath`), and the **mtime is the
+  realpath's mtime** — not the symlink's. The trailing `geometry_string`
+  segment is the `max_size` value with `>` appended (shrink-only;
+  see `image_file.rb` `geometry_string`), so changing `max_size` in
+  `_config.yml` or upgrading to a release that changes the upscale
+  policy invalidates entries naturally without needing a global cache
+  wipe. Consequences for `git-annex` are in §6.
 - Stored value is a 2-element array `[height, width]`. Tiny, so the
   disk-cache footprint is negligible even for 10 000 images.
 - `getset` raises-and-rescues to detect cache misses (this is
@@ -255,7 +259,7 @@ G  Generator#generate
 G    foreach collection marked cheesy-gallery
 G      foreach JPG in collection.files
 G        ImageFile.new
-G          ─ Layer C: geometry_cache.getset("#{realpath}##{mtime}")
+G          ─ Layer C: geometry_cache.getset("#{realpath}##{mtime}##{geometry_string}")
 G          ─ on miss: Magick::Image.ping → change_geometry! → destroy!
 G        ImageThumb.new                          # no cache touched here
 G      collection.files.sort!(path)              # primes Layer D ordering
@@ -313,7 +317,7 @@ keyed by SHA2 of the cache key:
 ├── CheesyGallery--Geometry/
 │   ├── 9f/
 │   │   └── 23c8b1d2e4f6…   # Marshal.dump([1080, 1920])
-│   └── …                   # one entry per (realpath#mtime)
+│   └── …                   # one entry per (realpath#mtime#geometry_string)
 └── CheesyGallery--Render/
     ├── 7e/
     │   └── 4d8f2a1c…        # Marshal.dump(true)
@@ -519,8 +523,11 @@ The strategy is:
   blobs** confirms that the disk side of each named cache populates
   on the first build and remains after the simulated restart. The
   Render cache key-set inspection (`@cache.keys`) directly verifies
-  the key shape (`"<dest_path>-rendered"`) and the Geometry key
-  shape (`"<realpath>#<mtime>"`).
+  the key shape (`"<dest_path>#<mtime>#<discriminator>-rendered"`
+  for `ImageFile`, with the geometry string as the discriminator;
+  `"<dest_path>#<mtime>-rendered"` for `ImageThumb`, where the
+  discriminator is currently empty) and the Geometry key shape
+  (`"<realpath>#<mtime>#<geometry_string>"`).
 
 The scenario-to-test mapping:
 

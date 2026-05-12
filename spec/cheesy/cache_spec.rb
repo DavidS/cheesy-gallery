@@ -331,14 +331,33 @@ RSpec.describe 'cheesy-gallery cache behaviour' do
       expect(keys).to all(end_with('-rendered'))
     end
 
-    it 'keys the Geometry cache on realpath + mtime' do
+    it 'keys the Geometry cache on realpath + mtime + geometry' do
       build!
       keys = geometry_cache.instance_variable_get(:@cache).keys
       expect(keys.size).to eq(CHEESY_CACHE_FIXTURE_JPGS.size)
       keys.each do |k|
-        realpath, mtime = k.split('#', 2)
+        realpath, mtime, geom = k.split('#', 3)
         expect(File.realdirpath(realpath)).to eq(realpath)
         expect(mtime).to match(%r{\A\d{4}-\d{2}-\d{2}})
+        # The geometry component is the `geometry_string` that
+        # ImageFile passes to `change_geometry!`, with the `>`
+        # appended so we never upscale small originals.
+        expect(geom).to eq('1920x1080>')
+      end
+    end
+
+    it 'keys the Render cache on dest_path + source mtime + geometry' do
+      build!
+      keys = CheesyGallery::BaseImageFile
+             .class_variable_get(:@@render_cache)
+             .instance_variable_get(:@cache).keys
+      image_file_keys = keys.reject { |k| k.include?('_thumb.jpg') || k.include?('_index.jpg') }
+      expect(image_file_keys).not_to be_empty
+      image_file_keys.each do |k|
+        # Full-size renders include the geometry discriminator; thumbs
+        # use the empty default and so look like the pre-discriminator
+        # format. Both still end with `-rendered`.
+        expect(k).to end_with('#1920x1080>-rendered')
       end
     end
 

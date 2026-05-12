@@ -43,9 +43,18 @@ class CheesyGallery::BaseImageFile < Jekyll::StaticFile
   # Render-cache key is dest_path plus source mtime so that an in-place
   # source edit (or a re-pointed git-annex symlink) invalidates the
   # cached marker naturally. Stale entries under old keys linger on
-  # disk until `jekyll clean`; cosmetic.
+  # disk until `jekyll clean`; cosmetic. Subclasses can extend the
+  # key via `render_cache_discriminator` when they have additional
+  # state whose changes should force a re-render.
   def render_cache_key(dest_path)
-    "#{dest_path}##{mtime.to_i}-rendered"
+    parts = ["#{dest_path}##{mtime.to_i}", render_cache_discriminator].reject { |s| s.nil? || s.empty? }
+    "#{parts.join('#')}-rendered"
+  end
+
+  # Subclasses override to mix render-affecting state into the
+  # Render-cache key (geometry, quality, thumbnail dimensions, …).
+  def render_cache_discriminator
+    ''
   end
 
   # Replace Jekyll's StaticFile#copy_file (FileUtils.cp) with RMagick
