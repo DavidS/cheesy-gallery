@@ -79,8 +79,16 @@ existing `spec/fixtures/test_site` (or a smaller in-spec fixture):
       first image; gallery without images gets no thumbnail.
 - [ ] Test image dimension extraction (`data['height'] / ['width']`)
       against fixture JPGs of known size.
-- [ ] Test caching: second `process` run with unchanged sources skips
+- [x] Test caching: second `process` run with unchanged sources skips
       the RMagick render path (mock or assert via `Jekyll::Cache`).
+      _Landed in `spec/cheesy/cache_spec.rb` (PR #414, 2026-05-12):
+      eight scenarios from `docs/cache-analysis.md` §3.3 + §1/§4/§5
+      details, with `Magick::Image.ping` and `Magick::ImageList.new`
+      spies asserting per-layer hits/misses. Surfaced two doc
+      corrections (`_config.yml` DOES invalidate both named caches;
+      `ImageThumb.mtimes` is shared between `*_thumb.jpg` and
+      `*_index.jpg`) and a real Render-cache staleness bug — see §5
+      below._
 - [ ] Test `max_size` and `quality` collection-metadata overrides.
 - [ ] Wire spec coverage reporting (simplecov) into `rake` if we keep
       coverage as a goal.
@@ -101,21 +109,55 @@ Jekyll docs/source:
       array. The generator now re-syncs `site.static_files` after
       mutating `collection.files`. Re-evaluate whether moving to a
       `:site, :post_read` hook (see below) would be cleaner._
-- [ ] `Jekyll::StaticFile`: review the `write` override in
+- [x] `Jekyll::StaticFile`: review the `write` override in
       `lib/cheesy-gallery/base_image_file.rb` against current upstream
       `lib/jekyll/static_file.rb` — the inline comment already calls
       out that we're shadowing internal behaviour, so check for drift
-      in 4.3.x → 4.4.x.
-- [ ] `Jekyll::Document`: review `GalleryIndex`'s override of
+      in 4.3.x → 4.4.x. _Reviewed and tightened in PR #415
+      (`e118c10`): RMagick rendering moved into a `copy_file`
+      override, the bespoke `mkdir_p` + `rm` dance dropped in favour
+      of deferring to `super`, and the remaining `write` override is
+      now just the cross-process Render-cache short-circuit. Same
+      commit fixes a Layer-B-shadows-Layer-A staleness bug by adding
+      source `mtime` to the Render-cache key — without it, in-place
+      source edits (or re-pointed git-annex symlinks) were silently
+      skipped on subsequent builds._
+- [x] `Jekyll::Document`: review `GalleryIndex`'s override of
       `read_content` and confirm `cleaned_relative_path`,
       `basename_without_ext`, and `relative_path` semantics match.
-- [ ] `Jekyll::Cache`: confirm the two named caches
+      _Done in PR #415 (`d5133a6`): `read_content` is private in
+      Jekyll 4.x and the synthetic doc has no backing file, so
+      calling `super` from a `read` override hit `ENOENT` and
+      `handle_read_error` aborted the build under 4.4.1.
+      `GalleryIndex` now overrides `read` directly (without calling
+      `super`) and invokes the still-private `merge_defaults`
+      itself, mirroring Jekyll's sequence minus the file I/O; skipping
+      `read_post_data` is intentional (it would touch
+      `File.mtime(path)` on the synthetic path)._
+- [x] `Jekyll::Cache`: confirm the two named caches
       (`CheesyGallery::Render`, `CheesyGallery::Geometry`) still
       invalidate correctly on `_config.yml` changes and
       `.jekyll-cache` removal as documented in the README.
-- [ ] Frontend hooks: consider whether `Jekyll::Hooks` (e.g.
+      _Verified end-to-end by `spec/cheesy/cache_spec.rb` (PR #414).
+      Note: `_config.yml` edits **do** invalidate both named caches
+      — `Jekyll::Cache.clear_if_config_changed` from `Site#process`
+      `rm -rf`s the whole `cache_dir`, contrary to an earlier note
+      in `docs/cache-analysis.md` (since corrected). The Render
+      cache is **not** self-healing under Marshal corruption (Geometry
+      cache is, via `getset`'s `StandardError` rescue)._
+- [x] Frontend hooks: consider whether `Jekyll::Hooks` (e.g.
       `:site, :post_read` or `:documents, :pre_render`) would be a
       cleaner integration point than mutating collections in a
-      `Generator`.
+      `Generator`. _Evaluated in `docs/jekyll-api-review.md` §3.5
+      and decided in PR #415 (branch `stay-course-tighten`) to keep
+      the `Generator` for this release. A `:site, :post_read` hook
+      would let us drop the `9dd18c0` `site.static_files` re-sync,
+      but it's only a small win on its own and is better paired with
+      the §3.3 libvips split when (if) we tackle it. Same PR added
+      `safe true` and `priority :low` to the generator
+      (`8a1602a`) so it whitelists under `--safe` and runs after
+      default-priority generators — synthetic `GalleryIndex` docs
+      remain invisible to earlier generators, which is acceptable for
+      current deployments._
 - [x] Document findings in `docs/jekyll-api-review.md` and link it from
       `docs/index.md` (2026-05-10).
