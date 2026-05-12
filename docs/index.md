@@ -10,6 +10,9 @@ Internal documentation and reports for `cheesy-gallery`.
 - [Jekyll Plugin API Review](jekyll-api-review.md) — current Jekyll 4.4
   plugin surface, what `cheesy-gallery` uses today, and a few alternative
   architectures going forward (generated 2026-05-10).
+- [Cache Mechanism Analysis](cache-analysis.md) — the four cache layers
+  the plugin sits on top of, how they invalidate, and how `git-annex`
+  source storage interacts with each layer (generated 2026-05-11).
 
 ## Working lists
 
