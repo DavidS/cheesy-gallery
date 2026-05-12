@@ -8,7 +8,7 @@ underneath it all.
 ## TL;DR
 
 - The plugin maintains **two named `Jekyll::Cache` instances** that
-  persist across builds in `.jekyll-cache/Jekyll--Cache/`:
+  persist across builds in `<source>/.jekyll-cache/Jekyll/Cache/`:
   `CheesyGallery::Render` (boolean per destination path) and
   `CheesyGallery::Geometry` (resized dimensions per source).
 - It also leans on Jekyll's per-process `StaticFile.mtimes` hash and on
@@ -21,10 +21,17 @@ underneath it all.
   `Render` named cache, (3) the geometry cache (queried once at
   generator time, never re-checked at write time), and (4) RMagick's
   own internal disk cache for the decoded source.
-- None of these caches honour `--disable-disk-cache`, none invalidate
-  on `_config.yml` changes that affect `max_size` / `quality`, and the
-  `mtimes` hash is per-subclass (not shared across `ImageFile` /
-  `ImageThumb`) — see §5.
+- `--disable-disk-cache` is honoured by accident (the underlying
+  `Jekyll::Cache` short-circuits), and the `mtimes` hash is
+  per-subclass — `ImageFile.mtimes` and `ImageThumb.mtimes` are
+  different hashes, but the two `ImageThumb` variants (`*_thumb.jpg`
+  and `*_index.jpg`) for the same source share theirs, with subtle
+  knock-on effects under scenario 7. See §5.
+- `_config.yml` edits *do* invalidate both caches, but only because
+  Jekyll calls `Jekyll::Cache.clear_if_config_changed` from
+  `Site#process` and that does an indiscriminate
+  `FileUtils.rm_rf(cache_dir)`. Any change to any config value
+  triggers a full rebuild.
 - **Run-to-run** (§3): the in-memory layers (A and the in-process
   half of B/C) die with the process, so a cold `jekyll build` re-loads
   Layer B and C from `.jekyll-cache/` and never hits Layer A on the
@@ -128,7 +135,7 @@ end
 ```
 
 `Jekyll::Cache#key?` looks in memory first, then on disk
-(`.jekyll-cache/Jekyll--Cache/CheesyGallery--Render/<sha2[0..1]>/<sha2[2..]>`,
+(`.jekyll-cache/Jekyll/Cache/CheesyGallery--Render/<sha2[0..1]>/<sha2[2..]>`,
 each entry a `Marshal.dump` of `true`). So **Layer B persists across
 processes** — that is the layer that makes a second `jekyll build`
 fast.
@@ -286,8 +293,8 @@ builds.
 |----------------------------------------------------|--------------|-------------------------------------|
 | `StaticFile.mtimes` (per-subclass class-ivar)      | Process RAM  | Process exit                        |
 | `Jekyll::Cache.base_cache` in-memory hashes        | Process RAM  | Process exit                        |
-| `.jekyll-cache/Jekyll--Cache/CheesyGallery--Render`| Disk         | `jekyll clean`, `rm -rf .jekyll-cache` |
-| `.jekyll-cache/Jekyll--Cache/CheesyGallery--Geometry`| Disk       | `jekyll clean`, `rm -rf .jekyll-cache` |
+| `.jekyll-cache/Jekyll/Cache/CheesyGallery--Render`| Disk         | `jekyll clean`, `rm -rf .jekyll-cache` |
+| `.jekyll-cache/Jekyll/Cache/CheesyGallery--Geometry`| Disk       | `jekyll clean`, `rm -rf .jekyll-cache` |
 | `_site/<rendered files>` (utime-stamped)           | Disk         | `jekyll clean`, `rm -rf _site`      |
 
 The two volatile rows (RAM) are why a cold `jekyll build` cannot hit
@@ -302,7 +309,7 @@ Each named cache is a directory tree of `Marshal.dump`-encoded files,
 keyed by SHA2 of the cache key:
 
 ```
-.jekyll-cache/Jekyll--Cache/
+.jekyll-cache/Jekyll/Cache/
 ├── CheesyGallery--Geometry/
 │   ├── 9f/
 │   │   └── 23c8b1d2e4f6…   # Marshal.dump([1080, 1920])
@@ -385,7 +392,7 @@ process (the `--watch` case is treated separately as scenario 8).
      §6.4 in its git-annex form. The fix is in §7.1: include source
      content/mtime in the Render cache key.
    - Workaround today: `jekyll clean`, or
-     `rm .jekyll-cache/Jekyll--Cache/CheesyGallery--Render` after an
+     `rm .jekyll-cache/Jekyll/Cache/CheesyGallery--Render` after an
      edit.
 
 5. **After `jekyll clean`.** Both `.jekyll-cache/` and `_site/`
@@ -407,10 +414,23 @@ process (the `--watch` case is treated separately as scenario 8).
      !modified?` is `true && false` = false — falls through.
    - Layer B: `key?` returns false (no on-disk entry). Falls through.
    - Layer C: miss. Every source is re-pinged.
-   - Net work: full re-render *and* full re-ping.
-   - This is strictly worse than scenario 6, because the kept `_site/`
-     buys nothing. The lesson: cache `.jekyll-cache/` in CI before
-     caching `_site/`.
+   - Net work: full re-ping + re-render for **`N` full-size + `N`
+     thumbs** = `2N` decodes — *not* `2N + M` (M = gallery thumbs).
+     The per-image `*_thumb.jpg` write sets
+     `ImageThumb.mtimes[source_path] = mtime`; when the
+     gallery-index `*_index.jpg` for the same source then runs, its
+     destination still exists (we kept `_site/`), `mtimes[source]`
+     is the matching `mtime`, so `File.exist?(dest_path) &&
+     !modified?` is true and Layer A short-circuits *despite Layer B
+     having no cached entry for it*. This is benign: the
+     `_index.jpg` on disk really is the right content. But it is a
+     surprising bypass and is the reason the matching scenario in
+     `spec/cheesy/cache_spec.rb` asserts `N*2`, not `N*2 + M`,
+     decodes.
+   - This path is strictly worse than scenario 6, because the kept
+     `_site/` buys nothing for the full-size and per-image thumbs.
+     The lesson: cache `.jekyll-cache/` in CI before caching
+     `_site/`.
 
 8. **`jekyll serve --watch`** (same process across many cycles).
    - Cycle 1: as scenario 1 or 2 depending on prior state.
@@ -458,60 +478,158 @@ its own cache. That's fine, just not surprising.
 SHA2 of the key; there is no file locking. Two simultaneous
 `jekyll build` processes pointing at the same `.jekyll-cache/`
 directory can interleave writes for the same key and leave a
-half-Marshalled file on disk. The next read via `getset` rescues the
-`StandardError` from `Marshal.load`, treats the entry as a miss,
-recomputes, and rewrites — so the corruption is self-healing, but
-the recompute cost (a full `Magick::Image.ping` or full re-render)
-is paid. Don't run parallel builds against a shared cache.
+half-Marshalled file on disk. For the Geometry cache the next read
+via `getset` rescues the `StandardError` from `Marshal.load`, treats
+the entry as a miss, recomputes, and rewrites — so the corruption is
+self-healing, but the recompute cost (a full `Magick::Image.ping`)
+is paid. **The Render cache is not self-healing**: its check uses
+`Jekyll::Cache#key?`, which only inspects `File.file?` and
+`File.readable?` and never deserialises the blob. A corrupt-but-
+present Render-cache entry therefore still suppresses re-render.
+Don't run parallel builds against a shared cache; see
+`spec/cheesy/cache_spec.rb` "Marshal corruption" examples for both
+behaviours.
+
+### 3.6 Verification: how each scenario is tested
+
+Each of the eight scenarios above (and the related implementation
+details in §1, §4-§6) is exercised by `spec/cheesy/cache_spec.rb`.
+The strategy is:
+
+- **`Magick::Image.ping`** is the only RMagick call inside the
+  Geometry-cache `getset` block — so spying on it via
+  `allow(Magick::Image).to receive(:ping).and_wrap_original` and
+  counting calls is a direct measure of Layer C participation. Zero
+  pings on a warm build proves Layer C hit on every source.
+- **`Magick::ImageList.new`** is the first call inside
+  `BaseImageFile#copy_file`, which is reached only when Layer A and
+  Layer B both miss. Counting calls is a direct measure of *render*
+  participation. Zero decodes proves the file was skipped (by either
+  Layer A or Layer B), and the corroborating `File.mtime(dest)`
+  before/after comparison pins down which one.
+- **Cold-process simulation between builds.** The suite calls a
+  `simulate_cold_process!` helper that resets the in-memory state a
+  fresh Ruby process would have lost — `StaticFile.mtimes` (per
+  subclass), the inner `@cache` hash on each named `Jekyll::Cache`
+  instance, and the `@base_dir` memoisation on those instances —
+  without touching `.jekyll-cache/` or `_site/`. That is the
+  smallest possible "second build" — i.e. proves the cache survived
+  the simulated restart, not just that the in-process state did.
+- **`File.exist?` on `.jekyll-cache/Jekyll/Cache/CheesyGallery--…/`
+  blobs** confirms that the disk side of each named cache populates
+  on the first build and remains after the simulated restart. The
+  Render cache key-set inspection (`@cache.keys`) directly verifies
+  the key shape (`"<dest_path>-rendered"`) and the Geometry key
+  shape (`"<realpath>#<mtime>"`).
+
+The scenario-to-test mapping:
+
+| Scenario              | Spec describe                                    | Cache-participation signal       |
+|-----------------------|--------------------------------------------------|----------------------------------|
+| §3.3 #1 cold          | `scenario 1: cold first build`                   | ping=N, decode=2N+M              |
+| §3.3 #2 warm          | `scenario 2: warm second build, no source changes` | ping=0, decode=0; mtimes unchanged |
+| §3.3 #3 +new photo    | `scenario 3: warm build with one new photo`      | ping=1, decode=2                 |
+| §3.3 #4 edited source | `scenario 4: source edited in place, …`          | regression (decode=0); pending  (decode>0)  |
+| §3.3 #5 after clean   | `scenario 5: after jekyll clean`                 | ping=N, decode=2N+M (= scenario 1) |
+| §3.3 #6 rm _site/     | `scenario 6: rm -rf _site/ only (cache kept)`    | ping=0, decode=2N+M              |
+| §3.3 #7 rm cache      | `scenario 7: rm -rf .jekyll-cache/ only (_site kept)` | ping=N, decode=2N (Layer A bypass) |
+| §3.3 #8 --watch       | `scenario 8: in-process re-build (jekyll serve --watch)` | ping=0, decode=0 via Layer A   |
+| §4 config edit        | `Jekyll wipes our caches when _config.yml changes` | ping=N after edit               |
+| §5.1 symlinks         | `path vs realpath via symlinked source`          | Geometry key contains realpath   |
+| §5.5 thumbs           | `ImageThumb does not consult the Geometry cache` | ping=N regardless of thumb count |
+| §1.1 mtimes split     | `StaticFile.mtimes is per-subclass`              | `ImageFile.mtimes.object_id != ImageThumb.mtimes.object_id` |
+| §3.5 corruption       | `Marshal corruption in a …`                     | Geometry self-heals; Render doesn't |
+
+The §3.3 scenario 4 entry is the bug `pending`-marked in the spec:
+the assertion is the *desired* behaviour (`decode > 0`), so the
+test stays red as a known bug until §7.1's fix lands; a sibling
+regression test asserts the *current* (buggy) behaviour explicitly
+so the fix is a deliberate suite change.
 
 ## 4. What actually invalidates each layer
 
 | Layer | Invalidated by                                                                                            | Survives `jekyll clean`? | Survives `_config.yml` edit? |
 |-------|-----------------------------------------------------------------------------------------------------------|--------------------------|------------------------------|
 | A — `mtimes` hash             | New process. Anything that resets the class-instance variable.                  | n/a (in-memory)          | n/a                          |
-| B — `Render` named cache       | `jekyll clean` (removes `.jekyll-cache`). `File.exist?(dest_path) == false`.    | **No**                   | **Yes** — stale!             |
-| C — `Geometry` named cache     | `jekyll clean`. Source `realpath` or `mtime` change.                            | **No**                   | **Yes** — stale!             |
+| B — `Render` named cache       | `jekyll clean`. `File.exist?(dest_path) == false`. **Any** `_config.yml` edit (via `clear_if_config_changed`). | **No**                   | **No** (whole cache dir wiped) |
+| C — `Geometry` named cache     | `jekyll clean`. Source `realpath` or `mtime` change. **Any** `_config.yml` edit.                          | **No**                   | **No** (same)                |
 | D — RMagick decode             | Per-process; freed on `destroy!`.                                              | n/a                      | n/a                          |
 
-Two notable gaps, both already flagged in
-`docs/jekyll-api-review.md` §1.6 but worth restating in cache terms:
+The earlier draft of this table claimed `_config.yml` edits leave our
+caches stale. That turns out to be wrong; verified by
+`spec/cheesy/cache_spec.rb` ("§4: invalidation behaviour"). Jekyll
+calls `Jekyll::Cache.clear_if_config_changed(site.config)` from
+`Site#process` (jekyll 4.4.1 `lib/jekyll/site.rb:118`), and that
+class-level `clear` does `FileUtils.rm_rf(Jekyll::Cache.cache_dir)` —
+which removes the *entire* `<source>/.jekyll-cache/Jekyll/Cache/`
+subtree, including our named caches. It also `Hash#clear`s every
+in-memory `Jekyll::Cache.base_cache` entry. The upshot:
+
+- Any change to `_config.yml` that alters its `Hash#inspect`
+  representation — a typo fix, a `quality:` change, a `title:` edit,
+  *anything* — nukes both our caches. This is generous (no staleness
+  bugs) and wasteful (a one-character fix re-pings and re-renders
+  every photo).
+- The fingerprint Jekyll stores is `config.inspect` (a Ruby string).
+  Whitespace and ordering of YAML keys don't matter (YAML→Hash
+  normalises), but adding/removing/touching *any* key value does.
+
+Two real gaps remain, both already flagged in
+`docs/jekyll-api-review.md` §1.6:
 
 1. **`--disable-disk-cache` is ignored.** Jekyll's CLI calls
    `Jekyll::Cache.disable_disk_cache!`, which sets a class flag that
-   *Jekyll-owned* caches consult. Our two named caches were created
-   before that flag is set during normal operation, but more
-   importantly the per-instance code paths
+   *Jekyll-owned* caches consult. The per-instance code paths
    (`base_image_file.rb:34`, `image_file.rb:19`) call `key?` /
    `getset` directly. Those methods *do* check the class flag, so
    reads bypass disk correctly — but writes via `cache[key] = value`
-   *also* bypass disk in that case, so really the layer just becomes
+   *also* bypass disk in that case, so the layer just becomes
    in-memory. Functionally fine; behaviourally it means
-   `--disable-disk-cache` works "by accident" rather than by design,
-   and no one has confirmed it on this codebase.
-2. **Config-driven invalidation is absent.** If you change
-   `max_size: 1920x1080 → 1600x900` in `_config.yml`, the
-   `Geometry` cache still has the old `[rows, cols]` for the old
-   `max_size`. The `Render` cache still says "already rendered" for
-   the old dest. Result: stale layouts (image tags claim the wrong
-   dimensions) and stale rendered JPEGs (still 1920px wide).
-   Workaround today: `jekyll clean` or
-   `rm -rf .jekyll-cache _site/<collection>` after such an edit.
-   The proper fix is one of: call
-   `Jekyll::Cache.clear_if_config_changed(site.config)` in the
-   generator, or include a digest of the relevant collection metadata
-   in the cache keys.
+   `--disable-disk-cache` works "by accident" rather than by design.
+2. **Corrupted Render-cache blobs are not self-healing.** The
+   Render cache check is `key? && File.exist?(dest_path)`, and
+   `key?` only does `File.file? && File.readable?` — it never tries
+   to deserialise. A corrupt (or zero-byte, or truncated) blob is
+   indistinguishable from a valid one and still suppresses the
+   re-render. The Geometry cache is unaffected, because it goes
+   through `getset`, which `rescue StandardError`s a `Marshal.load`
+   failure and recomputes. Verified by the two
+   `Marshal corruption in a … cache blob` examples in
+   `spec/cheesy/cache_spec.rb`. Workaround: `rm -rf .jekyll-cache/`
+   on suspicion. Long-term fix: have BaseImageFile go through
+   `getset` instead of `key?`, or store a checksum alongside the
+   boolean.
 
-There is also a third, subtler gap:
+And one more subtle behaviour worth knowing:
 
-3. **Layer B + missing dest = silent re-render path mismatch.** The
-   `Render` cache key embeds `dest_path`, which is an absolute path
-   under the chosen destination directory (default `_site`, but
-   configurable via `--destination` or `destination:` in
-   `_config.yml`). Two builds with different `--destination`
-   directories therefore share **no** Render cache entries — and
-   correctly so: there's no rendered file at the new dest to skip.
-   But it does mean swapping destinations doubles the cache footprint
-   over time.
+3. **`ImageThumb.mtimes` is shared by per-image and gallery-index
+   thumbs of the same source.** Both `*_thumb.jpg` and `*_index.jpg`
+   are `ImageThumb` instances; their class-instance `@mtimes` hash
+   is therefore the same. When the first one's `write` succeeds it
+   sets `mtimes[source_path] = mtime`. If both destinations already
+   exist on disk (the "kept `_site/`" case), the second thumb's
+   Layer A short-circuit fires (`File.exist?(dest_path) &&
+   !modified?` → true && true → return false) and the second
+   variant is silently skipped — *even though the Render cache is
+   empty*. This is benign when the dest is correct (it really is
+   already rendered, scenarios 2 and 7), but pathological under the
+   §3.3 scenario 4 source-edit bug, because Layer A then short-
+   circuits on a *stale* dest. Pinned down by scenario 7 in
+   `spec/cheesy/cache_spec.rb` (expected decodes = `N*2`, not
+   `N*2+1`, despite the `_index.jpg` blob having been wiped from
+   disk).
+
+A fourth, mostly-cosmetic gap:
+
+4. **Different `--destination` directories double the cache
+   footprint until config changes invalidate it.** The Render cache
+   key embeds the absolute `dest_path`. Two builds with different
+   destinations would share no Render-cache entries — but
+   destination is in `config`, so changing it also triggers
+   `clear_if_config_changed`. Net: the doubling only persists if you
+   somehow run two builds with *different* destinations and
+   *identical* config (e.g. via the `--destination` CLI flag, which
+   bypasses `_config.yml`). Rare.
 
 ## 5. Other implementation details worth knowing
 
@@ -797,7 +915,7 @@ cache-shaped.
    us skip the in-memory cache too if a user genuinely wants
    reproducible no-cache behaviour.
 4. **Cap the geometry cache.** Today entries are never evicted.
-   `.jekyll-cache/Jekyll--Cache/CheesyGallery--Geometry/` will keep
+   `.jekyll-cache/Jekyll/Cache/CheesyGallery--Geometry/` will keep
    growing across years of edits — each entry is ~50 bytes, so
    even 100 000 entries is ~5 MB, but the *file count* matters on
    slow filesystems (`fsync`-heavy SSDs, network shares). A
