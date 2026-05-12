@@ -7,10 +7,17 @@ Newer items at the bottom; tick items off in PRs as they land.
 
 - [x] Bump test fixture (`spec/fixtures/test_site/Gemfile.lock`) from
       Jekyll **4.3.2** to **4.4.1** (current latest, 2025-01-29).
-- [ ] Verify `~> 4.0` constraint in `cheesy-gallery.gemspec` still
+- [x] Verify `~> 4.0` constraint in `cheesy-gallery.gemspec` still
       makes sense; consider tightening to `~> 4.4` if 4.4 introduces APIs
       we want to rely on, or leave loose if 4.0 compatibility is
-      intentional.
+      intentional. _Tightened to `~> 4.4`. Jekyll 4.3.0 changed
+      `Collection#read` to snapshot `collection.files` into
+      `site.static_files` (requires the `9dd18c0` re-sync in the
+      generator), 4.4.x is what the StaticFile/Document overrides
+      have actually been validated against (PR #415), and the
+      Render-cache mtime fix (`e118c10`) keys on Jekyll's current
+      cache surface — no reason to keep claiming 4.0 / 4.1 / 4.2
+      compatibility._
 - [ ] Close / supersede stale dependabot PRs #410 (4.3.3) and #401-era
       bumps in favour of going straight to 4.4.1.
 - [x] Re-run the fixture build under the new Jekyll and confirm
@@ -68,17 +75,40 @@ Currently `spec/cheesy/gallery_spec.rb` only checks `VERSION` and a
 tautology. Build out real coverage of plugin behaviour using the
 existing `spec/fixtures/test_site` (or a smaller in-spec fixture):
 
-- [ ] Spec runs `Jekyll::Site#process` end-to-end on a fixture site
+- [x] Spec runs `Jekyll::Site#process` end-to-end on a fixture site
       and asserts the generated `_site/` tree contains the expected
       gallery pages, full-size images, `*_thumb.jpg`, and `*_index.jpg`.
-- [ ] Test that directories without an `index.md` get a synthetic
-      `GalleryIndex` document with `layout: gallery`.
-- [ ] Test parent / child wiring (`doc.data['parent']`,
-      `doc.data['pages']`) for nested galleries.
-- [ ] Test thumbnail selection: explicit `thumbnail.jpg` wins; otherwise
-      first image; gallery without images gets no thumbnail.
-- [ ] Test image dimension extraction (`data['height'] / ['width']`)
-      against fixture JPGs of known size.
+      _Landed in `spec/cheesy/generator_spec.rb`: builds an ephemeral
+      tmpdir mirroring the canonical two-collection layout
+      (`gallery_one` with explicit `index.html`, `gallery_two` with a
+      synthetic root + nested `third/` subgallery) and asserts 6
+      full-size renders, 6 `*_thumb.jpg`, 3 `*_index.jpg`, and an
+      `index.html` for every gallery._
+- [x] Test that directories without an `index.md` get a synthetic
+      `GalleryIndex` document with `layout: gallery`. _`generator_spec.rb`
+      asserts the doc for `_gallery_two/` is a `CheesyGallery::GalleryIndex`,
+      has `data['layout'] == 'gallery'`, and its content equals
+      `DEFAULT_CONTENT`; explicit index.html docs are plain
+      `Jekyll::Document` (sanity check)._
+- [x] Test parent / child wiring (`doc.data['parent']`,
+      `doc.data['pages']`) for nested galleries. _Covered in
+      `generator_spec.rb`: roots have `parent == nil`,
+      `gallery_two/third` has the synthetic gallery_two doc as parent,
+      `gallery_two`'s `data['pages']` includes the `third` doc, leaves
+      have an empty `pages` list._
+- [x] Test thumbnail selection: explicit `thumbnail.jpg` wins; otherwise
+      first image; gallery without images gets no thumbnail. _Three
+      examples in `generator_spec.rb` cover all branches; the
+      explicit-`thumbnail.jpg` case also asserts the chosen image is
+      filtered out of `doc.data['images']` (matches generator behaviour
+      at `generator.rb:73`)._
+- [x] Test image dimension extraction (`data['height'] / ['width']`)
+      against fixture JPGs of known size. _`generator_spec.rb` pins
+      `change_geometry!('1920x1080')` behaviour (1000x750 → 1440x1080,
+      since the geometry has no `>` modifier) and the `600x400`
+      override (1000x750 → 533x400). Note: a follow-up could revisit
+      whether the upscale-by-default semantics are actually desired
+      — that's a behavioural decision, not a bug._
 - [x] Test caching: second `process` run with unchanged sources skips
       the RMagick render path (mock or assert via `Jekyll::Cache`).
       _Landed in `spec/cheesy/cache_spec.rb` (PR #414, 2026-05-12):
@@ -89,7 +119,13 @@ existing `spec/fixtures/test_site` (or a smaller in-spec fixture):
       `ImageThumb.mtimes` is shared between `*_thumb.jpg` and
       `*_index.jpg`) and a real Render-cache staleness bug — see §5
       below._
-- [ ] Test `max_size` and `quality` collection-metadata overrides.
+- [x] Test `max_size` and `quality` collection-metadata overrides.
+      _`generator_spec.rb` asserts both: the rendered `gallery_two`
+      output (max_size `600x400`) fits within the bounding box, the
+      default `gallery_one` output renders at 1440x1080, and the
+      `ImageFile` instances carry the expected `@max_size` / `@quality`
+      values straight from `collection.metadata` (gallery_one quality
+      70 from explicit config; gallery_two defaults to 85)._
 - [ ] Wire spec coverage reporting (simplecov) into `rake` if we keep
       coverage as a goal.
 
