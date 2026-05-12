@@ -64,9 +64,10 @@ Newer items at the bottom; tick items off in PRs as they land.
       `3.2`, `3.3`, `3.4`, `4.0`. _Also bumped `actions/checkout` to v4._
 - [x] Update Rubocop's `TargetRubyVersion` in `.rubocop.yml` to match
       the new floor.
-- [ ] Re-run `rake` and the fixture `jekyll build` on each version;
+- [x] Re-run `rake` and the fixture `jekyll build` on each version;
       address any new cop offences or deprecation warnings. _Local run
-      under Ruby 3.3 is clean; awaiting CI matrix run for the rest._
+      under Ruby 3.3 was clean; CI matrix (`3.2`, `3.3`, `3.4`, `4.0`)
+      is now green on the upgraded workflow._
 
 ## 3. Upgrade other dependencies
 
@@ -152,8 +153,10 @@ existing `spec/fixtures/test_site` (or a smaller in-spec fixture):
       `ImageFile` instances carry the expected `@max_size` / `@quality`
       values straight from `collection.metadata` (gallery_one quality
       70 from explicit config; gallery_two defaults to 85)._
-- [ ] Wire spec coverage reporting (simplecov) into `rake` if we keep
-      coverage as a goal.
+- [~] Wire spec coverage reporting (simplecov) into `rake` if we keep
+      coverage as a goal. _Won't do for now: coverage isn't a tracked
+      goal for this gem (CI never uploaded it, and `codecov` was
+      already dropped in §3). Revisit if/when we want a coverage gate._
 
 ## 5. Review Jekyll plugin API surface
 
