@@ -93,7 +93,7 @@ GEM
     tzinfo-data (1.2026.2)
       tzinfo (>= 1.0.0)
     unicode-display_width (2.6.0)
-    wdm (0.1.1)
+    wdm (0.2.0)
     webrick (1.9.2)
 
 PLATFORMS
@@ -106,7 +106,7 @@ DEPENDENCIES
   minima (~> 2.5)
   tzinfo (~> 2.0)
   tzinfo-data
-  wdm (~> 0.1.1)
+  wdm (~> 0.2.0)
 
 BUNDLED WITH
   4.0.9
